@@ -1,5 +1,6 @@
 import ReactOnRails from 'react-on-rails';
 import React, { Component } from 'react';
+import Modal from './Modal.js';
 // import './Devise.css';
 
 class App extends React.Component {
@@ -19,37 +20,44 @@ class App extends React.Component {
         console.log(this.state)
         let userLoggedInStatus
 
-        if(this.state.userLoggedIn) {
-
-        userLoggedInStatus = (
-            <ul className="navbar-nav">
-            <li className="nav-item ">
-                <div id="logout" className="nav-link">
-                    logout
-                 </div>
-            </li>
-            </ul>
-         ) }else {
+        if (this.state.userLoggedIn) {
 
             userLoggedInStatus = (
                 <ul className="navbar-nav">
-            <li className = "nav-item " >
-                <div id="login" className="nav-link">
-                    Login
-                </div>
-             </li>
+                    <li className="nav-item ">
+                        <div id="logout" className="nav-link">
+                            logout
+                 </div>
+                    </li>
+                </ul>
+            )
+        } else {
 
-            <li className="nav-item ">
-                <div id="signup" className="nav-link">
-                    Signup
+            userLoggedInStatus = (
+                <ul className="navbar-nav">
+                    <li className="nav-item " >
+                        <div id="login" className="nav-link">
+                            Login
                 </div>
-            </li>
-            </ul>
+                    </li>
+
+                    <li className="nav-item ">
+                        <div id="signup" className="nav-link">
+                            Signup
+                </div>
+                    </li>
+                </ul>
             )
 
-         }
+        }
 
-            
+        let showModal 
+
+        if(this.state.userLoggedIn === false) {
+            showModal = <Modal
+                railsToken = {this.railsToken}
+            />
+        }
 
 
 
@@ -80,21 +88,29 @@ class App extends React.Component {
 
                         </ul>
 
-                       
+
                         {userLoggedInStatus}
 
 
-                     
+
 
                     </div>
                 </nav>
+
+               
+                {showModal}
+
+
+
+               
             </div>
-        );
-    }
-
-
-}
-
-
-
-export default App
+                );
+            }
+        }
+        
+        
+        
+        
+        
+        
+export default App 
