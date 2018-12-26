@@ -8,12 +8,36 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.railsToken = ReactOnRails.authenticityToken()
+        // this.railsToken = ReactOnRails.authenticityToken()
 
         this.state = {
             userLoggedIn: props.isLoggedIn,
-            modalContent: 'login'
+            modalContent: 'login',
+            railsToken: ReactOnRails.authenticityToken()
         }
+    }
+
+    signOut = () => {
+        let that = this
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/users/sign_out",
+            data: {"_method":"delete", "authenticity_token": that.state.railsToken},
+            success: function(json){
+               console.log("trying to delete")
+
+               that.setState({
+                userLoggedIn: false,
+                railsToken: json.csrfToken
+                })
+            
+            },
+            error: function(xhr) { 
+                console.log("error with delete")
+            
+            }, 
+            dataType: "json"
+          });
     }
 
     setModal = (e) => {
@@ -37,7 +61,7 @@ class App extends React.Component {
             userLoggedInStatus = (
                 <ul className="navbar-nav">
                     <li className="nav-item ">
-                        <div id="logout" className="nav-link">
+                        <div onClick={() => this.signOut()} id="logout" className="nav-link">
                             logout
                  </div>
                     </li>
@@ -79,7 +103,7 @@ class App extends React.Component {
 
         if(this.state.userLoggedIn === false) {
             showModal = <Modal
-                railsToken = {this.railsToken}
+                railsToken = {this.state.railsToken}
                 modalTitle = {this.state.modalContent}
                 formAction = {formAction}
                 formId = {formId}
