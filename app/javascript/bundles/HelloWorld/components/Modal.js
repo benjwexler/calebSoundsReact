@@ -25,7 +25,7 @@ const modal = (props) => {
       <div className="modal-body">
       <h2>{props.modalTitle}</h2>
 
-        <form id={props.formId} action={props.formAction} accept-charset="UTF-8" method="post"><input name="utf8"
+        <form onSubmit={props.submitForm} id={props.formId} action={props.formAction} accept-charset="UTF-8" method="post"><input name="utf8"
             type="hidden" value="✓"/>
             <input type="hidden" name="authenticity_token" value={props.railsToken}/>
       

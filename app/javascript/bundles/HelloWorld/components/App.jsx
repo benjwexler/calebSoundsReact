@@ -17,6 +17,11 @@ class App extends React.Component {
         }
     }
 
+    submitForm = (e) => {
+        e.preventDefault 
+        console.log("nfe8nr")
+    }
+
     signOut = () => {
         let that = this
         $.ajax({
@@ -108,6 +113,7 @@ class App extends React.Component {
                 formAction = {formAction}
                 formId = {formId}
                 showOrHidePassworConfirmation = {showOrHidePassworConfirmation}
+                submitForm = {(e) => this.submitForm(e)}
             />
         }
 
