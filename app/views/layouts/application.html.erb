@@ -1,15 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CalebSoundsReact</title>
-    <%= csrf_meta_tags %>
+
+    <title>CalebSounds</title>
+    
+    <meta name="csrf-param" content="authenticity_token">
+    <meta id="csfrToken" name="csrf-token" content="<%=form_authenticity_token%>">
     <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spicy+Rice" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spicy+Rice|Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Spicy+Rice|Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Spicy+Rice|Ubuntu|Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Acme|Open+Sans|Spicy+Rice" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Acme|Open+Sans|Spicy+Rice" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Acme|Open+Sans|Righteous|Spicy+Rice" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Chakra+Petch" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application' %>
+ 
   </head>
 
   <body>
+    
+      
     <%= yield %>
+   
   </body>
 </html>
