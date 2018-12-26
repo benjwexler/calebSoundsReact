@@ -7,7 +7,7 @@ const modal = (props) => {
 
         <div className="modalContainer">
         
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <button id="modalButton" type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Launch demo modal
 </button>
 
@@ -23,9 +23,9 @@ const modal = (props) => {
       </div>
       
       <div className="modal-body">
-      <h2>Log in</h2>
+      <h2>{props.modalTitle}</h2>
 
-        <form id="ajax_signin" action="/users/sign_in" accept-charset="UTF-8" method="post"><input name="utf8"
+        <form id={props.formId} action={props.formAction} accept-charset="UTF-8" method="post"><input name="utf8"
             type="hidden" value="✓"/>
             <input type="hidden" name="authenticity_token" value={props.railsToken}/>
       
@@ -39,8 +39,13 @@ const modal = (props) => {
                 <input autocomplete="current-password" type="password" name="user[password]" id="signInUserPasswordInput"/>
             </div>
 
+            <div id={props.showOrHidePassworConfirmation} className="field">
+                 <label for="user_password_confirmation">Password confirmation</label><br/>
+                <input autocomplete="new-password" type="password" name="user[password_confirmation]" id="user_password_confirmation"/>
+            </div>
+
             <div class="actions">
-                <input type="submit" name="commit" value="Log in"/>
+                <input type="submit" name="commit" value={props.modalTitle}/>
             </div>
        </form>
             
