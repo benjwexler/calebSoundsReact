@@ -31,17 +31,17 @@ const modal = (props) => {
       
             <div className="field">
                 <label for="user_email">Email</label><br/>
-                <input autofocus="autofocus" autocomplete="email" type="email" name="user[email]" id="signInUserEmailInput"/>
+                <input autofocus="autofocus" autocomplete="email" type="email" name="user[email]" id="userEmailInput"/>
             </div>
 
             <div className="field">
                 <label for="user_password">Password</label><br/>
-                <input autocomplete="current-password" type="password" name="user[password]" id="signInUserPasswordInput"/>
+                <input autocomplete="current-password" type="password" name="user[password]" id="userPasswordInput"/>
             </div>
 
             <div id={props.showOrHidePassworConfirmation} className="field">
                  <label for="user_password_confirmation">Password confirmation</label><br/>
-                <input autocomplete="new-password" type="password" name="user[password_confirmation]" id="user_password_confirmation"/>
+                <input autocomplete="new-password" type="password" name="user[password_confirmation]" id="userPasswordConfirmationInput"/>
             </div>
 
             <div class="actions">

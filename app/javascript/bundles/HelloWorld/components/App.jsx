@@ -18,8 +18,51 @@ class App extends React.Component {
     }
 
     submitForm = (e) => {
-        e.preventDefault 
-        console.log("nfe8nr")
+        
+        let that = this
+
+      
+            e.preventDefault() 
+            let signUpObj = {};
+           signUpObj.utf8 = "✓";
+           signUpObj.authenticity_token = that.state.railsToken
+           signUpObj['user[email]'] = document.getElementById("userEmailInput").value
+           signUpObj['user[password]'] = document.getElementById("userPasswordInput").value
+           signUpObj.commit = "Log in"
+
+            // document.getElementById("modal").click()
+
+            console.log(signUpObj)
+            $.ajax({
+              type: "POST",
+              url: "http://localhost:3000/users/sign_in",
+              data: signUpObj,
+              success: function(json){
+                 // location.href = "/";;
+                 console.log(json)
+                 console.log("sucess")
+
+                 document.getElementById("modalButton").click()
+
+                 that.setState({
+                    railsToken: json.csrfToken,
+                    userLoggedIn: true,
+                    })
+            
+                //  document.getElementById("modal").click()
+
+              },
+              error: function(xhr) { 
+    
+     
+                 console.log("error")
+                //  document.getElementById("wrongLogin").innerText = "Sorry, Couldn't log  in"
+                //  $('#js-error-block-login').show();
+              }, 
+              dataType: "json"
+            });
+       
+     
     }
 
     signOut = () => {
