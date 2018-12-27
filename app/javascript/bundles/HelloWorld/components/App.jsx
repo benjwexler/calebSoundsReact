@@ -8,8 +8,6 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        // this.railsToken = ReactOnRails.authenticityToken()
-
         this.state = {
             userLoggedIn: props.isLoggedIn,
             modalContent: 'login',
@@ -19,24 +17,15 @@ class App extends React.Component {
     }
 
     submitForm = (e) => {
-        
         let that = this
-
-      
             e.preventDefault() 
             let signUpObj = {};
            signUpObj.utf8 = "✓";
            signUpObj.authenticity_token = that.state.railsToken
            signUpObj['user[email]'] = document.getElementById("userEmailInput").value
            signUpObj['user[password]'] = document.getElementById("userPasswordInput").value
-           
            signUpObj.commit = "Log in"
-
-            // document.getElementById("modal").click()
-
-            console.log(signUpObj)
             let url = "http://localhost:3000/users/sign_in"
-
             if(this.state.modalContent === 'signup')
             url = "http://localhost:3000/users"
             signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value
@@ -45,35 +34,27 @@ class App extends React.Component {
               url: url,
               data: signUpObj,
               success: function(json){
-                 // location.href = "/";;
-                 console.log(json)
-                 console.log("sucess")
-
-                 document.getElementById("modalButton").click()
-
-                 that.setState({
-                    railsToken: json.csrfToken,
-                    userLoggedIn: true,
-                    errorMessage: undefined
-                    })
-            
-                //  document.getElementById("modal").click()
+                 if(json.errorMessage) {
+                    that.setState({
+                        errorMessage: json.errorMessage
+                        })
+                 } else {
+                    document.getElementById("modalButton").click()
+                    that.setState({
+                       railsToken: json.csrfToken,
+                       userLoggedIn: true,
+                       errorMessage: undefined
+                       })
+                 }
 
               },
-              error: function() { 
-                  
+              error: function(xhr) { 
                 that.setState({
-                    errorMessage: "Sorry, Couldn't log you in"
+                    errorMessage: "Sorry, could not sign you in"
                     })
-     
-                 console.log("error")
-                //  document.getElementById("wrongLogin").innerText = "Sorry, Couldn't log  in"
-                //  $('#js-error-block-login').show();
               }, 
               dataType: "json"
             });
-       
-     
     }
 
     signOut = () => {
@@ -92,32 +73,23 @@ class App extends React.Component {
             
             },
             error: function(xhr) { 
-                console.log("error with delete")
-            
             }, 
             dataType: "json"
           });
     }
 
     setModal = (e) => {
-        console.log(e.target.id)
-
         this.setState({
             modalContent: e.target.id,
             errorMessage: undefined 
             }
         )
-
         document.getElementById("modalButton").click()
     }
 
     render() {
-        let x = 5
-        console.log(this.state)
         let userLoggedInStatus
-
         if (this.state.userLoggedIn) {
-
             userLoggedInStatus = (
                 <ul className="navbar-nav">
                     <li className="nav-item ">
@@ -128,7 +100,6 @@ class App extends React.Component {
                 </ul>
             )
         } else {
-
             userLoggedInStatus = (
                 <ul className="navbar-nav">
                     <li className="nav-item " >
@@ -208,30 +179,13 @@ class App extends React.Component {
                             </li>
 
                         </ul>
-
-
                         {userLoggedInStatus}
-
-
-
-
                     </div>
                 </nav>
-
-               
                 {showModal}
-
-
-
-               
             </div>
                 );
             }
         }
-        
-        
-        
-        
-        
         
 export default App 
