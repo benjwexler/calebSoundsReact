@@ -48,6 +48,8 @@ const modal = (props) => {
                 <input type="submit" name="commit" value={props.modalTitle}/>
             </div>
        </form>
+
+       <div id={props.showOrHideErrorMessage}> {props.errorMessage}</div>
             
 
 

@@ -13,7 +13,8 @@ class App extends React.Component {
         this.state = {
             userLoggedIn: props.isLoggedIn,
             modalContent: 'login',
-            railsToken: ReactOnRails.authenticityToken()
+            railsToken: ReactOnRails.authenticityToken(),
+            ErrorMessage: undefined
         }
     }
 
@@ -33,6 +34,8 @@ class App extends React.Component {
             // document.getElementById("modal").click()
 
             console.log(signUpObj)
+
+     
             $.ajax({
               type: "POST",
               url: "http://localhost:3000/users/sign_in",
@@ -47,13 +50,17 @@ class App extends React.Component {
                  that.setState({
                     railsToken: json.csrfToken,
                     userLoggedIn: true,
+                    errorMessage: undefined
                     })
             
                 //  document.getElementById("modal").click()
 
               },
-              error: function(xhr) { 
-    
+              error: function() { 
+                  
+                that.setState({
+                    errorMessage: "Sorry, Couldn't log you in"
+                    })
      
                  console.log("error")
                 //  document.getElementById("wrongLogin").innerText = "Sorry, Couldn't log  in"
@@ -92,7 +99,8 @@ class App extends React.Component {
         console.log(e.target.id)
 
         this.setState({
-            modalContent: e.target.id
+            modalContent: e.target.id,
+            errorMessage: undefined 
             }
         )
 
@@ -145,6 +153,12 @@ class App extends React.Component {
                 formId = "ajax_signup"
                 showOrHidePassworConfirmation = 'showPasswordConfirmation'
             }
+        
+        let showOrHideErrorMessage = 'hideErrorMessage'
+
+        if(this.state.errorMessage !== undefined) {
+            showOrHideErrorMessage = 'showErrorMessage'
+        }
 
 
        
@@ -157,6 +171,8 @@ class App extends React.Component {
                 formId = {formId}
                 showOrHidePassworConfirmation = {showOrHidePassworConfirmation}
                 submitForm = {(e) => this.submitForm(e)}
+                showOrHideErrorMessage = {showOrHideErrorMessage}
+                errorMessage = {this.state.errorMessage}
             />
         }
 
