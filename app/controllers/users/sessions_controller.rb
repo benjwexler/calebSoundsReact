@@ -1,15 +1,32 @@
 class Users::SessionsController < Devise::SessionsController
 
   respond_to :json
+  
+  def new
+    self.resource = resource_class.new(sign_in_params)
+    clean_up_passwords(resource)
+    yield resource if block_given?
+
+    
+    respond_with(resource, serialize_options(resource))
+  end
 
   def create
-    self.resource = warden.authenticate!(auth_options)
+    p self.resource = warden.authenticate!(auth_options)
     set_flash_message!(:notice, :signed_in)
-    sign_in(resource_name, resource)
-    yield resource if block_given?
+    p sign_in(resource_name, resource)
+    
+    "nbfubnfei"
+    
+    if block_given?
+      p "sign in error test"
+      yield resource 
+    end 
+
+  
     p render :json => {
         'csrfParam' => request_forgery_protection_token,
-        'csrfToken' => form_authenticity_token
+        'csrfToken' => form_authenticity_token,
     }
   end
 

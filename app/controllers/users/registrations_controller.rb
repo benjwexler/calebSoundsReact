@@ -16,7 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
             
             p render :json => {
         'csrfParam' => request_forgery_protection_token,
-        'csrfToken' => form_authenticity_token
+        'csrfToken' => form_authenticity_token,
     }
           else
             set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
@@ -24,9 +24,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
             respond_with resource, location: after_inactive_sign_up_path_for(resource)
           end
         else
+
+          p "errorTest"
           clean_up_passwords resource
           set_minimum_password_length
-          respond_with resource
+
+          p render :json => {
+        'errorMessage' => "Sorry, Couldn't sign you up"
+        }
         end
       end
 
