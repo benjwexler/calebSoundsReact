@@ -29,16 +29,20 @@ class App extends React.Component {
            signUpObj.authenticity_token = that.state.railsToken
            signUpObj['user[email]'] = document.getElementById("userEmailInput").value
            signUpObj['user[password]'] = document.getElementById("userPasswordInput").value
+           
            signUpObj.commit = "Log in"
 
             // document.getElementById("modal").click()
 
             console.log(signUpObj)
+            let url = "http://localhost:3000/users/sign_in"
 
-     
+            if(this.state.modalContent === 'signup')
+            url = "http://localhost:3000/users"
+            signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value
             $.ajax({
               type: "POST",
-              url: "http://localhost:3000/users/sign_in",
+              url: url,
               data: signUpObj,
               success: function(json){
                  // location.href = "/";;
