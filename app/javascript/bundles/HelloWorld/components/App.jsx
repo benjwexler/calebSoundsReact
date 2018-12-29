@@ -1,6 +1,7 @@
 import ReactOnRails from 'react-on-rails';
 import React, { Component } from 'react';
 import Modal from './Modal.js';
+import Section1 from './Section1.js';
 // import './Devise.css';
 
 class App extends React.Component {
@@ -88,6 +89,14 @@ class App extends React.Component {
     }
 
     render() {
+
+        let shoppingCartDiv = (
+            <li class="nav-item ">
+                        <div class="nav-link icon">
+                    <i id="shoppingCartIcon" class=" fa-2x fas fa-shopping-cart"></i>
+                        </div>
+                    </li>
+        )
         let userLoggedInStatus
         if (this.state.userLoggedIn) {
             userLoggedInStatus = (
@@ -97,6 +106,7 @@ class App extends React.Component {
                             logout
                  </div>
                     </li>
+                    {shoppingCartDiv}
                 </ul>
             )
         } else {
@@ -113,6 +123,8 @@ class App extends React.Component {
                             Signup
                 </div>
                     </li>
+                        {shoppingCartDiv}
+                    
                 </ul>
             )
 
@@ -182,7 +194,9 @@ class App extends React.Component {
                         {userLoggedInStatus}
                     </div>
                 </nav>
+                <Section1/>
                 {showModal}
+               
             </div>
                 );
             }
