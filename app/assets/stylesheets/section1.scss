@@ -1,0 +1,11 @@
+.section1 {
+    height: 95vh;
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background: url(/pics/calebPlayingGuitar1.jpg) no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+}

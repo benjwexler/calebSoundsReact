@@ -1,0 +1,20 @@
+#logo {
+    height: 60px;
+}
+
+#logoText {
+    color: rgba(45, 51, 221, 0.747)  !important;
+}
+
+.navbar {
+    font-family: 'Josefin Sans', sans-serif !important;
+    font-weight: bold !important;
+    position: fixed;
+    background: white !important;
+    width: 100%;
+}
+
+.nav-item {
+    cursor: pointer !important;
+    letter-spacing: 1px;
+}
