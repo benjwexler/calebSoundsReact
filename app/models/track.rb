@@ -8,7 +8,7 @@ class Track < ApplicationRecord
         if query == "" || limit < 1
             return Track.all
         else
-            return Track.order(release_date: :desc).limit(limit)    
+            return Track.order(release_date: :desc).with_attached_cover_art.limit(limit)    
         end 
 
     end 
