@@ -6,12 +6,15 @@ class Section2 extends React.Component {
         super(props);
 
         this.state = {
-            nonsense: 5,
+            tracks: undefined,
         }
     }
 
     componentDidMount() {
         console.log('GrandChild did mount.');
+
+
+
 
         let that = this 
 
@@ -21,7 +24,7 @@ class Section2 extends React.Component {
             success: function(json){
                console.log(json)
                that.setState({
-                nonsense: json[0].name
+                tracks: json
                 })
             },
             error: function(xhr) { 
@@ -34,9 +37,33 @@ class Section2 extends React.Component {
       }
 
     render() {
+       
+
+        let tracks = this.state.tracks
+
+
+
+        if(tracks !== undefined) {
+        
+            tracks = (
+                <div id="mainContainer">
+                    <div className="cardsContainer">
+                    {tracks.map(function(track, index){
+                    return <div className="card" key={ index }>{track.name}</div>;
+                    }
+                    )}
+                    </div>
+                </div> 
+            )
+
+        
+        }
+
+        
         return (
             <div id="section2">
-                <div id="section2title">Latest Releases {this.state.nonsense}</div>
+                <div id="section2title">Latest Releases </div>
+                {tracks}
             </div>
         )
     }
