@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @track.name %>
+</p>
+
+<p>
+  <strong>Soundcloud:</strong>
+  <%= @track.soundcloud_id %>
+</p>
+
+<p>
+  <strong>Release date:</strong>
+  <%= @track.release_date %>
+</p>
+
+<%= link_to 'Edit', edit_track_path(@track) %> |
+<%= link_to 'Back', tracks_path %>
