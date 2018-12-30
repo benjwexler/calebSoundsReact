@@ -1,6 +1,6 @@
 #section2 {
     height: auto;
-    height: 95vh;
+    // height: 95vh;
     width: 100%;
     object-fit: cover;
     background-repeat: no-repeat;
@@ -58,6 +58,44 @@
     display: relative;
     width: 18rem;
 
-    
+}
 
+.playIcon {
+    position: absolute;
+    left: 52%;
+    top: 47%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.playAndPauseIcon {
+    color: #dedcdc !important;
+    opacity: .7 !important;
+}
+
+.card-title {
+    text-align: center;
+    font-size: 26px !important;
+    margin-top: 10px !important;
+    color: rgba(10, 20, 39, 0.913) !important;
+    margin-bottom: 0.75rem;
+
+}
+
+.card-img-top {
+    width: 50%;
+    height: 140px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 5px !important;
+}
+
+.card-body {
+    text-align: center !important;
+}
+
+.card-text {
+    font-size: 14px;
 }
