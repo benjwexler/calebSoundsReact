@@ -49,7 +49,18 @@ class Section2 extends React.Component {
                 <div id="mainContainer">
                     <div className="cardsContainer">
                     {tracks.map(function(track, index){
-                    return <div className="card" key={ index }>{track.name}</div>;
+                    return (
+                        <div className="card" key={ index }>
+                            <div className="playIcon">
+                                <i id={"playAndPauseIcon" + (index+1)} className="fas fa-3x playAndPauseIcon fa-play"></i>
+                            </div>
+                            <h5 className="card-title">{track.name}</h5>
+                            <img class="card-img-top" src={track.image} alt="Card image cap"/>
+                        <div className="card-body">
+                            <p className="card-text">Released: {track.release_date}</p>
+                        </div>
+                        </div>
+                        );
                     }
                     )}
                     </div>
