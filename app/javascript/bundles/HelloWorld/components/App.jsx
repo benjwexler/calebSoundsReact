@@ -2,6 +2,7 @@ import ReactOnRails from 'react-on-rails';
 import React, { Component } from 'react';
 import Modal from './Modal.js';
 import Section1 from './Section1.js';
+import Section2 from './Section2.jsx';
 // import './Devise.css';
 
 class App extends React.Component {
@@ -195,6 +196,7 @@ class App extends React.Component {
                     </div>
                 </nav>
                 <Section1/>
+                <Section2/>
                 {showModal}
                
             </div>

@@ -1,0 +1,25 @@
+#section2 {
+    height: auto;
+    height: 95vh;
+    width: 100%;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: auto;
+    -webkit-filter: grayscale(40%);
+    filter: grayscale(40%);
+    background: linear-gradient(207deg, rgba(71, 109, 204, 0.543), rgb(255, 255, 255)), url('/pics/calebStanRogersFolkFestival.jpg');   
+}
+
+#section2title {
+    width: 100%;
+    background: black;
+    color:  white;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 50px;
+   
+}
