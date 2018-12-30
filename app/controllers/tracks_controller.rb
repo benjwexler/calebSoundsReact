@@ -16,7 +16,7 @@ class TracksController < ApplicationController
           p "JSON Track"
           # render json: @tracks.to_json 
           render json: @tracks.map { |track|
-            track.as_json.merge({ image: url_for(track.cover_art) })
+            track.as_json.merge({ image: url_for(track.cover_art), isPlaying: false })
           }
         }
     end 
