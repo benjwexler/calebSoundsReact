@@ -14,7 +14,10 @@ class TracksController < ApplicationController
         }
         format.json { 
           p "JSON Track"
-          render json: @tracks.to_json 
+          # render json: @tracks.to_json 
+          render json: @tracks.map { |track|
+            track.as_json.merge({ image: url_for(track.cover_art) })
+          }
         }
     end 
     
