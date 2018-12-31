@@ -18,7 +18,7 @@ import ReactOnRails from 'react-on-rails';
 
 import App from '../bundles/HelloWorld/components/App.jsx';
 import Section2 from '../bundles/HelloWorld/components/Section2.jsx';
-
+import CustomSoundcloud from '../bundles/HelloWorld/components/CustomSoundcloud.jsx';
 
 // This is how react_on_rails can see the HelloWorld in the browser.
 
@@ -27,7 +27,15 @@ ReactOnRails.register({
     App
   });
 
+
+
   ReactOnRails.register({
     Section2
   });
+
+  ReactOnRails.register({
+    CustomSoundcloud
+  });
+
+
 
