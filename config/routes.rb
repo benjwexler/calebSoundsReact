@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
 
+  resources :sound_and_kits
+  resources :sounds
+  resources :kits
   resources :tracks
   devise_for :users, controllers: {
         sessions: 'users/sessions',

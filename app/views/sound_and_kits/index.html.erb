@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Sound And Kits</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kit</th>
+      <th>Sound</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sound_and_kits.each do |sound_and_kit| %>
+      <tr>
+        <td><%= sound_and_kit.kit_id %></td>
+        <td><%= sound_and_kit.sound_id %></td>
+        <td><%= link_to 'Show', sound_and_kit %></td>
+        <td><%= link_to 'Edit', edit_sound_and_kit_path(sound_and_kit) %></td>
+        <td><%= link_to 'Destroy', sound_and_kit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sound And Kit', new_sound_and_kit_path %>

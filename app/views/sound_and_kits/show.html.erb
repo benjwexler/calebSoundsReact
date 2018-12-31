@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Kit:</strong>
+  <%= @sound_and_kit.kit_id %>
+</p>
+
+<p>
+  <strong>Sound:</strong>
+  <%= @sound_and_kit.sound_id %>
+</p>
+
+<%= link_to 'Edit', edit_sound_and_kit_path(@sound_and_kit) %> |
+<%= link_to 'Back', sound_and_kits_path %>
