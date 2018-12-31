@@ -1,37 +1,20 @@
-<%= form_with(model: kit, local: true) do |form| %>
-  <% if kit.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(kit.errors.count, "error") %> prohibited this kit from being saved:</h2>
+<%= form_for @kit do |form| %>
 
-      <ul>
-      <% kit.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
-  </div>
+name: <%= form.text_field :name %><br />
+description: <%= form.text_field :description %><br />
+price: <%= form.text_field :price %><br />
+<%= form.file_field :folder, multiple: true, name: "kit[folder][]" %> <br />
+cover_art: <%= form.file_field :cover_art %> <br />
 
-  <div class="field">
-    <%= form.label :price %>
-    <%= form.text_field :price %>
-  </div>
 
-  <div class="field">
-    <%= form.label :quantity_sold %>
-    <%= form.number_field :quantity_sold %>
-  </div>
+quantity_sold: <%= form.number_field :quantity_sold %><br />
+<br>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+
+ 
+
+
+ <%= form.submit %>
 <% end %>
