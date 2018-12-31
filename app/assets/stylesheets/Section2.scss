@@ -30,6 +30,7 @@
     flex-direction: column;
     padding-top: 30px;
     padding-left: 530px;
+    margin: auto
 
 } 
 
@@ -41,7 +42,7 @@
     margin: auto;
     flex-direction: row; 
     flex-wrap: wrap;
-    border: 2px solid black;
+    // border: 2px solid black;
 
 }
 
@@ -105,4 +106,15 @@
     display: none;
     // justify-content: space-between;
     // position: absolute;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    #mainContainer {
+    padding-left: 0px;
+    }
+
+    
+
+    
 }
