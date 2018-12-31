@@ -5,6 +5,20 @@ class KitsController < ApplicationController
   # GET /kits.json
   def index
     @kits = Kit.all
+
+    respond_to do |format|
+        
+      format.html {
+        p "HTML"
+      }
+      format.json { 
+        p "JSON Kit"
+        # render json: @kits.to_json 
+        render json: @kits.map { |kit|
+          kit.as_json.merge({ image: url_for(kit.cover_art) })
+        }
+      }
+  end 
   end
 
   # GET /kits/1
