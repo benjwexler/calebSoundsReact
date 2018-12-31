@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Modal from './Modal.js';
 import Section1 from './Section1.js';
 import Section2 from './Section2.jsx';
+import DrumMachineSection from './DrumMachineSection.jsx';
 
 
 // import './Devise.css';
@@ -199,6 +200,7 @@ class App extends React.Component {
                 </nav>
                 <Section1/>
                 <Section2/>
+                <DrumMachineSection/>
                 {showModal}
                
             </div>
