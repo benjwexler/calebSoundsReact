@@ -3502,6 +3502,11 @@ jsesc@~0.5.0:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
 
+jsmidgen@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/jsmidgen/-/jsmidgen-0.1.5.tgz#ad0afd6375eb12f51064025393ce3baec380585d"
+  integrity sha1-rQr9Y3XrEvUQZAJTk847rsOAWF0=
+
 json-loader@^0.5.4:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
@@ -3642,6 +3647,11 @@ load-json-file@^2.0.0:
     parse-json "^2.2.0"
     pify "^2.0.0"
     strip-bom "^3.0.0"
+
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
+  integrity sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ=
 
 loader-runner@^2.3.0:
   version "2.3.1"
@@ -3889,6 +3899,18 @@ micromatch@^3.1.10, micromatch@^3.1.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
+
+midi-file-parser@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/midi-file-parser/-/midi-file-parser-1.0.0.tgz#175a013f277e9d26acf94cfe6c03b13abb0a1e9e"
+  integrity sha1-F1oBPyd+nSas+Uz+bAOxOrsKHp4=
+
+"midiconvert@github:jsphweid/MidiConvert":
+  version "0.4.3"
+  resolved "https://codeload.github.com/jsphweid/MidiConvert/tar.gz/96d0c66030a01d05b9708a1b0304d72d5d90fbd1"
+  dependencies:
+    jsmidgen "^0.1.5"
+    midi-file-parser "^1.0.0"
 
 miller-rabin@^4.0.0:
   version "4.0.1"
@@ -5411,6 +5433,14 @@ react-on-rails@11.2.1:
   integrity sha512-GY8if/w3JkrQNun1xB8O2GG0J8BCB66xranGk7o4TFQyfyeHIEhXbgDEfRM7Xmme4SHFjz1SUY+Oa73WgUcT9g==
   dependencies:
     "@babel/runtime-corejs2" "^7.0.0"
+
+react-simple-soundcloud-widget@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-simple-soundcloud-widget/-/react-simple-soundcloud-widget-0.0.5.tgz#283820573db83212196235d0021587465b3d8999"
+  integrity sha512-liPVSC4wpE+ZiK/LPZrbd3pOI+NkiPYuY2h1Mx+KztoNiIaQjuk+v2uWGPXLHF/sCj4lBqp910DJ20Dwemut9w==
+  dependencies:
+    load-script "^1.0.0"
+    midiconvert "github:jsphweid/MidiConvert"
 
 react@^16.6.3:
   version "16.7.0"

@@ -36,7 +36,7 @@
 .cardsContainer {
     width: 100%;
     max-width: 850px;
-
+    justify-content: space-around;
     display: flex;
     margin: auto;
     flex-direction: row; 
@@ -57,6 +57,7 @@
     font-family: 'Shadows Into Light' !important;
     display: relative;
     width: 18rem;
+    
 
 }
 
@@ -98,4 +99,10 @@
 
 .card-text {
     font-size: 14px;
+}
+
+.soundclouds {
+    display: none;
+    // justify-content: space-between;
+    // position: absolute;
 }
