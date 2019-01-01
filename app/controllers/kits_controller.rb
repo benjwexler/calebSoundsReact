@@ -24,6 +24,26 @@ class KitsController < ApplicationController
   # GET /kits/1
   # GET /kits/1.json
   def show
+
+    p "Hoobah"
+
+    @sounds = @kit.sounds
+
+    p @sounds
+
+
+    respond_to do |format|
+      format.json {
+        # render json: @kit.sounds
+        render json: @sounds.map { |sound|
+        p "What is going"
+        p url_for(sound.soundfile)
+          sound.as_json.merge({ soundfile: url_for(sound.soundfile), filename: sound.soundfile.blob.filename })
+        }
+      
+      }
+    end 
+
   end
 
   # GET /kits/new

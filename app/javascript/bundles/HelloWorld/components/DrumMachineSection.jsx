@@ -11,7 +11,9 @@ class DrumMachineSection extends React.Component {
             kits: undefined,
             kitPic: undefined,
             kitName: undefined,
-            kitPrice: undefined
+            kitPrice: undefined,
+            kitId: undefined,
+            kitSounds: undefined  
         }
     }
 
@@ -36,11 +38,9 @@ class DrumMachineSection extends React.Component {
             kits: kitLinkedlist1,
             kitPic: kitLinkedlist1.head.value.image,
             kitName: kitLinkedlist1.head.value.name,
-            kitPrice: kitLinkedlist1.head.value.price
-            })
-
-
-       
+            kitPrice: kitLinkedlist1.head.value.price,
+            kitId: kitLinkedlist1.head.value.id
+            }, that.loadSounds(kitLinkedlist1.head.value.id))
         },
         error: function(xhr) { 
         }, 
@@ -49,11 +49,41 @@ class DrumMachineSection extends React.Component {
 
     }
 
+    loadSounds = (kitId) => {
+
+        let that = this
+
+        $.ajax({
+            type: "GET",
+            url: `http://localhost:3000/kits/${kitId}`,
+            success: function(json){
+              
+                console.log(json)
+                console.log("load Sounds")
+
+                that.setState({
+                    kitSounds: json
+                    })
+            },
+            error: function(xhr) { 
+            }, 
+            dataType: "json"
+          });
+    
+        }
+
+    
+
     changeKit = (e) => {
+
+        this.loadSounds(e.target.dataset.kitId)
+
         this.setState({
             kitPic: e.target.src,
             kitName: e.target.dataset.kitName,
-            kitPrice: e.target.dataset.kitPrice
+            kitPrice: e.target.dataset.kitPrice,
+            kitId: e.target.dataset.kitId
+        
             })
     }
 
@@ -77,14 +107,25 @@ class DrumMachineSection extends React.Component {
         let that = this
         let displayKits
         let pads = []
+        let sound
+
+        if(this.state.kitSounds) {
         for (let i=0; i<16; i++){
+            
+            if(this.state.kitSounds[i]) {
+                sound = this.state.kitSounds[i].filename
+            } else {
+                sound = ""
+            }
+
             pads.push(
                 <div className="padContainer">
-                    <div className="padText"> Guitar {i}</div>
+                    <div className="padText"> {sound} {i}</div>
                     <div className="pad"></div>
                 </div>
             )
         }
+    }
 
         let padsWithContainer = <div className="padRow"> {pads} </div>
 
@@ -99,6 +140,7 @@ class DrumMachineSection extends React.Component {
                         onClick={(e) => that.changeKit(e)} 
                         data-kit-name={currentNode.value.name} 
                         data-kit-price={currentNode.value.price}
+                        data-kit-id={currentNode.value.id}
                         src={currentNode.value.image} 
                         className="galleryImage"/>
                     </div>
@@ -106,6 +148,8 @@ class DrumMachineSection extends React.Component {
 
                 currentNode = currentNode.next
             }
+
+            
 
             displayKits = ( 
                 <div id="packsGallery">
