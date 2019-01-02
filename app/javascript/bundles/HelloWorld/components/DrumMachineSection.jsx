@@ -7,18 +7,93 @@ class DrumMachineSection extends React.Component {
     constructor(props) {
         super(props);
 
+        this.initiateOnce = 0;
+        this.works = undefined  
+
         this.state = {
             kits: undefined,
             kitPic: undefined,
             kitName: undefined,
             kitPrice: undefined,
             kitId: undefined,
-            kitSounds: undefined  
+            kitSounds: undefined,
+            pads: undefined,
+            context: undefined,
+            gainNode: undefined   
         }
     }
 
+    initiateAudioContext = () => {
+
+        let that = this
+
+        if(that.initiateOnce === 0) {
+            let AudioContext = window.AudioContext || window.webkitAudioContext;
+            window["AudioContext"] = window.AudioContext || window.webkitAudioContext;
+
+            let context = new AudioContext();
+            window["context"] = new AudioContext()
+            window["gainNode"] = context.createGain();
+            let gainNode = context.createGain();
+
+
+        that.setState({
+            context: context,
+            gainNode: gainNode 
+        
+            })
+
+        that.initiateOnce = 1
+
+        } else {
+            window.removeEventListener("mouseover", this.initiateAudioContext)
+        }
+    }
+
+    playSound = (number, soundFile) => {
+        let that = this
+        window[`bufferNode${number}`] = that.state.context.createBufferSource();
+        var request = new XMLHttpRequest();
+        request.open('GET', soundFile, true);
+        request.responseType = 'arraybuffer';
+        request.onload = function () {
+            that.state.context.decodeAudioData(
+                request.response,
+                function (buffer) {
+                    window[`bufferNode${number}`].buffer = buffer;
+                    window[`bufferNode${number}`].connect(gainNode);
+                    gainNode.connect(that.state.context.destination);
+                    gainNode.gain.setValueAtTime(1, that.state.context.currentTime);
+                },
+                function (e) { console.log("Error with decoding audio data" + e.err); }
+            );
+        };
+        request.send()
+        window[`bufferNode${number}`].start()
+    };
+
+    stopSound = (number) => {
+        let that = this
+        let bufferNodeName = window[`bufferNode${number}`]
+        // try/catch is used because first time a pad is played stopSound won't work and needs to be ignored
+        try {
+            bufferNodeName.stop(that.state.context.currentTime);
+          }
+        catch(err) {
+        }
+       
+    };
+
+    playAndStop = (bufferNodeName, soundFile) => {
+        this.stopSound(bufferNodeName);
+        this.playSound(bufferNodeName, soundFile);
+    };
+
     componentDidMount() {
 
+    window.addEventListener("mouseover", this.initiateAudioContext)
+
+    
     let kitLinkedlist1 = new LinkedList
     let that = this
 
@@ -52,17 +127,19 @@ class DrumMachineSection extends React.Component {
     loadSounds = (kitId) => {
 
         let that = this
+        let padsObj = {}
 
         $.ajax({
             type: "GET",
             url: `http://localhost:3000/kits/${kitId}`,
             success: function(json){
-              
-                console.log(json)
-                console.log("load Sounds")
+                json.forEach((sound, index) => {
+                    padsObj[index] = sound.soundfile
+                   })
 
                 that.setState({
-                    kitSounds: json
+                    kitSounds: json,
+                    pads: padsObj 
                     })
             },
             error: function(xhr) { 
@@ -72,18 +149,13 @@ class DrumMachineSection extends React.Component {
     
         }
 
-    
-
     changeKit = (e) => {
-
         this.loadSounds(e.target.dataset.kitId)
-
         this.setState({
             kitPic: e.target.src,
             kitName: e.target.dataset.kitName,
             kitPrice: e.target.dataset.kitPrice,
             kitId: e.target.dataset.kitId
-        
             })
     }
 
@@ -121,7 +193,7 @@ class DrumMachineSection extends React.Component {
             pads.push(
                 <div className="padContainer">
                     <div className="padText"> {sound} {i}</div>
-                    <div className="pad"></div>
+                    <div onClick={() => that.playAndStop(i, that.state.kitSounds[i].soundfile)} className="pad"></div>
                 </div>
             )
         }
@@ -190,6 +262,7 @@ class DrumMachineSection extends React.Component {
                     </div>
                     <div id="drumMachineBottomContainer"></div>
                 </div>
+
             </div>
 
         )
