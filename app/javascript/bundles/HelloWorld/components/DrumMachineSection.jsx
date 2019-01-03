@@ -8,7 +8,9 @@ class DrumMachineSection extends React.Component {
         super(props);
 
         this.initiateOnce = 0;
-        this.works = undefined  
+        this.works = undefined ; 
+
+        this.props = props
 
         this.state = {
             kits: undefined,
@@ -243,8 +245,8 @@ class DrumMachineSection extends React.Component {
                             <span id="currentKitName"> {this.state.kitName} </span> - 
                             <span id="currentKitPrice"> {this.state.kitPrice} </span>
                         </a>
-                        <div id="addToCartContainer">
-                            <button id="addToCartButton" type="button" className="btn btn-primary">
+                        <div  id="addToCartContainer">
+                            <button onClick={this.props.addToCart} id="addToCartButton" type="button" className="btn btn-primary">
                                 <i className="fas fa-shopping-cart"></i> Add to cart
                             </button>
                         </div>

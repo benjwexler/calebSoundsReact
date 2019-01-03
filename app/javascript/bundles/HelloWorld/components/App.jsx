@@ -17,7 +17,8 @@ class App extends React.Component {
             userLoggedIn: props.isLoggedIn,
             modalContent: 'login',
             railsToken: ReactOnRails.authenticityToken(),
-            ErrorMessage: undefined
+            ErrorMessage: undefined,
+            cart: undefined 
         }
     }
 
@@ -81,6 +82,10 @@ class App extends React.Component {
             }, 
             dataType: "json"
           });
+    }
+
+    addToCart = () => {
+        console.log("Add To Cart")
     }
 
     setModal = (e) => {
@@ -200,7 +205,9 @@ class App extends React.Component {
                 </nav>
                 <Section1/>
                 <Section2/>
-                <DrumMachineSection/>
+                <DrumMachineSection
+                    addToCart = {this.addToCart}
+                />
                 {showModal}
                
             </div>
