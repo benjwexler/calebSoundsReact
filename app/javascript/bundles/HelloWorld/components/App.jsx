@@ -18,7 +18,7 @@ class App extends React.Component {
             modalContent: 'login',
             railsToken: ReactOnRails.authenticityToken(),
             ErrorMessage: undefined,
-            cart: undefined 
+            cart: undefined, 
         }
     }
 
