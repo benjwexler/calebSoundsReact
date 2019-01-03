@@ -54,6 +54,9 @@ class Section2 extends React.Component {
       }
 
       componentDidUpdate() {
+
+        
+
         console.log("updated!")
         let soundcloudWidget
         let that = this 
@@ -93,6 +96,7 @@ class Section2 extends React.Component {
             url: "http://localhost:3000/tracks?limit=4",
             success: function(json){
             //    console.log(json)s
+            
             let newTracksObj = {}
                json.forEach(function(track, index){
                    console.log(json[index])
@@ -103,7 +107,7 @@ class Section2 extends React.Component {
                 tracksObj: newTracksObj,
                 counter: 7
                 })
-            },
+            } ,
             error: function(xhr) { 
             }, 
             dataType: "json"
