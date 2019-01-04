@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :sounds
   resources :kits
   resources :tracks
+  resources :carts
   devise_for :users, controllers: {
         sessions: 'users/sessions',
         registrations: 'users/registrations'
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
       end
   resources :users
   get 'hello_world', to: 'hello_world#index'
+  # get 'carts', to: 'carts#index'
 
   root to: "users#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
