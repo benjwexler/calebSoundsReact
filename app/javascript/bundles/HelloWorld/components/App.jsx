@@ -71,6 +71,36 @@ class App extends React.Component {
     
         }
 
+        addToCart = () => {
+            let kitId
+            let coverArtPic
+            let data
+            let price
+            let name
+
+            console.log("Hitting this function?")
+         
+        
+            data = `authenticity_token=${this.state.railsToken}&kitId=${this.state.kitId}&coverArtPic=${this.state.kitPic}&price=${this.state.kitPrice}&name=${this.state.kitName}`
+
+            var response = (json) => {
+        
+                console.log(json)
+           
+               }
+        
+            $.ajax({
+              method: "POST",
+              url: `/carts`,
+              data: data,
+              dataType: 'json',
+              success: response
+            })
+
+            
+        
+          }
+
         playSound = (number, soundFile) => {
             let that = this
             window[`bufferNode${number}`] = that.state.context.createBufferSource();
@@ -252,9 +282,6 @@ class App extends React.Component {
           });
     }
 
-    addToCart = () => {
-        console.log("Add To Cart")
-    }
 
     setModal = (e) => {
         this.setState({
@@ -271,6 +298,8 @@ class App extends React.Component {
         let displayKits
         let pads = []
         let sound
+
+        let shoppingCart = <div onClick={() => that.addToCart()} id="shoppingCartListAbsolute">  </div>
 
         if(this.state.kitSounds) {
         for (let i=0; i<16; i++){
@@ -401,6 +430,7 @@ class App extends React.Component {
 
         return (
             <div className="App">
+                {shoppingCart}
                 <nav className="navbar navbar-expand-md navbar-light navbarText">
 
                     <a id="logoText" className="navbar-brand">
