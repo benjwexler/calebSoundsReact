@@ -2,9 +2,11 @@ class CartsController < ApplicationController
 
     def index
 
-        p session[:temporary_cart]
-        p "BlahBlah"
-
+      respond_to do |format|
+        format.json do
+          render json: session[:temporary_cart].to_json
+        end
+      end
     end 
 
     def create
@@ -38,9 +40,23 @@ class CartsController < ApplicationController
         format.json do
           render json: session[:temporary_cart].to_json
         end
-
-    end
+      end
 
     end 
+
+    def destroy
+      p params[:id]
+      p kit_id = params[:id]
+      session[:temporary_cart].delete(kit_id)
+      p request.session[:temporary_cart].each {|key, value| puts key.to_s + " --> " + value.to_s }
+      
+      respond_to do |format|
+        format.json do
+          render json: session[:temporary_cart].to_json
+        end
+      end 
+    end
+
+
 
 end 
