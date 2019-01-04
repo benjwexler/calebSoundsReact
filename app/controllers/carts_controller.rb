@@ -46,9 +46,13 @@ class CartsController < ApplicationController
 
     def destroy
       p params[:id]
+      if params[:id] != "all"
       p kit_id = params[:id]
       session[:temporary_cart].delete(kit_id)
       p request.session[:temporary_cart].each {|key, value| puts key.to_s + " --> " + value.to_s }
+      else
+        session[:temporary_cart] = {}
+      end
       
       respond_to do |format|
         format.json do

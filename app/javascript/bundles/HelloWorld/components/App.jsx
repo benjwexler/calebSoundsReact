@@ -156,6 +156,9 @@ class App extends React.Component {
 
         $.ajax({
             method: "POST",
+            beforeSend: function(request) {
+                request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+              },
             url: `/carts`,
             data: data,
             dataType: 'json',
@@ -177,12 +180,32 @@ class App extends React.Component {
     
         $.ajax({
           method: "DELETE",
+          beforeSend: function(request) {
+            request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+          },
           url: `carts/${kitId}`,
           data: `authenticity_token=${that.state.railsToken}`,
           dataType: 'json',
           success: that.response
         })
     
+      }
+
+      clearCart = () => {
+        let that = this
+
+        // let kitId = this.state.kitId
+    
+        $.ajax({
+          method: "DELETE",
+          beforeSend: function(request) {
+            request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+          },
+          url: `carts/all`,
+          data: `authenticity_token=${that.state.railsToken}`,
+          dataType: 'json',
+          success: that.response
+        })
       }
 
     playSound = (number, soundFile) => {
@@ -313,12 +336,14 @@ class App extends React.Component {
         signUpObj['user[email]'] = document.getElementById("userEmailInput").value
         signUpObj['user[password]'] = document.getElementById("userPasswordInput").value
         signUpObj.commit = "Log in"
+        // signUpObj['CSRFToken'] = that.state.railsToken
         let url = "http://localhost:3000/users/sign_in"
         if (this.state.modalContent === 'signup')
             url = "http://localhost:3000/users"
         signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value
         $.ajax({
             type: "POST",
+           
             url: url,
             data: signUpObj,
             success: function (json) {
@@ -327,12 +352,13 @@ class App extends React.Component {
                         errorMessage: json.errorMessage
                     })
                 } else {
+                    console.log("signed in or signed up")
                     document.getElementById("modalButton").click()
                     that.setState({
                         railsToken: json.csrfToken,
                         userLoggedIn: true,
                         errorMessage: undefined
-                    })
+                    }, () => {console.log(that.state)})
                 }
 
             },
