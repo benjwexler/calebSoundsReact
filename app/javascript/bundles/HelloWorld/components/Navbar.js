@@ -3,6 +3,7 @@ import React from 'react';
 
 const navbar = (props) => {
 
+
     return (
         <nav className="navbar navbar-expand-md navbar-light navbarText">
 
@@ -19,16 +20,10 @@ const navbar = (props) => {
 
             <ul className="navbar-nav mr-auto">
 
-                <li className="nav-item ">
-                    <a id="latestReleasesLink" className="nav-link">Latest Releases</a>
-                </li>
-
-                <li className="nav-item ">
-                    <a id="drumMachineLink" className="nav-link">Drum Machine</a>
-                </li>
+               {props.navLinks}
 
             </ul>
-            {this.props.userLoggedInStatus}
+            {props.userLoggedInStatus}
         </div>
     </nav>
     )
