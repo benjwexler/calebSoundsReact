@@ -1,7 +1,8 @@
 import ReactOnRails from 'react-on-rails';
 import React, { Component } from 'react';
 import Modal from './Modal.js';
-import Navbar from './Navbar.jsx';
+import Navbar from './Navbar.js';
+import HomeNavLinks from './HomeNavLinks.js'
 import Section1 from './Section1.js';
 import Section2 from './Section2.jsx';
 import DrumMachineSection from './DrumMachineSection.jsx';
@@ -584,10 +585,14 @@ class App extends React.Component {
             />
         }
 
+        let navLinks = <HomeNavLinks/>
+
         return (
             <div className="App">
                 {shoppingCart}
-               <Navbar userLoggedInStatus={userLoggedInStatus} />
+               <Navbar
+               navLinks =  {navLinks}
+               userLoggedInStatus={userLoggedInStatus} />
                 <Section1 />
                 <Section2 />
                 <DrumMachineSection
