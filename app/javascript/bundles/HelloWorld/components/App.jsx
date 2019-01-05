@@ -354,10 +354,12 @@ class App extends React.Component {
                 } else {
                     console.log("signed in or signed up")
                     document.getElementById("modalButton").click()
+                    console.log(json.cart)
                     that.setState({
                         railsToken: json.csrfToken,
                         userLoggedIn: true,
-                        errorMessage: undefined
+                        errorMessage: undefined,
+                        cart: JSON.parse(json.cart)
                     }, () => {console.log(that.state)})
                 }
 
@@ -379,10 +381,12 @@ class App extends React.Component {
             data: { "_method": "delete", "authenticity_token": that.state.railsToken },
             success: function (json) {
                 console.log("trying to delete")
+                console.log(json)
 
                 that.setState({
                     userLoggedIn: false,
-                    railsToken: json.csrfToken
+                    railsToken: json.csrfToken,
+                    cart: json.cart
                 })
 
             },
