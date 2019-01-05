@@ -19,6 +19,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    p current_user
+    current_user.update_attribute(:cart, session[:temporary_cart].to_json)
   end
 
   # POST /users
