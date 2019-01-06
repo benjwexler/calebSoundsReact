@@ -8,7 +8,7 @@ import Section2 from './Section2.jsx';
 import DrumMachineSection from './DrumMachineSection.jsx';
 import Item from './Item.jsx';
 import { LinkedList, Node } from './linkedList.js';
-import StripeCheckout from 'react-stripe-checkout'
+import StripeCheckout from 'react-stripe-checkout';
 
 const convertToUsCurrency = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -65,6 +65,8 @@ class App extends React.Component {
 
 
     componentDidMount() {
+
+        console.log(process.env.FOO)
 
         $.ajax({
             method: "GET",
