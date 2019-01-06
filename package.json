@@ -9,6 +9,7 @@
     "react-dom": "^16.6.3",
     "react-on-rails": "11.2.1",
     "react-simple-soundcloud-widget": "0.0.5",
+    "react-stripe-checkout": "^2.6.3",
     "react_ujs": "^2.4.4"
   },
   "devDependencies": {

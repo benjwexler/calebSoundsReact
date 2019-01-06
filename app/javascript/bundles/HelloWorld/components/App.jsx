@@ -8,6 +8,7 @@ import Section2 from './Section2.jsx';
 import DrumMachineSection from './DrumMachineSection.jsx';
 import Item from './Item.jsx';
 import { LinkedList, Node } from './linkedList.js';
+import StripeCheckout from 'react-stripe-checkout'
 
 const convertToUsCurrency = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -47,6 +48,7 @@ class App extends React.Component {
             railsToken: ReactOnRails.authenticityToken(),
             ErrorMessage: undefined,
             cart: undefined,
+            totalPrice: undefined,
             showCart: false,
             kits: undefined,
             kitPic: undefined,
@@ -110,16 +112,52 @@ class App extends React.Component {
 
     response = (json) => {
 
+        let that = this
+
+        let totalPrice 
+        if(Object.keys(json).length !== 0) {
+
+            totalPrice = this.totalPrice(json)
+        } else {
+            totalPrice = 0
+        }
+
 
         console.log(json)
 
         this.setState({
             cart: json,
+            totalPrice: totalPrice
 
-        }, () => console.log(this.state)
+        }
         )
 
 
+
+    }
+
+    totalPrice = (cartObj) => {
+
+        let that = this
+
+        let price
+        let quantity
+
+        let cartItems = Object.keys(cartObj)
+        console.log(cartItems)
+        let totalPrice = cartItems.map((item, index) => {
+
+            price = parseInt(cartObj[item].price)
+            quantity = cartObj[item].quantity
+
+            return price * quantity
+        }).reduce((sum, price) => {
+            return sum + price;
+        });
+
+        console.log(totalPrice)
+
+        return totalPrice
 
     }
 
@@ -168,7 +206,17 @@ class App extends React.Component {
         })
 
 
+        this.setState({
+            showCart: true,
+        })
 
+
+    }
+
+    showCheckout = () => {
+        this.showOrHideCart()
+        document.querySelector(".StripeCheckout").click()
+        
     }
 
     deleteItem = (e) => {
@@ -446,8 +494,9 @@ class App extends React.Component {
 
                     <div onClick={() => this.clearCart()} className="emptyBag">Empty Bag</div>
                     <div className="checkoutOuterContainer">
-                        <div className="proceedToCheckoutContainer">
+                        <div onClick={() => this.showCheckout()}className="proceedToCheckoutContainer">
                             Proceed to Checkout: {convertToUsCurrency.format(sum)}
+                            
                         </div>
 
 
@@ -604,7 +653,9 @@ class App extends React.Component {
                     kitPic={this.state.kitPic}
                 />
                 {showModal}
-
+                <StripeCheckout
+                amount={this.state.totalPrice * 100}
+            />
             </div>
         );
     }
