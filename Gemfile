@@ -4,6 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 
 gem 'bootstrap', '~> 4.1.3'
+gem 'stripe'
+gem "figaro"
 gem 'devise'
 gem 'sprockets-es6'
 gem 'webpacker', '~> 3.5'

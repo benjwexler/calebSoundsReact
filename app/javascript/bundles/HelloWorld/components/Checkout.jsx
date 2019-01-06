@@ -21,6 +21,8 @@ class Checkout extends React.Component {
 
     componentDidMount() {
 
+       
+
         $.ajax({
             method: "GET",
             url: `/carts`,
