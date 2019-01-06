@@ -66,7 +66,7 @@ class App extends React.Component {
 
     componentDidMount() {
 
-        console.log(process.env.FOO)
+        
 
         $.ajax({
             method: "GET",
@@ -138,6 +138,8 @@ class App extends React.Component {
 
     }
 
+    
+
     totalPrice = (cartObj) => {
 
         let that = this
@@ -168,6 +170,38 @@ class App extends React.Component {
             showCart: !this.state.showCart,
         })
     }
+
+   
+
+    onToken = (token) => {
+
+        const data = {...token, amount: this.state.totalPrice * 100}
+
+        let that = this 
+
+            $.ajax({
+                method: "POST",
+                beforeSend: function(request) {
+                    request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+                  },
+                url: `/charges`,
+                data: data,
+                dataType: 'json',
+                success: this.tokenResponse
+            })
+
+           
+
+        }
+
+        tokenResponse = (json) => {
+            console.log(json)
+        }
+
+        
+
+       
+    
 
     addToCart = () => {
         let kitId
@@ -657,6 +691,8 @@ class App extends React.Component {
                 {showModal}
                 <StripeCheckout
                 amount={this.state.totalPrice * 100}
+                stripeKey={process.env.stripe_publishable_key}
+                token={this.onToken}
             />
             </div>
         );

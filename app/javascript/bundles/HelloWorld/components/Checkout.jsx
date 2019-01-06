@@ -21,6 +21,8 @@ class Checkout extends React.Component {
 
     componentDidMount() {
 
+        
+
        
 
         $.ajax({
@@ -90,6 +92,7 @@ class Checkout extends React.Component {
             <Section1 />
             <StripeCheckout
                 amount={this.state.totalPrice * 100}
+                stripeKey={process.env.stripe_publishable_key}
             />
             </div>
         )
