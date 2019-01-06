@@ -14,4 +14,4 @@ require "webpacker"
 require "webpacker/dev_server_runner"
 Webpacker::DevServerRunner.run(ARGV)
 
-FOO=hello
+
