@@ -31,8 +31,13 @@ class KitsController < ApplicationController
 
     p @sounds
 
+    p request.format
+    p "blah"
+
 
     respond_to do |format|
+
+     
       format.json {
         # render json: @kit.sounds
         render json: @sounds.map { |sound|
@@ -40,7 +45,12 @@ class KitsController < ApplicationController
         p url_for(sound.soundfile)
           sound.as_json.merge({ soundfile: url_for(sound.soundfile), filename: sound.soundfile.blob.filename })
         }
+
+       
       
+      }
+      format.html {
+
       }
     end 
 
