@@ -5,27 +5,42 @@ const navbar = (props) => {
 
 
     return (
-        <nav className="navbar navbar-expand-md navbar-light navbarText">
+        <div id="outerNavContainer">
+        <div id="nav">
+            <div id="navContainer">
+                <i className="fas fa-bars"></i>
+                <div id="navTitle">Caleb Elias G sounds</div>
+                <div className="navLink">Sound Packs</div>
+                <div className="navLink">Latest Tracks</div>
+                <div id="navStreamingIcons">
+                        <div className="navLink">
+                                <i className="fab fa-spotify"></i>
+                        </div>
+                        <div className="navLink">
+                            <i className="fab fa-soundcloud"></i>
+                        </div>
+                        <div className="navLink">
+                            <i className="fab fa-apple"></i>
+                        </div>
+                        <div className="navLink">
+                                <i className="fab fa-youtube"></i>
+                        </div>
+                    </div>
+                <div id="logInSignUpContainer">
+                    <div className="logInorSignUp">
+                        LOG IN/SIGN UP
 
-        <a id="logoText" className="navbar-brand">
-            <img id="logo" src="pics/guitarLogo.png" /> Caleb Elias G sounds
-        </a>
+                    </div>
+                    <i className="fas fa-user-lock"></i>
+                </div>
+                <i className="fas fa-shopping-cart cartWideScreen"></i>
 
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span id="hamburgerMenu" className="navbar-toggler-icon"></span>
-        </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-
-            <ul className="navbar-nav mr-auto">
-
-               {props.navLinks}
-
-            </ul>
-            {props.userLoggedInStatus}
+            </div>
+            <i className="fas fa-shopping-cart floatRight"></i>
         </div>
-    </nav>
+        
+    </div>
     )
 
 }

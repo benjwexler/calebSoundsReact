@@ -1,0 +1,247 @@
+@media only screen and (min-width: 1121px) {
+    #mobileLinksContainer {
+        display: flex;
+        opacity: 0;
+        margin-top: -475px;
+        
+    }
+}
+
+@media only screen and (max-width: 1120px) {
+    .navLink, #logInSignUpContainer, .cartWideScreen  {
+      display: none;
+    }
+
+   #whatsInside {
+        margin-left: 40px;
+    }
+
+    .fa-bars {
+        display: initial;
+        margin-left: -20px;
+        
+    }
+
+    #mobileLinksContainer {
+        display: flex;
+        opacity: 1;
+        /* margin-top: -475px; */
+        
+    }
+
+    .floatRight {
+        display: initial;
+    }
+
+    #navContaineer {
+    max-width: initial;
+    }
+
+    /* .fa-shopping-cart {
+        position: absolute;
+    } */
+
+   
+  }
+
+  @media only screen and (max-width: 1090px) {
+
+    .fa-bars {
+
+        margin-left: 25px;
+        margin-right: 20px;
+        
+    }
+
+    .floatRight{
+        margin-right: 20px;
+        /* margin-right: 110px; */
+        /* text-align: end; */
+    }
+
+    .track {
+        width: 45%;
+        /* height: 160px; */
+    }
+
+    #tracksContainer {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+  }
+
+  
+
+  @media only screen and (max-width: 860px) {
+
+    #bigText {
+        font-size: 60px;
+    }
+
+    #bigTextContainer {
+        padding: 0;
+        /* padding-left: 40px; */
+        width: 400px;
+        margin-left: 40px;
+        flex-wrap: wrap;
+        /* margin-right: 40px; */
+        flex-direction: row;
+        /* margin-top: 100px; */
+        
+     }
+
+     .track {
+        height: 160px;
+     }
+
+     .trackName {
+         font-size: 16px;
+     }
+
+     .streamingLogo {
+         font-size: 20px !important;
+     }
+     
+
+  }
+
+  @media only screen and (max-width: 600px) {
+
+    #bigText {
+        font-size: 50px;
+        margin-bottom: -70px;
+    }
+
+    .streamingLogo {
+        font-size: 16px !important;
+    }
+
+    #section1 {
+        height: 80vh;
+        min-height: initial;
+    }
+
+    #bigTextContainer {
+        padding: 0;
+        /* padding-left: 40px; */
+        width: 80%;
+        margin-left: 40px;
+        flex-wrap: wrap;
+        /* margin-right: 40px; */
+        flex-direction: row;
+        margin-top: 110px;
+        
+        
+     }
+
+     .wrapper {
+         margin-top: 75px;
+     }
+
+     .track {
+        width: 70%;
+        min-width: 300px;
+        
+    }
+
+    .lastTwoTracks {
+        display: none;
+    }
+    
+
+  }
+
+  @media only screen and (max-width: 414px) {
+    /* .track {
+        width: 90%;
+        
+    } */
+
+    #whatsInside {
+        margin-left: 20px;
+    }
+
+    #addToCart {
+        margin-right: 25px;
+    }
+  }
+
+  @media only screen and (max-width: 375px) {
+    .floatRight {
+        margin-right: 10px;
+        margin-top: -21px;
+        font-size: 18px;
+    }
+
+    #bigText {
+        font-size: 40px;
+        margin-bottom: 0px;
+    }
+
+    #bigTextContainer {
+        margin-top: 100px;
+        width: 70%;
+    }
+
+    #previewButton {
+        width: 130px;
+        height: 37px;
+        padding-top: 13px;
+        margin-top: -30px;
+    }
+
+    .smallPhoneHide {
+        display: none;
+    }
+
+   
+
+  }
+
+  @media only screen and (max-width: 320px) {
+
+  
+
+    #bigTextContainer {
+
+        width: 80%;
+    }
+
+}
+  @media only screen and (max-width: 700px) {
+
+
+    .mobileHide {
+        display: none;
+    }
+
+    #whatsInside {
+        margin-left: 15px;
+    }
+
+    #addToCart {
+        margin-right: 15px;
+    }
+
+    
+
+   
+
+   
+
+   
+  }
+
+  @media only screen and (max-width: 1080px) {
+
+    /* #latestTracksContainer {
+        margin-left: 20px;
+        margin-right: 20px;
+
+    } */
+
+   
+
+   
+  }
