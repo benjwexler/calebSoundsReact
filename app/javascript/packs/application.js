@@ -17,7 +17,7 @@ ReactRailsUJS.useContext(componentRequireContext)
 import ReactOnRails from 'react-on-rails';
 
 import App from '../bundles/HelloWorld/components/App.jsx';
-import Section2 from '../bundles/HelloWorld/components/Section2.jsx';
+// import Section2 from '../bundles/HelloWorld/components/Section2.jsx';
 import DrumMachineSection from '../bundles/HelloWorld/components/DrumMachineSection.jsx';
 import Checkout from '../bundles/HelloWorld/components/Checkout.jsx';
 // This is how react_on_rails can see the HelloWorld in the browser.
@@ -29,9 +29,9 @@ ReactOnRails.register({
 
 
 
-  ReactOnRails.register({
-    Section2
-  });
+  // ReactOnRails.register({
+  //   Section2
+  // });
 
   ReactOnRails.register({
     DrumMachineSection
