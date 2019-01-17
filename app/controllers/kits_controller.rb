@@ -51,6 +51,8 @@ class KitsController < ApplicationController
       }
       format.html {
 
+      p "test"
+
       }
     end 
 
