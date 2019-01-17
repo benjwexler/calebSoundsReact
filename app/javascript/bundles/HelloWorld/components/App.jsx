@@ -56,7 +56,19 @@ class App extends React.Component {
 
     render() {
 
-        let samples = <Sample/>
+        let samples = []
+        let oddRow = ""
+
+        for(let i=0; i<6; i++) {
+            if(i%2===1) {
+                oddRow = "oddRow"
+            } else {
+                oddRow = ""
+            }
+            samples.push(<Sample oddRow = {oddRow}/>)
+        }
+
+        samples = <React.Fragment>{samples}</React.Fragment>;
 
         
         return (

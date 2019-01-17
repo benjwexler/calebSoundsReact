@@ -4,7 +4,7 @@ import React from 'react';
 const sample = (props) => {
 
     return (
-        <tr>
+        <tr className={props.oddRow}>
             <td className="setWidth">
                 <div className="circle">
                     <i className="fas fa-play"></i>
