@@ -20,7 +20,7 @@ const section2 = (props) => {
                         <th className="mobileHide">Energy</th>
                     </tr>
 
-                    {this.props.samples}
+                    {props.samples}
                 </table>
 
                 <div id="loadMoreSounds">Load More Sounds</div>

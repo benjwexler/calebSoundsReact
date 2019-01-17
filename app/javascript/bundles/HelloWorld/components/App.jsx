@@ -6,6 +6,7 @@ import './test.css'
 import HomeNavLinks from './HomeNavLinks.js'
 import Section1 from './Section1.js';
 import Section2 from './Section2.js';
+import Sample from './Sample.js';
 import DrumMachineSection from './DrumMachineSection.jsx';
 import Item from './Item.jsx';
 import { LinkedList, Node } from './linkedList.js';
@@ -54,6 +55,10 @@ class App extends React.Component {
 
 
     render() {
+
+        let samples = <Sample/>
+
+        
         return (
             <div>
                 <Navbar/>
