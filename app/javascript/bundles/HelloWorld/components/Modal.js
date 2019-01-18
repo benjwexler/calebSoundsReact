@@ -4,67 +4,54 @@ import React from 'react';
 const modal = (props) => {
 
     return (
-
-        <div className="modalContainer">
+      <div id="modalContainer">
         
-        <button id="modalButton" type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
+      <form class="new_user" id="new_user" action="/users" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"/><input type="hidden" name="authenticity_token" value="nmsCVI3I51ZEhTP7NXDHxwtyKA+a3GeCXXvX09Y5Q6jwGPRWKA/7/FWwLWW7Xux5tWzxbBi2iS9uAgOZmuEjpg=="/>
+          <div class="wrapper">
+                  <div onClick={props.exitModal} id="exitModal">
+                          <i id="exitModalIcon" class="far fa-times-circle"></i>
+                  </div>
+              <h1 id="formTitle">ACCOUNT</h1>
+              <div id="modalInstructions">Please Login or Sign Up</div>
+              <div id="modalBtnsContainer">
+                  <div class="inactiveBtn">LOGIN</div>
+                  <div class="switchFormBtn">SIGN UP</div>
+                  
+              </div>
+          
+                <div class="field" >
+                  <div class="modalIconContainer">
+                          <input autofocus="autofocus" autocomplete="email" class="form" placeholder="Email" type="email"  name="user[email]" />
+                          <i class="far fa-envelope modalIcon"></i>
+                      </div>
+                      
+                </div>
+          <br/>
+  
+              <div class="field">
+                  <div class="pwdMinText">(6 character min)</div>
+                  <div class="modalIconContainer">
+                      <input autocomplete="new-password" class="form" placeholder="Password" type="password" name="user[password]" id="user_password"/>
+                      <i class="fas fa-unlock-alt modalIcon"></i>
+                  </div>
+              </div>
+          <br/>  
+              <div class="field">
+                  <div class="modalIconContainer">
+                   <input autocomplete="new-password" class="form" placeholder="Confirm Password" type="password" name="user[password]" id="user_password"/>
+                      <i class="fas fa-unlock-alt modalIcon"></i>
+                   </div>
+              </div>
 
-
-<div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog" role="document">
-    <div className="modal-content">
-      <div className="modal-header">
-        <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <div className="modal-body">
-      <h2>{props.modalTitle}</h2>
-
-        <form onSubmit={props.submitForm} id={props.formId} action={props.formAction} accept-charset="UTF-8" method="post"><input name="utf8"
-            type="hidden" value="✓"/>
-            <input type="hidden" name="authenticity_token" value={props.railsToken}/>
-      
-            <div className="field">
-                <label for="user_email">Email</label><br/>
-                <input autofocus="autofocus" autocomplete="email" type="email" name="user[email]" id="userEmailInput"/>
-            </div>
-
-            <div className="field">
-                <label for="user_password">Password</label><br/>
-                <input autocomplete="current-password" type="password" name="user[password]" id="userPasswordInput"/>
-            </div>
-
-            <div id={props.showOrHidePassworConfirmation} className="field">
-                 <label for="user_password_confirmation">Password confirmation</label><br/>
-                <input autocomplete="new-password" type="password" name="user[password_confirmation]" id="userPasswordConfirmationInput"/>
-            </div>
-
-            <div class="actions">
-                <input type="submit" name="commit" value={props.modalTitle}/>
-            </div>
-       </form>
-
-       <div id={props.showOrHideErrorMessage}> {props.errorMessage}</div>
-            
-
-
-
-
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" className="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-        
+          <br/>
+              <div class="actions">
+                  <input type="submit" name="commit" value="Sign up" class="btn" data-disable-with="Sign up"/>
+              </div>
         </div>
+      </form>
+
+  </div>
+
         )
     };
     
