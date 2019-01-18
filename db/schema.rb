@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_04_231311) do
+ActiveRecord::Schema.define(version: 2019_01_18_202409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,10 @@ ActiveRecord::Schema.define(version: 2019_01_04_231311) do
     t.date "release_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "spotify_url"
+    t.string "soundcloud_url"
+    t.string "apple_music_url"
+    t.string "youtube_url"
   end
 
   create_table "users", force: :cascade do |t|
