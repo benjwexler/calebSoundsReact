@@ -8,7 +8,7 @@ const navbar = (props) => {
         <div id="outerNavContainer">
         <div id="nav">
             <div id="navContainer">
-                <i className="fas fa-bars"></i>
+                <i onClick={props.toggleMobileNav} className="fas fa-bars"></i>
                 <div id="navTitle">Caleb Elias G sounds</div>
                 <div className="navLink">Sound Packs</div>
                 <div className="navLink">Latest Tracks</div>
@@ -26,18 +26,18 @@ const navbar = (props) => {
                                 <i className="fab fa-youtube"></i>
                         </div>
                     </div>
-                <div id="logInSignUpContainer">
+                <div onClick={props.openModal} id="logInSignUpContainer">
                     <div className="logInorSignUp">
                         LOG IN/SIGN UP
 
                     </div>
                     <i className="fas fa-user-lock"></i>
                 </div>
-                <i className="fas fa-shopping-cart cartWideScreen"></i>
+                <i onClick={props.toggleCart}  className="fas fa-shopping-cart cartWideScreen"></i>
 
 
             </div>
-            <i className="fas fa-shopping-cart floatRight"></i>
+            <i onClick={props.toggleCart} className="fas fa-shopping-cart floatRight"></i>
         </div>
         
     </div>
