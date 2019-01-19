@@ -3,6 +3,8 @@ import React from 'react';
 
 const track = (props) => {
 
+   
+
     let icon = <i onClick={props.playPauseTrack}  className={"fas fa-play trackPlayIcon" + " " + props.currentHoverPlayIcon}></i>
 
     if(props.currentTrack && props.currentlyPlaying) {
@@ -52,6 +54,8 @@ const track = (props) => {
                     </div>
 
                 </div>
+
+                 <iframe  className="soundclouds" id={"sc-widget" + "index"} src={"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" + props.soundcloud_id + "&visual=true"}></iframe>
             </div>
     )
 };

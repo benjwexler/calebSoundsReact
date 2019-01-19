@@ -257,6 +257,9 @@ class App extends React.Component {
 
             for(let i=0; i<that.state.tracks.length; i++) {
 
+                console.log(that.state.tracks[i])
+                console.log("blah blah")
+
                 let spotifyNoStreaming
                 let soundcloudNoStreaming
                 let appleMusicNoStreaming
@@ -314,6 +317,7 @@ class App extends React.Component {
                 currentHoverPlayIcon = {currentHoverPlayIcon}
                 hideCircle = {() => this.hideCircle()}
                 playPauseTrack = {this.setCurrentTrack}
+                soundcloud_id = {that.state.tracks[i].soundcloud_id}
 
 
                 />
