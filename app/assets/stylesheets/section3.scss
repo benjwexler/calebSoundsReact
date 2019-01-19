@@ -241,6 +241,24 @@
 
 }
 
+.trackPauseIcon {
+
+    position: absolute;
+  left: 51%;
+  top: 50%;
+  font-size: 30px;
+  cursor: pointer;
+  color: white !important;
+  opacity: 0;
+  
+
+  transform: translate(-50%, -50%);
+  transition: opacity 400ms;
+//   color: black;
+
+
+}
+
 .showPlayIcon {
     opacity: 1 !important;
 }

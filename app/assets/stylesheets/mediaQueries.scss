@@ -18,7 +18,9 @@
 
     .fa-bars {
         display: initial;
-        margin-left: -20px;
+        // margin-left: -20px;
+        margin-left: 0px;
+        margin-right: 20px;
         
     }
 
@@ -250,6 +252,10 @@
     .trackCircle {
         opacity: 1;
 
+    }
+
+    .trackPauseIcon {
+        opacity: 1
     }
 
    
