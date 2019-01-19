@@ -90,6 +90,33 @@ class App extends React.Component {
           });
      }
 
+     componentDidUpdate() {
+     console.log("updated!")
+        let soundcloudWidget
+        let that = this 
+        if(this.state.counter === 7) {
+            console.log(document.getElementById("playAndPauseIcon1"))
+
+            let tracks = document.querySelectorAll('.playAndPauseIcon');
+            let soundclouds = document.querySelectorAll('.soundclouds')
+
+            console.log(soundclouds)
+
+            for(let i=0; i<soundclouds.length; i++) {
+                console.log(soundclouds[i].id)
+                soundcloudWidget  = soundclouds[i]
+  window[`widget${i}`] = SC.Widget(soundcloudWidget);
+  console.log(soundcloudWidget)
+
+  window[`widget${i}`].bind(SC.Widget.Events.READY, function () {
+
+
+
+});
+
+            }
+        }}
+
      showCircle = (e) => {
          console.log("showCircle")
         //  console.log(e.currentTarget.childNodes)
@@ -125,12 +152,24 @@ class App extends React.Component {
          this.setState({ 
             currentTrack: currentTrack,
             currentlyPlaying: currentlyPlaying
-        }, this.playPauseTrack)
+        }, this.playPauseTrack(currentTrack))
      }
 
-     playPauseTrack = () => {
-         console.log(this.state.tracksObj[this.state.currentTrack])
-         console.log(this.state.tracksObj[this.state.currentTrack].soundcloud_id)
+     playPauseTrack = (currentTrack) => {
+        //  console.log(this.state.tracksObj[this.state.currentTrack])
+        //  console.log(this.state.tracksObj[this.state.currentTrack].soundcloud_id)
+
+         if(this.state.currentTrack === currentTrack) {
+            window[`widget${currentTrack}`].toggle()
+            console.log("pausing")
+            // currentTrack = undefined 
+            // isTrackPlaying = !this.state.isTrackPlaying
+        } else {
+            console.log("playing")
+            window[`widget${currentTrack}`].seekTo(0)
+            window[`widget${currentTrack}`].play()
+            // isTrackPlaying = true
+        }
      }
 
   
@@ -230,6 +269,9 @@ class App extends React.Component {
 
             for(let i=0; i<that.state.tracks.length; i++) {
 
+                console.log(that.state.tracks[i])
+                console.log("blah blah")
+
                 let spotifyNoStreaming
                 let soundcloudNoStreaming
                 let appleMusicNoStreaming
@@ -287,6 +329,7 @@ class App extends React.Component {
                 currentHoverPlayIcon = {currentHoverPlayIcon}
                 hideCircle = {() => this.hideCircle()}
                 playPauseTrack = {this.setCurrentTrack}
+                soundcloud_id = {that.state.tracks[i].soundcloud_id}
 
 
                 />
