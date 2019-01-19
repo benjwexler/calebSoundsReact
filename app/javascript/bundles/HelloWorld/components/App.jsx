@@ -212,9 +212,11 @@ class App extends React.Component {
                 let youtubeNoStreaming
 
                 let currentHoverTrack
+                let currentHoverPlayIcon
 
                 if(i === that.state.currentHoverTrack) {
                     currentHoverTrack = "showCircle"
+                    currentHoverPlayIcon =  "showPlayIcon"
                 }
 
                 if (!that.state.tracks[i].spotify_url) {
@@ -249,6 +251,7 @@ class App extends React.Component {
                 showCircle = {this.showCircle}
                 trackNumber = {i}
                 currentHoverTrack = {currentHoverTrack}
+                currentHoverPlayIcon = {currentHoverPlayIcon}
                 hideCircle = {() => this.hideCircle()}
 
                 />

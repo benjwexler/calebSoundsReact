@@ -125,20 +125,7 @@
     /* margin-right: 50px !important; */
 }
 
-.trackPlayIcon {
-    position: absolute;
-  left: 50%;
-  top: 50%;
-  font-size: 30px;
-  opacity: 0;
-  cursor: pointer;
-  
 
-  transform: translate(-50%, -50%);
-  color: white !important;
-  /* color: rgba(45, 51, 221, 0.338) !important */
-  
-}
 
 .trackImage {
     width: 100%;
@@ -220,6 +207,20 @@
     
 }
 
+.trackPlayIcon {
+    position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 30px;
+//   opacity: 0;
+  cursor: pointer;
+  
+
+  transform: translate(-50%, -50%);
+  color: white !important;
+  /* color: rgba(45, 51, 221, 0.338) !important */
+  
+}
 
 
 .trackPlayIcon {
@@ -227,16 +228,25 @@
     position: absolute;
   left: 53%;
   top: 49%;
+  font-size: 30px;
+  cursor: pointer;
+  color: white !important;
+  opacity: 0;
   
 
   transform: translate(-50%, -50%);
-  color: black;
+  transition: opacity 400ms;
+//   color: black;
 
 
 }
 
+.showPlayIcon {
+    opacity: 1 !important;
+}
+
 .noStreamingLink {
-    opacity: .1;
+    opacity: .3;
 }
 
 
