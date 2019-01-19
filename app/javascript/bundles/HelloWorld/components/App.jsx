@@ -90,8 +90,22 @@ class App extends React.Component {
 
      showCircle = (e) => {
          console.log("showCircle")
-         console.log(e.currentTarget.childNodes)
+        //  console.log(e.currentTarget.childNodes)
+        //  console.log(e.currentTarget.dataset.trackNumber)
 
+         let currentHoverTrack = parseInt(e.currentTarget.dataset.trackNumber)
+
+         console.log(currentHoverTrack)
+         this.setState({ 
+            currentHoverTrack: currentHoverTrack
+        })
+
+     }
+
+     hideCircle = () => {
+        this.setState({ 
+            currentHoverTrack: undefined
+        })
      }
 
   
@@ -197,6 +211,12 @@ class App extends React.Component {
                 let appleMusicNoStreaming
                 let youtubeNoStreaming
 
+                let currentHoverTrack
+
+                if(i === that.state.currentHoverTrack) {
+                    currentHoverTrack = "showCircle"
+                }
+
                 if (!that.state.tracks[i].spotify_url) {
                     spotifyNoStreaming = "noStreamingLink"
                 }
@@ -228,6 +248,8 @@ class App extends React.Component {
                 image = {that.state.tracks[i].image}
                 showCircle = {this.showCircle}
                 trackNumber = {i}
+                currentHoverTrack = {currentHoverTrack}
+                hideCircle = {() => this.hideCircle()}
 
                 />
             )
