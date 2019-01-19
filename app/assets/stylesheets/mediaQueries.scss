@@ -165,6 +165,8 @@
     #addToCart {
         margin-right: 25px;
     }
+
+    
   }
 
   @media only screen and (max-width: 375px) {
@@ -233,13 +235,22 @@
    
   }
 
-  @media only screen and (max-width: 1080px) {
+  @media only screen and (max-width: 1024px) {
 
     /* #latestTracksContainer {
         margin-left: 20px;
         margin-right: 20px;
 
     } */
+
+    .trackPlayIcon {
+        opacity: 1;
+    }
+
+    .trackCircle {
+        opacity: 1;
+
+    }
 
    
 

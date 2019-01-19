@@ -8,7 +8,7 @@ const track = (props) => {
                 <div data-track-number={props.trackNumber} onMouseOver={props.showCircle} onMouseOut={props.hideCircle} className="trackImageContainer">
                     <img  className="trackImage" src={props.image}/>
                     <div className={"trackCircle" + " " + props.currentHoverTrack}></div>
-                    <i className="fas fa-play trackPlayIcon"></i>
+                    <i className={"fas fa-play trackPlayIcon" + " " + props.currentHoverPlayIcon}></i>
                 </div>
                 <div className="trackInfoContainer">
                     <div className="trackNameContainer">
