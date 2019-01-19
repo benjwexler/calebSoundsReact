@@ -90,6 +90,33 @@ class App extends React.Component {
           });
      }
 
+     componentDidUpdate() {
+     console.log("updated!")
+        let soundcloudWidget
+        let that = this 
+        if(this.state.counter === 7) {
+            console.log(document.getElementById("playAndPauseIcon1"))
+
+            let tracks = document.querySelectorAll('.playAndPauseIcon');
+            let soundclouds = document.querySelectorAll('.soundclouds')
+
+            console.log(soundclouds)
+
+            for(let i=0; i<soundclouds.length; i++) {
+                console.log(soundclouds[i].id)
+                soundcloudWidget  = soundclouds[i]
+  window[`widget${i}`] = SC.Widget(soundcloudWidget);
+  console.log(soundcloudWidget)
+
+  window[`widget${i}`].bind(SC.Widget.Events.READY, function () {
+
+
+
+});
+
+            }
+        }}
+
      showCircle = (e) => {
          console.log("showCircle")
         //  console.log(e.currentTarget.childNodes)
