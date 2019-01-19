@@ -152,12 +152,24 @@ class App extends React.Component {
          this.setState({ 
             currentTrack: currentTrack,
             currentlyPlaying: currentlyPlaying
-        }, this.playPauseTrack)
+        }, this.playPauseTrack(currentTrack))
      }
 
-     playPauseTrack = () => {
-         console.log(this.state.tracksObj[this.state.currentTrack])
-         console.log(this.state.tracksObj[this.state.currentTrack].soundcloud_id)
+     playPauseTrack = (currentTrack) => {
+        //  console.log(this.state.tracksObj[this.state.currentTrack])
+        //  console.log(this.state.tracksObj[this.state.currentTrack].soundcloud_id)
+
+         if(this.state.currentTrack === currentTrack) {
+            window[`widget${currentTrack}`].toggle()
+            console.log("pausing")
+            // currentTrack = undefined 
+            // isTrackPlaying = !this.state.isTrackPlaying
+        } else {
+            console.log("playing")
+            window[`widget${currentTrack}`].seekTo(0)
+            window[`widget${currentTrack}`].play()
+            // isTrackPlaying = true
+        }
      }
 
   
