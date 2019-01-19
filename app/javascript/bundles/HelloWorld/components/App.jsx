@@ -51,7 +51,9 @@ class App extends React.Component {
             kitSounds: undefined,
             pads: undefined,
             context: undefined,
-            gainNode: undefined
+            gainNode: undefined,
+            tracksObj: undefined,
+            currentHoverTrack: undefined,
         }
         
 
@@ -67,15 +69,29 @@ class App extends React.Component {
             url: "http://localhost:3000/tracks?limit=4",
             success: function(json){
                 console.log(json)
-                that.setState({ 
-                    tracks: json,
+                let newTracksObj = {}
+                json.forEach(function(track, index){
+                    console.log(json[index])
+                    newTracksObj[index] = json[index]
                 })
+                that.setState({
+                 tracks: json,
+                 tracksObj: newTracksObj,
+                 counter: 7
+                 })
+              
                 
             } ,
             error: function(xhr) { 
             }, 
             dataType: "json"
           });
+     }
+
+     showCircle = (e) => {
+         console.log("showCircle")
+         console.log(e.currentTarget.childNodes)
+
      }
 
   
@@ -210,7 +226,8 @@ class App extends React.Component {
                 youtubeLink = {that.state.tracks[i].youtube_url}
                 youtubeNoStreaming = {youtubeNoStreaming}
                 image = {that.state.tracks[i].image}
-                counter = {i}
+                showCircle = {this.showCircle}
+                trackNumber = {i}
 
                 />
             )

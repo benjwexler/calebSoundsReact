@@ -5,8 +5,8 @@ const track = (props) => {
 
     return (
         <div className="track">
-                <div className="trackImageContainer">
-                    <img className="trackImage" src={props.image}/>
+                <div onMouseOver={props.showCircle} className="trackImageContainer">
+                    <img  className="trackImage" src={props.image}/>
                     <div className="trackCircle"></div>
                     <i className="fas fa-play trackPlayIcon"></i>
                 </div>
