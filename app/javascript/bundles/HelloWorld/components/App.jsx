@@ -42,6 +42,7 @@ class App extends React.Component {
             cartHeightZero: true,
             showModal: false,
             showMobileNav: false,
+            tracks: undefined,
             kits: undefined,
             kitPic: undefined,
             kitName: undefined,
@@ -59,7 +60,27 @@ class App extends React.Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.handleResize)
+        let that = this
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:3000/tracks?limit=4",
+            success: function(json){
+                console.log(json)
+                that.setState({ 
+                    tracks: json,
+                })
+                
+            } ,
+            error: function(xhr) { 
+            }, 
+            dataType: "json"
+          });
      }
+
+  
+       
+
 
      handleResize = () => {
          console.log(window.innerWidth)
@@ -141,13 +162,68 @@ class App extends React.Component {
 
         samples = <React.Fragment>{samples}</React.Fragment>;
 
+        let latestTracks
         let tracks = []
 
-        for(let i=0; i<6; i++) {
-            tracks.push(<Track/>)
+        let that = this 
+
+       
+
+        
+
+
+        if(this.state.tracks) {
+
+            for(let i=0; i<that.state.tracks.length; i++) {
+
+                let spotifyNoStreaming
+                let soundcloudNoStreaming
+                let appleMusicNoStreaming
+                let youtubeNoStreaming
+
+                if (!that.state.tracks[i].spotify_url) {
+                    spotifyNoStreaming = "noStreamingLink"
+                }
+
+                if (!that.state.tracks[i].soundcloud_url) {
+                    soundcloudNoStreaming = "noStreamingLink"
+                }
+
+                if (!that.state.tracks[i].apple_music_url) {
+                    appleMusicNoStreaming = "noStreamingLink"
+                }
+
+                if (!that.state.tracks[i].youtube_url) {
+                    console.log(that.state.tracks[i].youtube_url)
+                    youtubeNoStreaming = "noStreamingLink"
+                }
+
+                tracks.push(
+                <Track
+                name = {that.state.tracks[i].name}
+                spotifyLink = {that.state.tracks[i].spotify_url}
+                spotifyNoStreaming = {spotifyNoStreaming}
+                soundcloudLink = {that.state.tracks[i].soundcloud_url}
+                soundcloudNoStreaming = {soundcloudNoStreaming}
+                appleMusicNoStreaming = {appleMusicNoStreaming}
+                appleMusicLink = {that.state.tracks[i].apple_music_url}
+                youtubeLink = {that.state.tracks[i].youtube_url}
+                youtubeNoStreaming = {youtubeNoStreaming}
+                image = {that.state.tracks[i].image}
+                counter = {i}
+
+                />
+            )
+            }
+
+       
+
+            tracks = <React.Fragment>{tracks}</React.Fragment>;
+            latestTracks = <Section3 tracks = {tracks} />
         }
 
-        tracks = <React.Fragment>{tracks}</React.Fragment>;
+        
+        
 
         let items = []
         let totalPrice = 0
@@ -199,6 +275,8 @@ class App extends React.Component {
             mobileNavToggle ="showMobileNav"
         }
 
+        
+
 
         
         return (
@@ -217,9 +295,7 @@ class App extends React.Component {
                 <Section2
                     samples = {samples}
                 />
-                <Section3
-                    tracks = {tracks}
-                />
+                {latestTracks}
                 <Footer/>
             </div>
         )
