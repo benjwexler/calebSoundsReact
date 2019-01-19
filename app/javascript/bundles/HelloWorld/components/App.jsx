@@ -51,7 +51,9 @@ class App extends React.Component {
             kitSounds: undefined,
             pads: undefined,
             context: undefined,
-            gainNode: undefined
+            gainNode: undefined,
+            tracksObj: undefined,
+            currentHoverTrack: undefined,
         }
         
 
@@ -67,15 +69,43 @@ class App extends React.Component {
             url: "http://localhost:3000/tracks?limit=4",
             success: function(json){
                 console.log(json)
-                that.setState({ 
-                    tracks: json,
+                let newTracksObj = {}
+                json.forEach(function(track, index){
+                    console.log(json[index])
+                    newTracksObj[index] = json[index]
                 })
+                that.setState({
+                 tracks: json,
+                 tracksObj: newTracksObj,
+                 counter: 7
+                 })
+              
                 
             } ,
             error: function(xhr) { 
             }, 
             dataType: "json"
           });
+     }
+
+     showCircle = (e) => {
+         console.log("showCircle")
+        //  console.log(e.currentTarget.childNodes)
+        //  console.log(e.currentTarget.dataset.trackNumber)
+
+         let currentHoverTrack = parseInt(e.currentTarget.dataset.trackNumber)
+
+         console.log(currentHoverTrack)
+         this.setState({ 
+            currentHoverTrack: currentHoverTrack
+        })
+
+     }
+
+     hideCircle = () => {
+        this.setState({ 
+            currentHoverTrack: undefined
+        })
      }
 
   
@@ -181,6 +211,12 @@ class App extends React.Component {
                 let appleMusicNoStreaming
                 let youtubeNoStreaming
 
+                let currentHoverTrack
+
+                if(i === that.state.currentHoverTrack) {
+                    currentHoverTrack = "showCircle"
+                }
+
                 if (!that.state.tracks[i].spotify_url) {
                     spotifyNoStreaming = "noStreamingLink"
                 }
@@ -210,7 +246,10 @@ class App extends React.Component {
                 youtubeLink = {that.state.tracks[i].youtube_url}
                 youtubeNoStreaming = {youtubeNoStreaming}
                 image = {that.state.tracks[i].image}
-                counter = {i}
+                showCircle = {this.showCircle}
+                trackNumber = {i}
+                currentHoverTrack = {currentHoverTrack}
+                hideCircle = {() => this.hideCircle()}
 
                 />
             )
