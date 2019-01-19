@@ -54,6 +54,8 @@ class App extends React.Component {
             gainNode: undefined,
             tracksObj: undefined,
             currentHoverTrack: undefined,
+            currentTrack: undefined,
+            currentlyPlaying: false,
         }
         
 
@@ -108,12 +110,34 @@ class App extends React.Component {
         })
      }
 
+     setCurrentTrack = (e) => {
+         console.log("Playing or paused")
+        //  console.log(e.currentTarget.parentNode.dataset.trackNumber)
+
+         let currentTrack = parseInt(e.currentTarget.parentNode.dataset.trackNumber)
+         let currentlyPlaying = true 
+
+         if(this.state.currentlyPlaying && (this.state.currentTrack === currentTrack)) {
+            currentlyPlaying = false 
+         }
+
+         console.log(currentTrack)
+         this.setState({ 
+            currentTrack: currentTrack,
+            currentlyPlaying: currentlyPlaying
+        }, this.playPauseTrack)
+     }
+
+     playPauseTrack = () => {
+         console.log(this.state.tracksObj[this.state.currentTrack])
+         console.log(this.state.tracksObj[this.state.currentTrack].soundcloud_id)
+     }
+
   
        
 
 
      handleResize = () => {
-         console.log(window.innerWidth)
 
          if(window.innerWidth> 1120) [
             this.setState({ 
@@ -213,10 +237,15 @@ class App extends React.Component {
 
                 let currentHoverTrack
                 let currentHoverPlayIcon
+                let currentTrack = false 
 
                 if(i === that.state.currentHoverTrack) {
                     currentHoverTrack = "showCircle"
                     currentHoverPlayIcon =  "showPlayIcon"
+                }
+
+                if(i === that.state.currentTrack) {
+                    currentTrack = true 
                 }
 
                 if (!that.state.tracks[i].spotify_url) {
@@ -236,6 +265,8 @@ class App extends React.Component {
                     youtubeNoStreaming = "noStreamingLink"
                 }
 
+              
+
                 tracks.push(
                 <Track
                 name = {that.state.tracks[i].name}
@@ -250,9 +281,13 @@ class App extends React.Component {
                 image = {that.state.tracks[i].image}
                 showCircle = {this.showCircle}
                 trackNumber = {i}
+                currentTrack = {currentTrack}
+                currentlyPlaying = {this.state.currentlyPlaying}
                 currentHoverTrack = {currentHoverTrack}
                 currentHoverPlayIcon = {currentHoverPlayIcon}
                 hideCircle = {() => this.hideCircle()}
+                playPauseTrack = {this.setCurrentTrack}
+
 
                 />
             )

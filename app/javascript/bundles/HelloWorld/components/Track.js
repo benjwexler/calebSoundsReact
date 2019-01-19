@@ -3,12 +3,24 @@ import React from 'react';
 
 const track = (props) => {
 
+    let icon = <i onClick={props.playPauseTrack}  className={"fas fa-play trackPlayIcon" + " " + props.currentHoverPlayIcon}></i>
+
+    if(props.currentTrack && props.currentlyPlaying) {
+        icon = <i onClick={props.playPauseTrack}  className={"fas fa-pause trackPauseIcon" + " " + props.currentHoverPlayIcon}></i>
+    }
+
+    
+
+    
+
+    
+
     return (
         <div className="track">
                 <div data-track-number={props.trackNumber} onMouseOver={props.showCircle} onMouseOut={props.hideCircle} className="trackImageContainer">
                     <img  className="trackImage" src={props.image}/>
-                    <div className={"trackCircle" + " " + props.currentHoverTrack}></div>
-                    <i className={"fas fa-play trackPlayIcon" + " " + props.currentHoverPlayIcon}></i>
+                    <div onClick={props.playPauseTrack} className={"trackCircle" + " " + props.currentHoverTrack}></div>
+                    {icon}
                 </div>
                 <div className="trackInfoContainer">
                     <div className="trackNameContainer">
