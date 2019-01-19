@@ -6,26 +6,35 @@ const track = (props) => {
     return (
         <div className="track">
                 <div className="trackImageContainer">
-                    <img className="trackImage" src="pics/coolItCoverArt.jpg"/>
+                    <img className="trackImage" src={props.image}/>
                     <div className="trackCircle"></div>
                     <i className="fas fa-play trackPlayIcon"></i>
                 </div>
                 <div className="trackInfoContainer">
                     <div className="trackNameContainer">
-                        <div className="trackName">Cool it Pt. 2 </div>
+                        <div className="trackName">{props.name} </div>
                     </div>
                     <div className="streamContainer">
                         <div className="logoContainer">
-                            <i className="fab streamingLogo  fa-spotify"></i>
+                            <a class={props.spotifyNoStreaming} href={props.spotifyLink}>
+                                <i className="fab streamingLogo  fa-spotify"></i>
+                            </a>
                         </div>
                         <div className="logoContainer">
-                            <i className="fab streamingLogo  fa-soundcloud"></i>
+                            <a class={props.soundcloudNoStreaming} href={props.soundcloudLink}>
+                                <i className="fab streamingLogo  fa-soundcloud"></i>
+                            </a>
                         </div>
                         <div className="logoContainer">
-                            <i className="fab streamingLogo  fa-apple"></i>
+                            <a href={props.appleMusicLink}>
+                                <i className="fab streamingLogo  fa-apple"></i>
+                            </a>
                         </div>
+                        
                         <div className="logoContainer">
-                            <i className="fab streamingLogo  fa-youtube"></i>
+                            <a class={props.youtubeNoStreaming} href={props.youtubeLink}>
+                                <i className="fab streamingLogo  fa-youtube"></i>
+                            </a>
                         </div>
 
                     </div>
