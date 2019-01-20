@@ -31,6 +31,22 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
+        this.compare = (a, b) => {
+            const timestampA = this.state.cart[a].timestamp
+
+            const timestampB = this.state.cart[b].timestamp
+
+            let comparison = 0;
+
+            if (timestampA > timestampB) {
+                comparison = 1;
+            } else if (timestampA <= timestampB) {
+                comparison = -1;
+            }
+            return comparison;
+
+        }
+
         this.state = {
             userLoggedIn: props.isLoggedIn,
             modalContent: 'login',
@@ -56,6 +72,7 @@ class App extends React.Component {
             currentHoverTrack: undefined,
             currentTrack: undefined,
             currentlyPlaying: false,
+            cart: undefined
         }
         
 
@@ -65,6 +82,8 @@ class App extends React.Component {
     componentDidMount() {
         window.addEventListener('resize', this.handleResize)
         let that = this
+
+        
 
         $.ajax({
             type: "GET",
@@ -88,6 +107,13 @@ class App extends React.Component {
             }, 
             dataType: "json"
           });
+
+          $.ajax({
+            method: "GET",
+            url: `/carts`,
+            dataType: 'json',
+            success: this.response
+        })
      }
 
      bindWidget = () => {
@@ -116,6 +142,114 @@ class App extends React.Component {
 
             }
         }}
+
+        response = (json) => {
+
+            let that = this
+    
+            let totalPrice 
+            // if(Object.keys(json).length !== 0) {
+    
+            //     totalPrice = this.totalPrice(json)
+            // } else {
+            //     totalPrice = 0
+            // }
+    
+    
+            console.log(json)
+    
+            this.setState({
+                cart: json,
+    
+            }
+            )
+    
+    
+    
+        }
+
+        addToCart = () => {
+            let kitId
+            let coverArtPic
+            let data
+            let price
+            let name
+            let that = this
+    
+            console.log("Hitting this function?")
+    
+    
+            data = `authenticity_token=${this.state.railsToken}&kitId=${this.state.kitId}&coverArtPic=${this.state.kitPic}&price=${this.state.kitPrice}&name=${this.state.kitName}`
+            data = `authenticity_token=${this.state.railsToken}&kitId=${"1"}&price=${"25.99"}&name=${"blahblah"}`
+         
+    
+            $.ajax({
+                method: "POST",
+                beforeSend: function(request) {
+                    request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+                  },
+                url: `/carts`,
+                data: data,
+                dataType: 'json',
+                success: this.response
+            })
+
+            this.toggleCart()
+
+
+            // console.log(this.state)
+            this.setState({ 
+                showCart: true,
+                showMobileNav: false
+            }, this.checkToggleCart)
+    
+    
+            // this.setState({
+            //     showCart: true,
+            // })
+    
+    
+        }
+
+        deleteItem = (e) => {
+    
+            let kitId = e.target.dataset.kitId
+            console.log("about to delete")
+        
+            let that = this
+    
+            // let kitId = this.state.kitId
+        
+            $.ajax({
+              method: "DELETE",
+              beforeSend: function(request) {
+                request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+              },
+              url: `carts/${1}`,
+              data: `authenticity_token=${that.state.railsToken}`,
+              dataType: 'json',
+              success: that.response
+            })
+        
+          }
+
+          clearCart = () => {
+            let that = this
+    
+            // let kitId = this.state.kitId
+        
+            $.ajax({
+              method: "DELETE",
+              beforeSend: function(request) {
+                request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+              },
+              url: `carts/all`,
+              data: `authenticity_token=${that.state.railsToken}`,
+              dataType: 'json',
+              success: that.response
+            })
+          }
+    
 
      showCircle = (e) => {
         //  console.log("showCircle")
@@ -340,23 +474,58 @@ class App extends React.Component {
             latestTracks = <Section3 tracks = {tracks} />
         }
 
-        
-        
-
-        let items = []
-        let totalPrice = 0
-        let itemPrice = 75
-
-        for(let i=0; i<2; i++) {
-            items.push(<Item
-                itemPrice = {itemPrice}
-            />)
-
-            totalPrice+= itemPrice
+        let unsortedItems
+        if (this.state.cart) {
+            unsortedItems = Object.keys(this.state.cart)
+            unsortedItems.sort(this.compare)
+        } else {
+            unsortedItems = []
         }
+        let sum = 0
 
-        items = <React.Fragment>{items}</React.Fragment>;
+        let items = (
 
+            <React.Fragment>
+
+        {unsortedItems.map((item, index) => {
+            sum += this.state.cart[item].price * this.state.cart[item].quantity
+            console.log(this.state.cart[item].quantity * 5)
+            return <Item
+                quantity={this.state.cart[item].quantity}
+                name={this.state.cart[item].name}
+                key={item}
+               
+                deleteItem={(e) => this.deleteItem(e)}
+                kitId={item}
+                kitData={item}
+                increaseQuantity={(e) => this.addToCart(e)}
+                decreaseQuantity={(e) => this.decreaseQuantity(e)}
+                itemPrice={convertToUsCurrency.format(this.state.cart[item].price * this.state.cart[item].quantity)}
+            />
+        })}
+
+        </React.Fragment>
+
+    )
+
+        
+        
+
+        // let items = []
+        // let totalPrice = 0
+        // let itemPrice = 75
+
+        // for(let i=0; i<2; i++) {
+        //     items.push(<Item
+        //         itemPrice = {itemPrice}
+        //     />)
+
+        //     totalPrice+= itemPrice
+        // }
+
+        // items = <React.Fragment>{items}</React.Fragment>;
+
+        console.log(items)
         let showCartBoolean
 
         let cartHeightZero
@@ -376,9 +545,10 @@ class App extends React.Component {
         let cart = <Cart
             showCartBoolean = {showCartBoolean}
             items = {items}
-            totalPrice = {totalPrice}
+            totalPrice = {convertToUsCurrency.format(sum)}
             cartTransitionEnd = {this.cartTransitionEnd}
             cartHeightZero = {cartHeightZero}
+            click = {this.clearCart}
             />
 
         let modal 
@@ -412,6 +582,7 @@ class App extends React.Component {
                 <Section1/>
                 <Section2
                     samples = {samples}
+                    click = {this.addToCart}
                 />
                 {latestTracks}
                 <Footer/>

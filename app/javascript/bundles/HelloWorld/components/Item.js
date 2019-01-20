@@ -5,12 +5,12 @@ const item = (props) => {
 
     return (
         <div class="item">
-            <div class="itemQuantity">1</div>
-            <div class="itemName">Sound Pack Vol. 1</div>
+            <div class="itemQuantity">{props.quantity}</div>
+            <div class="itemName">{props.name}</div>
             <div class="removeItem">
-                    <i class="far fa-trash-alt"></i>
+                    <i onClick={props.deleteItem} class="far fa-trash-alt"></i>
             </div>
-            <div class="itemTotal">${props.itemPrice}</div>
+            <div class="itemTotal">{props.itemPrice}</div>
         </div>
 
     )

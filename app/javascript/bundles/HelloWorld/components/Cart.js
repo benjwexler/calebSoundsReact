@@ -9,12 +9,12 @@ const cart = (props) => {
             {props.items}
             <div id="cartTotal">
                 <div id="totalLeft">Total:</div>
-                <div id="totalRight">${props.totalPrice}</div>
+                <div id="totalRight">{props.totalPrice}</div>
             </div>
-            <div id="emptyBagContainer"> <span id="emptyBagText">Empty Bag</span></div>
+            <div onClick={props.click} id="emptyBagContainer"> <span id="emptyBagText">Empty Bag</span></div>
             <div id="checkoutBtnOuterContainer">
             <div id="checkoutBtn">
-                <div id="checkoutText">Proceed to Checkout: ${props.totalPrice}</div>
+                <div id="checkoutText">Proceed to Checkout: {props.totalPrice}</div>
             </div>
         </div>
         </div>
