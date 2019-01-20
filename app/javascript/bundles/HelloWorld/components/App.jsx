@@ -344,6 +344,52 @@ class App extends React.Component {
         // document.getElementById("modalButton").click()
     }
 
+    submitForm = (e) => {
+        let that = this
+        e.preventDefault()
+        let signUpObj = {};
+        signUpObj.utf8 = "✓";
+        signUpObj.authenticity_token = that.state.railsToken
+        signUpObj['user[email]'] = document.getElementById("userEmailInput").value
+        signUpObj['user[password]'] = document.getElementById("userPasswordInput").value
+        signUpObj.commit = "Log in"
+        // signUpObj['CSRFToken'] = that.state.railsToken
+        let url = "http://localhost:3000/users/sign_in"
+        if (this.state.modalContent === 'signup')
+            url = "http://localhost:3000/users"
+        signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value
+        $.ajax({
+            type: "POST",
+           
+            url: url,
+            data: signUpObj,
+            success: function (json) {
+                if (json.errorMessage) {
+                    that.setState({
+                        errorMessage: json.errorMessage
+                    })
+                } else {
+                    console.log("signed in or signed up")
+                    document.getElementById("modalButton").click()
+                    console.log(json.cart)
+                    that.setState({
+                        railsToken: json.csrfToken,
+                        userLoggedIn: true,
+                        errorMessage: undefined,
+                        cart: JSON.parse(json.cart)
+                    }, () => {console.log(that.state)})
+                }
+
+            },
+            error: function (xhr) {
+                that.setState({
+                    errorMessage: "Sorry, could not sign you in"
+                })
+            },
+            dataType: "json"
+        });
+    }
+
     toggleMobileNav = () => {
 
         let that = this
