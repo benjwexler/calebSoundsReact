@@ -6,8 +6,8 @@ const section2 = (props) => {
     return (
         <div id="section2">
             <div id="section2topRow">
-                <div id="whatsInside">What's Inside</div>
-                <div id="addToCart">Add to Cart</div>
+                <div id="whatsInside">$24.99</div>
+                <div onClick={props.click} id="addToCart">Add to Cart</div>
             </div>
 
                 <table id="samplePackTable">
