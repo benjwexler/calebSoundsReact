@@ -49,7 +49,7 @@ class App extends React.Component {
 
         this.state = {
             userLoggedIn: props.isLoggedIn,
-            modalContent: 'login',
+            modalContent: 'Sign Up',
             railsToken: ReactOnRails.authenticityToken(),
             ErrorMessage: undefined,
             cart: undefined,
@@ -327,6 +327,23 @@ class App extends React.Component {
         })
     }
 
+    setModalContent = (e) => {
+
+        console.log(e.currentTarget.id)
+
+        let modalContent = "Sign Up"
+
+        if(e.currentTarget.id === "switchToLogin") {
+            modalContent = "Log In"
+        }
+
+        this.setState({
+            modalContent: modalContent,
+        }
+        )
+        // document.getElementById("modalButton").click()
+    }
+
     toggleMobileNav = () => {
 
         let that = this
@@ -553,8 +570,23 @@ class App extends React.Component {
 
         let modal 
 
+        let loginInSwitch = "inactiveBtn"
+        let signUpSwitch = "switchFormBtn"
+
+        if(this.state.modalContent === 'Log In') {
+            loginInSwitch = "switchFormBtn"
+            signUpSwitch = "inactiveBtn"
+        }
+
         if(this.state.showModal) {
-            modal = <Modal exitModal = {this.toggleModal}/>
+            modal = <Modal 
+            exitModal = {this.toggleModal}
+            setModalContent = {this.setModalContent}
+            submitBtnText = {this.state.modalContent}
+            loginInSwitch = {loginInSwitch}
+            signUpSwitch = {signUpSwitch}
+
+            />
         }
 
         let mobileNavToggle = "hideMobileNav"

@@ -3,6 +3,22 @@ import React from 'react';
 
 const modal = (props) => {
 
+    let pwdConfirm
+
+    if(props.submitBtnText === 'Sign Up') {
+
+        pwdConfirm = <React.Fragment> <br/>  
+    <div className="field">
+        <div className="modalIconContainer">
+         <input autocomplete="new-password" className="form" placeholder="Confirm Password" type="password" name="user[password]" id="user_password"/>
+            <i className="fas fa-unlock-alt modalIcon"></i>
+         </div>
+    </div> </React.Fragment>
+
+
+    }
+
+    
     return (
       <div id="modalContainer">
         
@@ -14,8 +30,8 @@ const modal = (props) => {
               <h1 id="formTitle">ACCOUNT</h1>
               <div id="modalInstructions">Please Login or Sign Up</div>
               <div id="modalBtnsContainer">
-                  <div className="inactiveBtn">LOGIN</div>
-                  <div className="switchFormBtn">SIGN UP</div>
+                  <div id="switchToLogin" onClick={props.setModalContent} className={props.loginInSwitch}>LOGIN</div>
+                  <div id="switchToSignUp" onClick={props.setModalContent} className={props.signUpSwitch}>SIGN UP</div>
                   
               </div>
           
@@ -35,17 +51,13 @@ const modal = (props) => {
                       <i className="fas fa-unlock-alt modalIcon"></i>
                   </div>
               </div>
-          <br/>  
-              <div className="field">
-                  <div className="modalIconContainer">
-                   <input autocomplete="new-password" className="form" placeholder="Confirm Password" type="password" name="user[password]" id="user_password"/>
-                      <i className="fas fa-unlock-alt modalIcon"></i>
-                   </div>
-              </div>
+
+              {pwdConfirm}
+          
 
           <br/>
               <div className="actions">
-                  <input type="submit" name="commit" value="Sign up" className="btn" data-disable-with="Sign up"/>
+                  <input type="submit" name="commit" value={props.submitBtnText} className="btn" data-disable-with="Sign up"/>
               </div>
         </div>
       </form>
