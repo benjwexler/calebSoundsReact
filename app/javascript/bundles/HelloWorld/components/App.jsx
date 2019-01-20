@@ -80,7 +80,7 @@ class App extends React.Component {
                  tracks: json,
                  tracksObj: newTracksObj,
                  counter: 7
-                 })
+                 }, that.bindWidget)
               
                 
             } ,
@@ -90,23 +90,23 @@ class App extends React.Component {
           });
      }
 
-     componentDidUpdate() {
+     bindWidget = () => {
      console.log("updated!")
         let soundcloudWidget
         let that = this 
         if(this.state.counter === 7) {
-            console.log(document.getElementById("playAndPauseIcon1"))
+            // console.log(document.getElementById("playAndPauseIcon1"))
 
             let tracks = document.querySelectorAll('.playAndPauseIcon');
             let soundclouds = document.querySelectorAll('.soundclouds')
 
-            console.log(soundclouds)
+            // console.log(soundclouds)
 
             for(let i=0; i<soundclouds.length; i++) {
-                console.log(soundclouds[i].id)
+                // console.log(soundclouds[i].id)
                 soundcloudWidget  = soundclouds[i]
   window[`widget${i}`] = SC.Widget(soundcloudWidget);
-  console.log(soundcloudWidget)
+//   console.log(soundcloudWidget)
 
   window[`widget${i}`].bind(SC.Widget.Events.READY, function () {
 
@@ -118,13 +118,13 @@ class App extends React.Component {
         }}
 
      showCircle = (e) => {
-         console.log("showCircle")
+        //  console.log("showCircle")
         //  console.log(e.currentTarget.childNodes)
         //  console.log(e.currentTarget.dataset.trackNumber)
 
          let currentHoverTrack = parseInt(e.currentTarget.dataset.trackNumber)
 
-         console.log(currentHoverTrack)
+        //  console.log(currentHoverTrack)
          this.setState({ 
             currentHoverTrack: currentHoverTrack
         })
@@ -138,7 +138,7 @@ class App extends React.Component {
      }
 
      setCurrentTrack = (e) => {
-         console.log("Playing or paused")
+        //  console.log("Playing or paused")
         //  console.log(e.currentTarget.parentNode.dataset.trackNumber)
 
          let currentTrack = parseInt(e.currentTarget.parentNode.dataset.trackNumber)
@@ -148,7 +148,7 @@ class App extends React.Component {
             currentlyPlaying = false 
          }
 
-         console.log(currentTrack)
+        //  console.log(currentTrack)
          this.setState({ 
             currentTrack: currentTrack,
             currentlyPlaying: currentlyPlaying
@@ -161,11 +161,11 @@ class App extends React.Component {
 
          if(this.state.currentTrack === currentTrack) {
             window[`widget${currentTrack}`].toggle()
-            console.log("pausing")
+            // console.log("pausing")
             // currentTrack = undefined 
             // isTrackPlaying = !this.state.isTrackPlaying
         } else {
-            console.log("playing")
+            // console.log("playing")
             window[`widget${currentTrack}`].seekTo(0)
             window[`widget${currentTrack}`].play()
             // isTrackPlaying = true
@@ -206,7 +206,7 @@ class App extends React.Component {
 
         let that = this
 
-        console.log(this.state)
+        // console.log(this.state)
         this.setState({ 
             showCart: !that.state.showCart,
             showMobileNav: false
@@ -269,8 +269,7 @@ class App extends React.Component {
 
             for(let i=0; i<that.state.tracks.length; i++) {
 
-                console.log(that.state.tracks[i])
-                console.log("blah blah")
+        
 
                 let spotifyNoStreaming
                 let soundcloudNoStreaming
@@ -303,7 +302,6 @@ class App extends React.Component {
                 }
 
                 if (!that.state.tracks[i].youtube_url) {
-                    console.log(that.state.tracks[i].youtube_url)
                     youtubeNoStreaming = "noStreamingLink"
                 }
 
