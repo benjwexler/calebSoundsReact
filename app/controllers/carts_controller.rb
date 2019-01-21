@@ -20,8 +20,15 @@ class CartsController < ApplicationController
     end 
 
     def create
+      
+      p "luana"
+      # p params = eval(params)
+
+
 
       p kit_id = params[:kitId]
+      p "Blah"
+      p session[:temporary_cart]
 
 
 
@@ -32,6 +39,7 @@ class CartsController < ApplicationController
      
   
       if session[:temporary_cart][kit_id] == nil
+        p "Hitting this?"
         session[:temporary_cart][kit_id] = {
           quantity: 1,
           pic: params[:coverArtPic],
@@ -40,6 +48,7 @@ class CartsController < ApplicationController
           name: params[:name]
         }
       else 
+        # p "Hitting this?"
         p new_amount = session[:temporary_cart][kit_id]["quantity"]
         new_amount +=1
         p session[:temporary_cart][kit_id][:quantity] = new_amount
