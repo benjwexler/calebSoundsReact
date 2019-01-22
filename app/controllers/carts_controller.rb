@@ -27,17 +27,19 @@ class CartsController < ApplicationController
 
 
       p kit_id = params[:kitId]
+      kit_id = kit_id.to_s
       p "Blah"
       p session[:temporary_cart]
 
 
 
         if session[:temporary_cart] == nil
+          p "yeah?"
         session[:temporary_cart] = {}
         end 
   
      
-  
+ 
       if session[:temporary_cart][kit_id] == nil
         p "Hitting this?"
         session[:temporary_cart][kit_id] = {
@@ -60,7 +62,9 @@ class CartsController < ApplicationController
         current_user.update_attribute(:cart, session[:temporary_cart].to_json)
       end 
   
+      p session[:temporary_cart][kit_id]
       respond_to do |format|
+        # p session[:temporary_cart]
         format.json do
           render json: session[:temporary_cart].to_json
         end

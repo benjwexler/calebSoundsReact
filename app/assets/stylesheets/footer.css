@@ -1,0 +1,48 @@
+#footer {
+  width: 100vw;
+  height: 170px;
+  background: rgba(0, 0, 0, 0.94);
+  background: #090a10;
+  margin-bottom: 5px;
+  z-index: 100;
+}
+
+#email {
+  margin: auto;
+  text-align: center;
+  color: white;
+  padding-top: 50px;
+  font-family: 'Josefin Sans', sans-serif !important;
+  /* font-family: 'Fjalla One', sans-serif; */
+}
+
+#phoneNum {
+  margin: auto;
+  margin-top: 10px;
+  text-align: center;
+  color: white;
+  /* padding-top: 50px; */
+  font-family: 'Josefin Sans', sans-serif !important;
+}
+
+#socialMediaContainer {
+  margin: auto;
+  margin-top: 10px;
+  text-align: center;
+  /* color:  white; */
+  /* padding-top: 50px; */
+  font-family: 'Josefin Sans', sans-serif !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.socialMediaLogo {
+  color: white;
+  text-align: center;
+  padding: 5px;
+}
+/*# sourceMappingURL=footer.css.map */

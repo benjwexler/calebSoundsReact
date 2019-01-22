@@ -201,31 +201,35 @@ class App extends React.Component {
     // data = `authenticity_token=${that.state.railsToken}&kitId=${"1"}&price=${"25.99"}&name=${"4blahblah"}`;
 
     data = {
-    authenticity_token:that.state.railsToken,
-    kitId: 1,
-    price: 25.99,
-    name: "5blahblah"
+    // "authenticity_token":that.state.railsToken,
+    "kitId": 1,
+    "price": 25.99,
+    "name": "5blahblah"
     }
 
 
     fetch('/carts', {
         method: "POST",
         body: JSON.stringify(data),
+        credentials: 'same-origin',
         headers: {
             "Content-Type": "application/json",
-            "X-CSRF-Token": that.state.railsToken
+            "X-CSRF-Token": that.state.railsToken,
+            
           }
     })
       .then(function(response) {
         return response.json();
       })
       .then(function(myJson) {
-        console.log(JSON.stringify(myJson));
+        
+        console.log("wtf")
         
         that.setState({
             cart: myJson
           });
-      });
+      })
+      
 
 
 
