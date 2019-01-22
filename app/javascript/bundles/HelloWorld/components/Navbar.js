@@ -17,7 +17,7 @@ const navbar = (props) => {
     <i className="fas fa-user-lock"></i>
 </div>)
 } else {
-    loginSignUp = (<div id="signOutContainer">
+    loginSignUp = (<div onClick={props.signOut} id="signOutContainer">
     <div className="logInorSignUp">
         SIGN OUT
 

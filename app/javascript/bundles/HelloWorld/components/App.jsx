@@ -478,6 +478,30 @@ class App extends React.Component {
     });
   };
 
+  signOut = () => {
+    let that = this
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/users/sign_out",
+        data: { "_method": "delete", "authenticity_token": that.state.railsToken },
+        success: function (json) {
+            console.log("trying to delete")
+            console.log(json)
+
+            that.setState({
+                userLoggedIn: false,
+                railsToken: json.csrfToken,
+                cart: json.cart
+            })
+
+        },
+        error: function (xhr) {
+        },
+        dataType: "json"
+    });
+}
+
+
   toggleMobileNav = () => {
     let that = this;
     this.setState({
@@ -711,6 +735,7 @@ class App extends React.Component {
           openModal={this.toggleModal}
           toggleMobileNav={this.toggleMobileNav}
           userLoggedIn = {this.state.userLoggedIn}
+          signOut = {this.signOut}
         />
         <MobileNav mobileNavToggle={mobileNavToggle} />
         <Section1 />
