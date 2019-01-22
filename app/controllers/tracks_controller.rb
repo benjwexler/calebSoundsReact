@@ -7,6 +7,8 @@ class TracksController < ApplicationController
     query = request.query_string
     @tracks = Track.check_for_query(query)
 
+    p request.format 
+
     respond_to do |format|
         
         format.html {

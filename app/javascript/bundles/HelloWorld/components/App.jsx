@@ -112,34 +112,59 @@ class App extends React.Component {
     // });
   };
 
-  componentDidMount() {
+    componentDidMount() {
     window.addEventListener("resize", this.handleResize);
     let that = this;
 
     this.loadSounds();
 
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:3000/tracks?limit=4",
-      success: function(json) {
-        console.log(json);
-        let newTracksObj = {};
-        json.forEach(function(track, index) {
-          console.log(json[index]);
-          newTracksObj[index] = json[index];
-        });
-        that.setState(
-          {
-            tracks: json,
-            tracksObj: newTracksObj,
-            counter: 7
-          },
-          that.bindWidget
-        );
-      },
-      error: function(xhr) {},
-      dataType: "json"
+    fetch(`http://localhost:3000/tracks.json?limit=4`, {
+      headers: {
+          "Content-Type": "application/json"
+        }
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log(JSON.stringify(myJson));
+      let newTracksObj = {};
+      myJson.forEach(function(track, index) {
+        console.log(myJson[index]);
+        newTracksObj[index] = myJson[index];
+      });
+      that.setState(
+        {
+          tracks: myJson,
+          tracksObj: newTracksObj,
+          counter: 7
+        },
+        that.bindWidget
+      );
     });
+
+    // $.ajax({
+    //   type: "GET",
+    //   url: "http://localhost:3000/tracks?limit=4",
+    //   success: function(json) {
+    //     console.log(json);
+    //     let newTracksObj = {};
+    //     json.forEach(function(track, index) {
+    //       console.log(json[index]);
+    //       newTracksObj[index] = json[index];
+    //     });
+    //     that.setState(
+    //       {
+    //         tracks: json,
+    //         tracksObj: newTracksObj,
+    //         counter: 7
+    //       },
+    //       that.bindWidget
+    //     );
+    //   },
+    //   error: function(xhr) {},
+    //   dataType: "json"
+    // });
 
     $.ajax({
       method: "GET",
@@ -229,6 +254,12 @@ class App extends React.Component {
             cart: myJson
           });
       })
+      .catch((err) => {
+        // Handle any error that occurred in any of the previous
+        // promises in the chain.
+        console.log(err)
+        console.log("there was an error")
+      });
       
 
 
