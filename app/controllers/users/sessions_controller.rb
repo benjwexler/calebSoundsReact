@@ -24,6 +24,8 @@ class Users::SessionsController < Devise::SessionsController
       yield resource 
     end 
 
+    p current_user
+
 
     if current_user.cart != "{}"
       p "bloo"
