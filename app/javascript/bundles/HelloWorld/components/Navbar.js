@@ -3,6 +3,29 @@ import React from 'react';
 
 const navbar = (props) => {
 
+    let loginSignUp
+
+    if(!props.userLoggedIn) {
+
+    
+
+    loginSignUp = (<div onClick={props.openModal} id="logInSignUpContainer">
+    <div className="logInorSignUp">
+        LOG IN/SIGN UP
+
+    </div>
+    <i className="fas fa-user-lock"></i>
+</div>)
+} else {
+    loginSignUp = (<div id="signOutContainer">
+    <div className="logInorSignUp">
+        SIGN OUT
+
+    </div>
+    <i class="fas fa-sign-out-alt"></i>
+</div>)
+}
+
 
     return (
         <div id="outerNavContainer">
@@ -26,13 +49,8 @@ const navbar = (props) => {
                                 <i className="fab fa-youtube"></i>
                         </div>
                     </div>
-                <div onClick={props.openModal} id="logInSignUpContainer">
-                    <div className="logInorSignUp">
-                        LOG IN/SIGN UP
-
-                    </div>
-                    <i className="fas fa-user-lock"></i>
-                </div>
+               
+                    {loginSignUp}
                 <i onClick={props.toggleCart}  className="fas fa-shopping-cart cartWideScreen"></i>
 
 

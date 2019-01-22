@@ -433,11 +433,12 @@ class App extends React.Component {
     signUpObj.commit = "Log in";
     // signUpObj['CSRFToken'] = that.state.railsToken
     let url = "http://localhost:3000/users/sign_in";
-    if (this.state.modalContent === "signup")
+    if (this.state.modalContent === "Sign Up") {
       url = "http://localhost:3000/users";
-    signUpObj["user[password_confirmation]"] = document.getElementById(
-      "userPasswordConfirmationInput"
-    ).value;
+    signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value;
+
+    }
+      
     $.ajax({
       type: "POST",
 
@@ -450,7 +451,7 @@ class App extends React.Component {
           });
         } else {
           console.log("signed in or signed up");
-          document.getElementById("modalButton").click();
+          // document.getElementById("modalButton").click();
           console.log(json.cart);
           that.setState(
             {
@@ -461,6 +462,9 @@ class App extends React.Component {
             },
             () => {
               console.log(that.state);
+              that.setState({
+                showModal: false
+              })
             }
           );
         }
@@ -687,6 +691,7 @@ class App extends React.Component {
           submitBtnText={this.state.modalContent}
           loginInSwitch={loginInSwitch}
           signUpSwitch={signUpSwitch}
+          submit = {this.submitForm}
         />
       );
     }
@@ -705,6 +710,7 @@ class App extends React.Component {
           toggleCart={this.toggleCart}
           openModal={this.toggleModal}
           toggleMobileNav={this.toggleMobileNav}
+          userLoggedIn = {this.state.userLoggedIn}
         />
         <MobileNav mobileNavToggle={mobileNavToggle} />
         <Section1 />
