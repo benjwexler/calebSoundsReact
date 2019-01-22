@@ -5,6 +5,7 @@ class KitsController < ApplicationController
   # GET /kits.json
   def index
     @kits = Kit.all
+    
 
     respond_to do |format|
         
@@ -26,12 +27,29 @@ class KitsController < ApplicationController
   def show
 
     p "Hoobah"
+    # @sounds = Sound.check_for_query(query)
 
-    @sounds = @kit.sounds
+    p query = request.query_string
+    # @sounds = Track.check_for_query(query)
 
-    p @sounds
+ 
+      query_hash = CGI.parse(query) 
+      limit = query_hash["limit"][0].to_i
 
-    p request.format
+      if query == "" || limit < 1
+          @sounds = Sound.all
+          sounds = @kit.sounds
+      else
+          sounds = @kit.sounds.limit(limit)  
+      end 
+
+
+
+    # @sounds = @kit.sounds
+
+    # p @sounds
+
+    # p request.format
     p "blah"
 
 
@@ -40,7 +58,7 @@ class KitsController < ApplicationController
      
       format.json {
         # render json: @kit.sounds
-        render json: @sounds.map { |sound|
+        render json: sounds.map { |sound|
         p "What is going"
         p url_for(sound.soundfile)
           sound.as_json.merge({ soundfile: url_for(sound.soundfile), filename: sound.soundfile.blob.filename })
