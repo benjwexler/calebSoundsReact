@@ -33,14 +33,16 @@ class KitsController < ApplicationController
     # @sounds = Track.check_for_query(query)
 
  
-      query_hash = CGI.parse(query) 
+      p query_hash = CGI.parse(query) 
       limit = query_hash["limit"][0].to_i
+      p offset = query_hash["offset"][0].to_i
+
 
       if query == "" || limit < 1
           @sounds = Sound.all
           sounds = @kit.sounds
       else
-          sounds = @kit.sounds.limit(limit)  
+          sounds = @kit.sounds.limit(limit).offset(offset)  
       end 
 
 

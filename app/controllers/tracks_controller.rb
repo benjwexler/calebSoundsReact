@@ -5,7 +5,7 @@ class TracksController < ApplicationController
   # GET /tracks.json
   def index
     query = request.query_string
-    @tracks = Track.check_for_query(query)
+    p @tracks = Track.check_for_query(query)
 
     p request.format 
 
