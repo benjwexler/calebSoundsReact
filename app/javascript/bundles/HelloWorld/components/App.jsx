@@ -70,7 +70,8 @@ class App extends React.Component {
       currentlyPlaying: false,
       cart: undefined,
       kitSounds: [],
-      sampleOffset: 0
+      sampleOffset: 0,
+      currentSample: undefined 
     };
   }
 
@@ -228,6 +229,32 @@ class App extends React.Component {
       cart: json
     });
   };
+
+  setSample = (e) => {
+    console.log(e.currentTarget.dataset.sampleNumber);
+    let sampleNumber = e.currentTarget.dataset.sampleNumber
+
+    console.log(this.state.kitSounds[sampleNumber].soundfile)
+    this.setState({
+      currentSample: this.state.kitSounds[sampleNumber].soundfile
+    }, this.playSample);
+  }
+
+  playSample = () => {
+    console.log("hulu")
+    let audioPlayer = document.getElementById("audioPlayer");
+    if(this.state.currentTrack) {
+      window[`widget${this.state.currentTrack}`].pause()
+      this.setState({
+        currentlyPlaying: false
+      });
+    }
+    
+    
+
+    audioPlayer.play()
+
+  }
 
   addToCart = () => {
     let kitId;
@@ -665,10 +692,13 @@ class App extends React.Component {
       } else {
         oddRow = "";
       }
-      samples.push(<Sample oddRow={oddRow} name={this.state.kitSounds[i].filename} />);
+      samples.push(<Sample oddRow={oddRow} name={this.state.kitSounds[i].filename} soundfile={this.state.kitSounds[i].soundfile} sampleNumber={i} playSample={this.setSample}  />);
     }
 
-    samples = <React.Fragment>{samples}</React.Fragment>;
+    samples = <React.Fragment>
+    {samples}
+   
+    </React.Fragment>;
   }
 
     let latestTracks;
@@ -788,7 +818,7 @@ class App extends React.Component {
 
     // items = <React.Fragment>{items}</React.Fragment>;
 
-    console.log(items);
+
     let showCartBoolean;
 
     let cartHeightZero;
@@ -843,6 +873,8 @@ class App extends React.Component {
       mobileNavToggle = "showMobileNav";
     }
 
+    let audioPlayer = <audio id="audioPlayer" controls autoplay src={this.state.currentSample}  type="audio/mpeg"/>
+
     return (
       <div>
         {modal}
@@ -857,7 +889,9 @@ class App extends React.Component {
         <MobileNav mobileNavToggle={mobileNavToggle} />
         <Section1 />
         <Section2 samples={samples} click={this.addToCart} loadSounds={this.loadSounds} />
+        {audioPlayer}
         {latestTracks}
+        
         <Footer />
       </div>
     );
