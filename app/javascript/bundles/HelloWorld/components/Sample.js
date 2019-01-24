@@ -3,11 +3,18 @@ import React from 'react';
 
 const sample = (props) => {
 
+    let icon = <i className="fas fa-play samplePlayIcon"></i>
+
+    if(props.currentSample && props.sampleCurrentlyPlaying) {
+        console.log("why no work")
+        icon = <i className="fas fa-pause samplePauseIcon"></i>
+    }
+
     return (
         <tr className={props.oddRow}>
             <td className="setWidth">
                 <div data-sample-number={props.sampleNumber} onClick={props.playSample} className="circle">
-                    <i className="fas fa-play"></i>
+                    {icon}
                 </div>
             </td>
             <td>{props.name}</td>
