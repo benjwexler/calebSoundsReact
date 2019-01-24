@@ -6,7 +6,7 @@ const section2 = (props) => {
     return (
         <div id="section2">
             <div id="section2topRow">
-                <div id="whatsInside">$24.99</div>
+                <div id="whatsInside">$24.99 - CEG Guitar Essentials Vol 1.</div>
                 <div onClick={props.click} id="addToCart">Add to Cart</div>
             </div>
 
@@ -23,7 +23,7 @@ const section2 = (props) => {
                     {props.samples}
                 </table>
 
-                <div id="loadMoreSounds">Load More Sounds</div>
+                <div onClick={props.loadSounds} id="loadMoreSounds">Load More Sounds</div>
         
     </div>
     )

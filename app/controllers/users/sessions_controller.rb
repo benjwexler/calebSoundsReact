@@ -3,6 +3,9 @@ class Users::SessionsController < Devise::SessionsController
   respond_to :json
   
   def new
+  
+    p "before?" 
+    p sign_in_params
     self.resource = resource_class.new(sign_in_params)
     clean_up_passwords(resource)
     yield resource if block_given?
@@ -13,11 +16,21 @@ class Users::SessionsController < Devise::SessionsController
 
   def create
     require 'json'
+
+    
+    p request.headers['Authorization']
+    p "Where diss" 
+    p params
+    p "wwwHuh"
+    p auth_options
+    p "Huh"
+    # p self
     p self.resource = warden.authenticate!(auth_options)
+    p "whahh"
     set_flash_message!(:notice, :signed_in)
     p sign_in(resource_name, resource)
     
-    "nbfubnfei"
+    
     
     if block_given?
       p "sign in error test"

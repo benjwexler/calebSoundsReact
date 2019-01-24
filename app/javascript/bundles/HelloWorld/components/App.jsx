@@ -61,7 +61,6 @@ class App extends React.Component {
       kitName: undefined,
       kitPrice: undefined,
       kitId: undefined,
-      kitSounds: undefined,
       pads: undefined,
       context: undefined,
       gainNode: undefined,
@@ -70,16 +69,18 @@ class App extends React.Component {
       currentTrack: undefined,
       currentlyPlaying: false,
       cart: undefined,
-      kitSounds: undefined
+      kitSounds: [],
+      sampleOffset: 0
     };
   }
 
-  loadSounds = kitId => {
+  loadSounds = (kitId) => {
     let that = this;
+    let kitSounds 
     let padsObj = {};
     console.log("load sounds");
 
-    fetch(`http://localhost:3000/kits/${7}?limit=6`, {
+    fetch(`http://localhost:3000/kits/${7}?limit=6&offset=${that.state.sampleOffset}`, {
         headers: {
             "Content-Type": "application/json"
           }
@@ -89,8 +90,10 @@ class App extends React.Component {
       })
       .then(function(myJson) {
         console.log(JSON.stringify(myJson));
+        kitSounds = that.state.kitSounds.concat(myJson)
         that.setState({
-            kitSounds: myJson
+            kitSounds: kitSounds,
+            sampleOffset: that.state.sampleOffset + 6
             });
       });
      
@@ -111,6 +114,10 @@ class App extends React.Component {
     //   dataType: "json"
     // });
   };
+
+  loadMoreSounds = () => {
+
+  }
 
     componentDidMount() {
     window.addEventListener("resize", this.handleResize);
@@ -166,12 +173,26 @@ class App extends React.Component {
     //   dataType: "json"
     // });
 
-    $.ajax({
-      method: "GET",
-      url: `/carts`,
-      dataType: "json",
-      success: this.response
+    fetch(`/carts`, {
+      headers: {
+          "Content-Type": "application/json"
+        }
+  })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      // console.log(JSON.stringify(myJson));
+      console.log(myJson)
+      that.response(myJson)
     });
+
+  //   $.ajax({
+  //     method: "GET",
+  //     url: `/carts`,
+  //     dataType: "json",
+  //     success: this.response
+  //   });
   }
 
   bindWidget = () => {
@@ -197,7 +218,7 @@ class App extends React.Component {
     }
   };
 
-  response = json => {
+  response = (json) => {
     let that = this;
 
 
@@ -299,16 +320,42 @@ class App extends React.Component {
 
     // let kitId = this.state.kitId
 
-    $.ajax({
+    fetch(`carts/${1}`, {
       method: "DELETE",
-      beforeSend: function(request) {
-        request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
-      },
-      url: `carts/${1}`,
-      data: `authenticity_token=${that.state.railsToken}`,
-      dataType: "json",
-      success: that.response
+      credentials: 'same-origin',
+      headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": that.state.railsToken,
+          
+        }
+  })
+    .then(function(response) {
+      console.log("Yeehaw")
+      return response.json();
+    })
+    .then(function(myJson) {
+      
+      console.log("wtf")
+      that.response(myJson) 
+      
+    })
+    .catch((err) => {
+      // Handle any error that occurred in any of the previous
+      // promises in the chain.
+      console.log(err)
+      console.log("there was an error")
     });
+
+    // $.ajax({
+    //   method: "DELETE",
+    //   beforeSend: function(request) {
+    //     request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+    //   },
+    //   url: `carts/${1}`,
+    //   data: `authenticity_token=${that.state.railsToken}`,
+    //   dataType: "json",
+    //   success: that.response
+    // });
   };
 
   clearCart = () => {
@@ -316,17 +363,43 @@ class App extends React.Component {
 
     // let kitId = this.state.kitId
 
-    $.ajax({
+    fetch(`carts/all`, {
       method: "DELETE",
-      beforeSend: function(request) {
-        request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
-      },
-      url: `carts/all`,
-      data: `authenticity_token=${that.state.railsToken}`,
-      dataType: "json",
-      success: that.response
+      credentials: 'same-origin',
+      headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": that.state.railsToken,
+          
+        }
+  })
+    .then(function(response) {
+      console.log("Yeehaw")
+      return response.json();
+    })
+    .then(function(myJson) {
+      
+      console.log("wtf")
+      that.response(myJson) 
+      
+    })
+    .catch((err) => {
+      // Handle any error that occurred in any of the previous
+      // promises in the chain.
+      console.log(err)
+      console.log("there was an error")
     });
-  };
+  }
+  //   $.ajax({
+  //     method: "DELETE",
+  //     beforeSend: function(request) {
+  //       request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+  //     },
+  //     url: `carts/all`,
+  //     data: `authenticity_token=${that.state.railsToken}`,
+  //     dataType: "json",
+  //     success: that.response
+  //   });
+  // };
 
   showCircle = e => {
     //  console.log("showCircle")
@@ -427,55 +500,96 @@ class App extends React.Component {
     signUpObj.utf8 = "✓";
     signUpObj.authenticity_token = that.state.railsToken;
     signUpObj["user[email]"] = document.getElementById("userEmailInput").value;
-    signUpObj["user[password]"] = document.getElementById(
-      "userPasswordInput"
-    ).value;
+    signUpObj["user[password]"] = document.getElementById("userPasswordInput").value;
     signUpObj.commit = "Log in";
     // signUpObj['CSRFToken'] = that.state.railsToken
-    let url = "http://localhost:3000/users/sign_in";
+    let url = "http://localhost:3000/users/sign_in.json";
     if (this.state.modalContent === "Sign Up") {
-      url = "http://localhost:3000/users";
+      url = "http://localhost:3000/users.json";
     signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value;
 
     }
-      
-    $.ajax({
-      type: "POST",
 
-      url: url,
-      data: signUpObj,
-      success: function(json) {
-        if (json.errorMessage) {
-          that.setState({
-            errorMessage: json.errorMessage
-          });
-        } else {
-          console.log("signed in or signed up");
-          // document.getElementById("modalButton").click();
-          console.log(json.cart);
-          that.setState(
-            {
-              railsToken: json.csrfToken,
-              userLoggedIn: true,
-              errorMessage: undefined,
-              cart: JSON.parse(json.cart)
-            },
-            () => {
-              console.log(that.state);
-              that.setState({
-                showModal: false
-              })
-            }
-          );
+    fetch(url, {
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify(signUpObj),
+      credentials: 'same-origin',
+      headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin':'*',
+          "X-CSRF-Token": that.state.railsToken,
+          "Authorization": that.state.railsToken,
+          
         }
-      },
-      error: function(xhr) {
-        that.setState({
-          errorMessage: "Sorry, could not sign you in"
-        });
-      },
-      dataType: "json"
+  })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      
+      console.log("wtf")
+      
+      that.setState(
+        {
+          railsToken: myJson.csrfToken,
+          userLoggedIn: true,
+          errorMessage: undefined,
+          cart: JSON.parse(myJson.cart)
+        },
+        () => {
+          console.log(that.state);
+          that.setState({
+            showModal: false
+          })
+        }
+      );
+    })
+    .catch((err) => {
+      // Handle any error that occurred in any of the previous
+      // promises in the chain.
+      console.log(err)
+      console.log("there was an error")
     });
+      
+  //   $.ajax({
+  //     type: "POST",
+
+  //     url: url,
+  //     data: signUpObj,
+  //     success: function(json) {
+  //       if (json.errorMessage) {
+  //         that.setState({
+  //           errorMessage: json.errorMessage
+  //         });
+  //       } else {
+  //         console.log("signed in or signed up");
+  //         // document.getElementById("modalButton").click();
+  //         console.log(json.cart);
+  //         that.setState(
+  //           {
+  //             railsToken: json.csrfToken,
+  //             userLoggedIn: true,
+  //             errorMessage: undefined,
+  //             cart: JSON.parse(json.cart)
+  //           },
+  //           () => {
+  //             console.log(that.state);
+  //             that.setState({
+  //               showModal: false
+  //             })
+  //           }
+  //         );
+  //       }
+  //     },
+  //     error: function(xhr) {
+  //       that.setState({
+  //         errorMessage: "Sorry, could not sign you in"
+  //       });
+  //     },
+  //     dataType: "json"
+  //   });
   };
 
   signOut = () => {
@@ -540,19 +654,22 @@ class App extends React.Component {
   };
 
   render() {
-    let samples = [];
+    let samples 
+    if (this.state.kitSounds.length > 0) {
+    samples = [];
     let oddRow = "";
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.state.kitSounds.length; i++) {
       if (i % 2 === 1) {
         oddRow = "oddRow";
       } else {
         oddRow = "";
       }
-      samples.push(<Sample oddRow={oddRow} />);
+      samples.push(<Sample oddRow={oddRow} name={this.state.kitSounds[i].filename} />);
     }
 
     samples = <React.Fragment>{samples}</React.Fragment>;
+  }
 
     let latestTracks;
     let tracks = [];
@@ -739,7 +856,7 @@ class App extends React.Component {
         />
         <MobileNav mobileNavToggle={mobileNavToggle} />
         <Section1 />
-        <Section2 samples={samples} click={this.addToCart} />
+        <Section2 samples={samples} click={this.addToCart} loadSounds={this.loadSounds} />
         {latestTracks}
         <Footer />
       </div>

@@ -10,7 +10,7 @@ const sample = (props) => {
                     <i className="fas fa-play"></i>
                 </div>
             </td>
-            <td>Guitar Bend</td>
+            <td>{props.name}</td>
             <td>Rock</td>
             <td className="smallPhoneHide">Category</td>
             <td>97</td>
