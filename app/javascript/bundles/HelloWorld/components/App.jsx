@@ -270,12 +270,17 @@ class App extends React.Component {
     // });
 
     if(this.state.currentTrack) {
+     
       window[`widget${this.state.currentTrack}`].pause()
-      this.setState({
-        currentlyPlaying: false,
-        // sampleCurrentlyPlaying: sampleCurrentlyPlaying
-      });
+      window[`widget${this.state.currentTrack}`].seekTo(0);
+      
+      
     } 
+
+    this.setState({
+      currentlyPlaying: false,
+      // sampleCurrentlyPlaying: sampleCurrentlyPlaying
+    });
     
     
     console.log(audioPlayer.readyState)
@@ -545,6 +550,14 @@ class App extends React.Component {
     //  console.log(this.state.tracksObj[this.state.currentTrack])
     //  console.log(this.state.tracksObj[this.state.currentTrack].soundcloud_id)
 
+    let audioPlayer = document.getElementById("audioPlayer");
+    audioPlayer.pause()
+    audioPlayer.currentTime = 0;
+
+    this.setState({
+      sampleCurrentlyPlaying: false
+    });
+
     if (this.state.currentTrack === currentTrack) {
       window[`widget${currentTrack}`].toggle();
       // console.log("pausing")
@@ -556,6 +569,8 @@ class App extends React.Component {
       window[`widget${currentTrack}`].play();
       // isTrackPlaying = true
     }
+
+
   };
 
   handleResize = () => {
