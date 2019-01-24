@@ -71,7 +71,8 @@ class App extends React.Component {
       cart: undefined,
       kitSounds: [],
       sampleOffset: 0,
-      currentSample: undefined 
+      currentSample: undefined,
+      sampleCurrentlyPlaying: false,
     };
   }
 
@@ -234,26 +235,95 @@ class App extends React.Component {
     console.log(e.currentTarget.dataset.sampleNumber);
     let sampleNumber = e.currentTarget.dataset.sampleNumber
 
+    let sampleCurrentlyPlaying = true;
+
+    // console.log(sampleNumber)
+
+    if (this.state.sampleCurrentlyPlaying && (this.state.currentSample === parseInt(sampleNumber))) {
+      sampleCurrentlyPlaying = false;
+    }
+
+    // this.setState({
+    //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
+    // });
+
     console.log(this.state.kitSounds[sampleNumber].soundfile)
     this.setState({
-      currentSample: this.state.kitSounds[sampleNumber].soundfile
+      currentSample: parseInt(sampleNumber),
+      sampleCurrentlyPlaying: sampleCurrentlyPlaying
     }, this.playSample);
   }
 
-  playSample = () => {
+  playSample = (sampleNumber) => {
     console.log("hulu")
     let audioPlayer = document.getElementById("audioPlayer");
+    // let sampleCurrentlyPlaying = true;
+
+
+
+    // if (this.state.sampleCurrentlyPlaying && (this.state.currentSample === parseInt(sampleNumber))) {
+    //   sampleCurrentlyPlaying = false;
+    // }
+
+    // this.setState({
+    //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
+    // });
+
     if(this.state.currentTrack) {
       window[`widget${this.state.currentTrack}`].pause()
       this.setState({
-        currentlyPlaying: false
+        currentlyPlaying: false,
+        // sampleCurrentlyPlaying: sampleCurrentlyPlaying
       });
+    } 
+    
+    
+    console.log(audioPlayer.readyState)
+    let audioPlayerState = audioPlayer.readyState
+
+    // while(audioPlayerState !== 4) {
+      
+    //   audioPlayerState = audioPlayer.readyState
+    //   console.log(audioPlayerState)
+    // }
+
+    // var playPromise = audioPlayer.play();
+
+    if(audioPlayer.paused) {
+      console.log("should play")
+      audioPlayer.play()
+      .then(function() {
+        // Automatic playback started!
+        console.log("Playing")
+      })
+    } else {
+      console.log("should pause")
+      audioPlayer.pause()
     }
+
+    // if (playPromise !== undefined) {
+    //   playPromise.then(_ => {
+    //     // Automatic playback started!
+    //     // Show playing UI.
+       
+    //   })
+    //   .catch(error => {
+    //     console.log("PROBLEMS")
+    //     // Auto-play was prevented
+    //     // Show paused UI.
+    //   });
+    // }
     
+  
     
 
-    audioPlayer.play()
+  }
 
+  audioEnded = () => {
+    console.log("audio ended")
+    this.setState({
+      sampleCurrentlyPlaying: false
+    });
   }
 
   addToCart = () => {
@@ -685,14 +755,33 @@ class App extends React.Component {
     if (this.state.kitSounds.length > 0) {
     samples = [];
     let oddRow = "";
+    
+    let that = this
+    
 
     for (let i = 0; i < this.state.kitSounds.length; i++) {
+      let currentSample = false;
       if (i % 2 === 1) {
         oddRow = "oddRow";
       } else {
         oddRow = "";
       }
-      samples.push(<Sample oddRow={oddRow} name={this.state.kitSounds[i].filename} soundfile={this.state.kitSounds[i].soundfile} sampleNumber={i} playSample={this.setSample}  />);
+
+      
+
+      if (i === that.state.currentSample) {
+        currentSample = true;
+      }
+
+      samples.push(<Sample 
+      oddRow={oddRow} 
+      name={this.state.kitSounds[i].filename} 
+      soundfile={this.state.kitSounds[i].soundfile} 
+      sampleNumber={i} 
+      playSample={this.setSample}  
+      currentSample={currentSample}
+      sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
+      />);
     }
 
     samples = <React.Fragment>
@@ -873,7 +962,13 @@ class App extends React.Component {
       mobileNavToggle = "showMobileNav";
     }
 
-    let audioPlayer = <audio id="audioPlayer" controls autoplay src={this.state.currentSample}  type="audio/mpeg"/>
+    let audioPlayer
+    let currentSampleSrc 
+    if(this.state.currentSample || this.state.currentSample === 0) {
+      
+      currentSampleSrc = this.state.kitSounds[this.state.currentSample].soundfile
+    }
+    audioPlayer = <audio onEnded={this.audioEnded} id="audioPlayer" autoplay src={currentSampleSrc}  type="audio/wav"/>
 
     return (
       <div>
