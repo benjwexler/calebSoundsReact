@@ -17,6 +17,7 @@ import Item from "./Item.js";
 import { LinkedList, Node } from "./linkedList.js";
 import StripeCheckout from "react-stripe-checkout";
 
+
 const convertToUsCurrency = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -73,14 +74,15 @@ class App extends React.Component {
       sampleOffset: 0,
       currentSample: undefined,
       sampleCurrentlyPlaying: false,
+      transition: true
     };
   }
 
   loadSounds = (kitId) => {
+    // this.setState({ in: false });
     let that = this;
     let kitSounds 
     let padsObj = {};
-    console.log("load sounds");
 
     fetch(`http://localhost:3000/kits/${7}?limit=6&offset=${that.state.sampleOffset}`, {
         headers: {
@@ -91,13 +93,17 @@ class App extends React.Component {
         return response.json();
       })
       .then(function(myJson) {
-        console.log(JSON.stringify(myJson));
         kitSounds = that.state.kitSounds.concat(myJson)
         that.setState({
             kitSounds: kitSounds,
-            sampleOffset: that.state.sampleOffset + 6
-            });
-      });
+            sampleOffset: that.state.sampleOffset + 6,
+            transition: false
+            }, that.transition);
+          })
+
+      }
+      
+
      
 
     // $.ajax({
@@ -115,13 +121,18 @@ class App extends React.Component {
     //   error: function(xhr) {},
     //   dataType: "json"
     // });
-  };
+  
 
   loadMoreSounds = () => {
 
   }
 
+  transition = () => {
+    this.setState({transition: true})
+  }
+
     componentDidMount() {
+      //  this.setState({ in: !this.state.transition });
     window.addEventListener("resize", this.handleResize);
     let that = this;
 
@@ -136,10 +147,8 @@ class App extends React.Component {
       return response.json();
     })
     .then(function(myJson) {
-      console.log(JSON.stringify(myJson));
       let newTracksObj = {};
       myJson.forEach(function(track, index) {
-        console.log(myJson[index]);
         newTracksObj[index] = myJson[index];
       });
       that.setState(
@@ -184,7 +193,6 @@ class App extends React.Component {
       return response.json();
     })
     .then(function(myJson) {
-      // console.log(JSON.stringify(myJson));
       console.log(myJson)
       that.response(myJson)
     });
@@ -198,7 +206,6 @@ class App extends React.Component {
   }
 
   bindWidget = () => {
-    console.log("updated!");
     let soundcloudWidget;
     let that = this;
     if (this.state.counter === 7) {
@@ -223,16 +230,12 @@ class App extends React.Component {
   response = (json) => {
     let that = this;
 
-
-    console.log(json);
-
     this.setState({
       cart: json
     });
   };
 
   setSample = (e) => {
-    console.log(e.currentTarget.dataset.sampleNumber);
     let sampleNumber = e.currentTarget.dataset.sampleNumber
 
     let sampleCurrentlyPlaying = true;
@@ -247,7 +250,6 @@ class App extends React.Component {
     //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
     // });
 
-    console.log(this.state.kitSounds[sampleNumber].soundfile)
     this.setState({
       currentSample: parseInt(sampleNumber),
       sampleCurrentlyPlaying: sampleCurrentlyPlaying
@@ -255,7 +257,6 @@ class App extends React.Component {
   }
 
   playSample = (sampleNumber) => {
-    console.log("hulu")
     let audioPlayer = document.getElementById("audioPlayer");
     // let sampleCurrentlyPlaying = true;
 
@@ -281,9 +282,7 @@ class App extends React.Component {
       currentlyPlaying: false,
       // sampleCurrentlyPlaying: sampleCurrentlyPlaying
     });
-    
-    
-    console.log(audioPlayer.readyState)
+
     let audioPlayerState = audioPlayer.readyState
 
     // while(audioPlayerState !== 4) {
@@ -295,14 +294,12 @@ class App extends React.Component {
     // var playPromise = audioPlayer.play();
 
     if(audioPlayer.paused) {
-      console.log("should play")
       audioPlayer.play()
       .then(function() {
         // Automatic playback started!
-        console.log("Playing")
+
       })
     } else {
-      console.log("should pause")
       audioPlayer.pause()
     }
 
@@ -325,7 +322,6 @@ class App extends React.Component {
   }
 
   audioEnded = () => {
-    console.log("audio ended")
     this.setState({
       sampleCurrentlyPlaying: false
     });
@@ -339,7 +335,6 @@ class App extends React.Component {
     let name;
     let that = this;
 
-    console.log("Hitting this function?");
 
     // data = `authenticity_token=${this.state.railsToken}&kitId=${
     //   this.state.kitId
@@ -371,8 +366,6 @@ class App extends React.Component {
       })
       .then(function(myJson) {
         
-        console.log("wtf")
-        
         that.setState({
             cart: myJson
           });
@@ -380,8 +373,6 @@ class App extends React.Component {
       .catch((err) => {
         // Handle any error that occurred in any of the previous
         // promises in the chain.
-        console.log(err)
-        console.log("there was an error")
       });
       
 
@@ -416,7 +407,6 @@ class App extends React.Component {
 
   deleteItem = e => {
     let kitId = e.target.dataset.kitId;
-    console.log("about to delete");
 
     let that = this;
 
@@ -432,20 +422,16 @@ class App extends React.Component {
         }
   })
     .then(function(response) {
-      console.log("Yeehaw")
       return response.json();
     })
     .then(function(myJson) {
       
-      console.log("wtf")
       that.response(myJson) 
       
     })
     .catch((err) => {
       // Handle any error that occurred in any of the previous
       // promises in the chain.
-      console.log(err)
-      console.log("there was an error")
     });
 
     // $.ajax({
@@ -475,20 +461,16 @@ class App extends React.Component {
         }
   })
     .then(function(response) {
-      console.log("Yeehaw")
       return response.json();
     })
     .then(function(myJson) {
-      
-      console.log("wtf")
+
       that.response(myJson) 
       
     })
     .catch((err) => {
       // Handle any error that occurred in any of the previous
       // promises in the chain.
-      console.log(err)
-      console.log("there was an error")
     });
   }
   //   $.ajax({
@@ -591,7 +573,6 @@ class App extends React.Component {
   };
 
   setModalContent = e => {
-    console.log(e.currentTarget.id);
 
     let modalContent = "Sign Up";
 
@@ -796,13 +777,13 @@ class App extends React.Component {
       playSample={this.setSample}  
       currentSample={currentSample}
       sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
+      inProp={this.state.transition && (i>= this.state.sampleOffset - 6)}
+      key={i}
+      delay={i * 70}
       />);
     }
 
-    samples = <React.Fragment>
-    {samples}
-   
-    </React.Fragment>;
+    samples = <React.Fragment>{samples}</React.Fragment>;
   }
 
     let latestTracks;
@@ -888,7 +869,6 @@ class App extends React.Component {
       <React.Fragment>
         {unsortedItems.map((item, index) => {
           sum += this.state.cart[item].price * this.state.cart[item].quantity;
-          console.log(this.state.cart[item].quantity * 5);
           return (
             <Item
               quantity={this.state.cart[item].quantity}
