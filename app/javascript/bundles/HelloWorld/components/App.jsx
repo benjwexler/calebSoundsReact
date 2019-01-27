@@ -84,7 +84,7 @@ class App extends React.Component {
     let kitSounds 
     let padsObj = {};
 
-    fetch(`http://localhost:3000/kits/${7}?limit=6&offset=${that.state.sampleOffset}`, {
+    fetch(`/kits/${7}?limit=6&offset=${that.state.sampleOffset}`, {
         headers: {
             "Content-Type": "application/json"
           }
@@ -138,7 +138,7 @@ class App extends React.Component {
 
     this.loadSounds();
 
-    fetch(`http://localhost:3000/tracks.json?limit=4`, {
+    fetch(`/tracks.json?limit=4`, {
       headers: {
           "Content-Type": "application/json"
         }
@@ -596,100 +596,100 @@ class App extends React.Component {
     signUpObj["user[password]"] = document.getElementById("userPasswordInput").value;
     signUpObj.commit = "Log in";
     // signUpObj['CSRFToken'] = that.state.railsToken
-    let url = "http://localhost:3000/users/sign_in.json";
+    let url = "/users/sign_in.json";
     if (this.state.modalContent === "Sign Up") {
-      url = "http://localhost:3000/users.json";
+      url = "/users.json";
     signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value;
 
     }
 
-    fetch(url, {
-      method: "POST",
-      mode: 'cors',
-      body: JSON.stringify(signUpObj),
-      credentials: 'same-origin',
-      headers: {
-          "Content-Type": "application/json",
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin':'*',
-          "X-CSRF-Token": that.state.railsToken,
-          "Authorization": that.state.railsToken,
+  //   fetch(url, {
+  //     method: "POST",
+  //     mode: 'cors',
+  //     body: JSON.stringify(signUpObj),
+  //     credentials: 'same-origin',
+  //     headers: {
+  //         "Content-Type": "application/json",
+  //         'Accept': 'application/json',
+  //         'Access-Control-Allow-Origin':'*',
+  //         "X-CSRF-Token": that.state.railsToken,
+  //         "Authorization": that.state.railsToken,
           
-        }
-  })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(myJson) {
-      
-      console.log("wtf")
-      
-      that.setState(
-        {
-          railsToken: myJson.csrfToken,
-          userLoggedIn: true,
-          errorMessage: undefined,
-          cart: JSON.parse(myJson.cart)
-        },
-        () => {
-          console.log(that.state);
-          that.setState({
-            showModal: false
-          })
-        }
-      );
-    })
-    .catch((err) => {
-      // Handle any error that occurred in any of the previous
-      // promises in the chain.
-      console.log(err)
-      console.log("there was an error")
-    });
-      
-  //   $.ajax({
-  //     type: "POST",
-
-  //     url: url,
-  //     data: signUpObj,
-  //     success: function(json) {
-  //       if (json.errorMessage) {
-  //         that.setState({
-  //           errorMessage: json.errorMessage
-  //         });
-  //       } else {
-  //         console.log("signed in or signed up");
-  //         // document.getElementById("modalButton").click();
-  //         console.log(json.cart);
-  //         that.setState(
-  //           {
-  //             railsToken: json.csrfToken,
-  //             userLoggedIn: true,
-  //             errorMessage: undefined,
-  //             cart: JSON.parse(json.cart)
-  //           },
-  //           () => {
-  //             console.log(that.state);
-  //             that.setState({
-  //               showModal: false
-  //             })
-  //           }
-  //         );
   //       }
-  //     },
-  //     error: function(xhr) {
-  //       that.setState({
-  //         errorMessage: "Sorry, could not sign you in"
-  //       });
-  //     },
-  //     dataType: "json"
+  // })
+  //   .then(function(response) {
+  //     return response.json();
+  //   })
+  //   .then(function(myJson) {
+      
+  //     console.log("wtf")
+      
+  //     that.setState(
+  //       {
+  //         railsToken: myJson.csrfToken,
+  //         userLoggedIn: true,
+  //         errorMessage: undefined,
+  //         cart: JSON.parse(myJson.cart)
+  //       },
+  //       () => {
+  //         console.log(that.state);
+  //         that.setState({
+  //           showModal: false
+  //         })
+  //       }
+  //     );
+  //   })
+  //   .catch((err) => {
+  //     // Handle any error that occurred in any of the previous
+  //     // promises in the chain.
+  //     console.log(err)
+  //     console.log("there was an error")
   //   });
+      
+    $.ajax({
+      type: "POST",
+
+      url: url,
+      data: signUpObj,
+      success: function(json) {
+        if (json.errorMessage) {
+          that.setState({
+            errorMessage: json.errorMessage
+          });
+        } else {
+          console.log("signed in or signed up");
+          // document.getElementById("modalButton").click();
+          console.log(json.cart);
+          that.setState(
+            {
+              railsToken: json.csrfToken,
+              userLoggedIn: true,
+              errorMessage: undefined,
+              cart: JSON.parse(json.cart)
+            },
+            () => {
+              console.log(that.state);
+              that.setState({
+                showModal: false
+              })
+            }
+          );
+        }
+      },
+      error: function(xhr) {
+        that.setState({
+          errorMessage: "Sorry, could not sign you in"
+        });
+      },
+      dataType: "json"
+    });
   };
 
   signOut = () => {
     let that = this
     $.ajax({
         type: "POST",
-        url: "http://localhost:3000/users/sign_out",
+        url: "/users/sign_out",
         data: { "_method": "delete", "authenticity_token": that.state.railsToken },
         success: function (json) {
             console.log("trying to delete")

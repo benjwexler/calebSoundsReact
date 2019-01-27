@@ -1,15 +1,15 @@
 import React from 'react';
 
 const tableStyle = {
-    maxHeight: '600px',
-    overflowY: 'auto',
-    width: '500px,'
+    // maxHeight: '600px',
+    // overflowY: 'auto',
+    // width: '500px,'
   };
 
   const wrapper = {
     
-        width: "100%",
-        overflow: "scroll"
+        // width: "100%",
+        // overflow: "scroll"
   
   }
 
