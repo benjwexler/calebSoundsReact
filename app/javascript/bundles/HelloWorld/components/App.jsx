@@ -84,7 +84,7 @@ class App extends React.Component {
     let kitSounds 
     let padsObj = {};
 
-    fetch(`/kits/${7}?limit=6&offset=${that.state.sampleOffset}`, {
+    fetch(`/kits/${10}?limit=6&offset=${that.state.sampleOffset}`, {
         headers: {
             "Content-Type": "application/json"
           }
@@ -270,7 +270,7 @@ class App extends React.Component {
     //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
     // });
 
-    if(this.state.currentTrack) {
+    if(this.state.currentTrack || this.state.currentTrack === 0) {
      
       window[`widget${this.state.currentTrack}`].pause()
       window[`widget${this.state.currentTrack}`].seekTo(0);

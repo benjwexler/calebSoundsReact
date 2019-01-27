@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 
 
+gem 'aws-sdk'
 gem 'stripe'
 gem "figaro"
 gem 'devise'
