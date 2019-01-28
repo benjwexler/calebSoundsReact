@@ -1,31 +1,120 @@
-<p id="notice"><%= notice %></p>
+<div id="outerNavContainer" style="position: relative">
+    <div id="nav">
+        <div id="navContainer">
+            <i class="fas fa-bars"></i>
+            <div id="navTitle">
+                <a style="color: rgba(45, 51, 221, 0.747)" href="/">Caleb Elias G sounds</a>
+                </div>
+            <div class="navLink">
+                <a href="/kits">Packs</a>
+            </div>
+            <div class="navLink">
+                <a href="/tracks">Tracks</a>
+            </div>
+            <div class="navLink">
+                <a href="/tracks">Sounds</a>
+                </div>
+            <div class="navLink">Info</div>
+           
+            <div id="logInSignUpContainer" style="margin-left: 0px;  margin-right: 0px">
+                <div class="logInorSignUp" >
+                    <a style="color: rgba(45, 51, 221, 0.747)" href="/tracks/new"> ADD NEW TRACK</a>
 
-<h1>Tracks</h1>
+                </div>
+                <a href="/tracks/new"><i class="fas fa-plus-square"></i></a>
+              
+            </div>
+            <div id="signOutContainer"><div class="logInorSignUp">SIGN OUT</div><i class="fas fa-sign-out-alt"></i></div>
+          
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Soundcloud</th>
-      <th>Release date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @tracks.each do |track| %>
-      <tr>
-        <td><%= track.name %></td>
-        <td><%= track.soundcloud_id %></td>
-        <td><%= track.release_date %></td>
-        <td><%= link_to 'Show', track %></td>
-        <td><%= link_to 'Edit', edit_track_path(track) %></td>
-        <td><%= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        </div>
+      
+    
+</div>
+<div id="navDropdownOuterContainer"> 
+    <div id="mobileLinksContainer">
+    <div class="mobileNavLink">
+        <div class="mobileNavLinkName">
+            Your Packs
+        </div>
+    </div>
+    <div class="mobileNavLink">
+        <div class="mobileNavLinkName">
+            Beats
+        </div>
+    </div>
+    <div class="mobileNavLink">
+        <div class="mobileNavLinkName">
+            Tutorials
+        </div>
+    </div>
+    <div class="mobileNavLink">
+        <div class="mobileNavLinkName">
+            Songs
+        </div>
+    </div>
+    <div class="mobileNavLink">
+        <div class="mobileNavLinkName">
+            Videos
+        </div>
+    </div>
+    <div class="mobileNavLink">
+        <div class="mobileNavLinkName">
+            Log in/Sign up
+        </div>
+    </div>
+    </div>
+</div>
 
-<br>
+<div id="section3" style="padding-top: 100px; height: auto;">
 
-<%= link_to 'New Track', new_track_path %>
+    <div id="latestTracksHeader">Tracks</div>
+
+    <div id="tracksContainer">
+
+        <% @tracks.each do |track| %>
+        <div class="track">
+            <div class="trackImageContainer">
+                <img class="trackImage" src="<%= url_for(track.cover_art)%>">
+                <div class="trackCircle"></div>
+                <i class="fas fa-play trackPlayIcon"></i>
+            </div>
+            <div class="trackInfoContainer">
+                <div class="trackNameContainer">
+                    <div class="trackName"><%= track.name %> </div>
+                    <%= link_to 'Edit', edit_track_path(track) %>
+                    <%= link_to 'Show', track %>
+                    <%= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' } %>
+                </div>
+
+
+
+                <div class="streamContainer">
+                    <div class="logoContainer">
+                        <a href="<%= track.spotify_url%>"><i class="fab streamingLogo  fa-spotify"></i></a>
+                    </div>
+                    <div class="logoContainer">
+                        <a href="<%= track.soundcloud_url%>"><i class="fab streamingLogo  fa-soundcloud"></i></a>
+                    </div>
+                    <div class="logoContainer">
+                        <i class="fab streamingLogo  fa-apple"></i>
+                    </div>
+                    <div class="logoContainer">
+                        <a href="<%= track.youtube_url%>"><i class="fab streamingLogo  fa-youtube"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <% end %>
+
+
+
+    </div>
+
+
+
+</div>

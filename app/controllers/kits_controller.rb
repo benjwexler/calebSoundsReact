@@ -70,7 +70,16 @@ class KitsController < ApplicationController
       
       }
       format.html {
+        # sound = Kit.find(10).sounds[0]
 
+        # p url_for(sound.soundfile)
+        @sounds = @kit.sounds
+
+        @sounds.map { |sound|
+       
+          sound.as_json.merge({ soundfile: url_for(sound.soundfile), filename: sound.soundfile.blob.filename })
+        }
+       p @sounds
       }
     end 
 
