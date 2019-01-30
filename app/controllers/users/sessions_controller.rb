@@ -50,7 +50,8 @@ class Users::SessionsController < Devise::SessionsController
     p render :json => {
         'csrfParam' => request_forgery_protection_token,
         'csrfToken' => form_authenticity_token,
-        'cart' => current_user.cart
+        'cart' => current_user.cart,
+        'user_id' => current_user.id
     }
   end
 

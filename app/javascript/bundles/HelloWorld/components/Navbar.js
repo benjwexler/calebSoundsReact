@@ -17,13 +17,34 @@ const navbar = (props) => {
     <i className="fas fa-user-lock"></i>
 </div>)
 } else {
-    loginSignUp = (<div onClick={props.signOut} id="signOutContainer">
-    <div className="logInorSignUp">
-        SIGN OUT
+    loginSignUp = (
 
+    <div id="accountContainer">
+        <div onClick={props.toggleAccountDropdown} id="signOutContainer">
+            <div className="logInorSignUp">
+            ACCOUNT
+            </div>
+            <i onClick={props.toggleAccountDropdown} class="navbarIconBig fas fa-user-circle"></i>
+        </div>
+
+        <div id="accountDropdown" class={props.showAccountDropdown}>
+            <div className="carrotContainer">
+                <i class="carrot fas fa-caret-up"></i>
+            </div>
+            <div className="accountLink">
+            <a href={'/users/' + props.userId}>Update Info</a>
+            
+            </div>
+            <hr/>
+            <div className="accountLink">
+            <a href="/users/edit">Change Password</a>
+            
+            </div>
+            <hr/>
+            <div onClick={props.signOut} className="accountLink">Sign Out</div>
+        </div>
     </div>
-    <i class="fas fa-sign-out-alt"></i>
-</div>)
+)
 }
 
 
