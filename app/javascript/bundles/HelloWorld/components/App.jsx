@@ -559,12 +559,16 @@ class App extends React.Component {
   };
 
   handleResize = () => {
-    if (window.innerWidth > 1120)
-      [
+    if (window.innerWidth > 1120){
         this.setState({
           showMobileNav: false
         })
-      ];
+        
+      } else {
+        this.setState({
+          showAccountDropdown: false
+        })
+      }
   };
 
   toggleModal = () => {
