@@ -47,6 +47,7 @@ class App extends React.Component {
 
     this.state = {
       userLoggedIn: props.isLoggedIn,
+      userId: props.userId,
       modalContent: "Sign Up",
       railsToken: ReactOnRails.authenticityToken(),
       ErrorMessage: undefined,
@@ -74,7 +75,8 @@ class App extends React.Component {
       sampleOffset: 0,
       currentSample: undefined,
       sampleCurrentlyPlaying: false,
-      transition: true
+      transition: true,
+      showAccountDropdown: false
     };
   }
 
@@ -395,7 +397,8 @@ class App extends React.Component {
     this.setState(
       {
         showCart: true,
-        showMobileNav: false
+        showMobileNav: false,
+        showAccountDropdown: false
       },
       this.checkToggleCart
     );
@@ -659,11 +662,12 @@ class App extends React.Component {
         } else {
           console.log("signed in or signed up");
           // document.getElementById("modalButton").click();
-          console.log(json.cart);
+          console.log(json);
           that.setState(
             {
               railsToken: json.csrfToken,
               userLoggedIn: true,
+              userId: JSON.parse(json.user_id),
               errorMessage: undefined,
               cart: JSON.parse(json.cart)
             },
@@ -724,9 +728,24 @@ class App extends React.Component {
     this.setState(
       {
         showCart: !that.state.showCart,
-        showMobileNav: false
+        showMobileNav: false,
+        showAccountDropdown: false,
       },
       this.checkToggleCart
+    );
+  };
+
+  toggleAccountDropdown = () => {
+    let that = this;
+
+    // console.log(this.state)
+    this.setState(
+      {
+        showAccountDropdown: !this.state.showAccountDropdown,
+        showCart: false,
+        showMobileNav: false
+      },
+      // this.checkToggleCart
     );
   };
 
@@ -965,6 +984,14 @@ class App extends React.Component {
     }
     audioPlayer = <audio onEnded={this.audioEnded} id="audioPlayer" autoplay src={currentSampleSrc}  type="audio/wav"/>
 
+    let showAccountDropdown
+    
+    if(this.state.showAccountDropdown) {
+      showAccountDropdown = "showAccountDropdown"
+    } else {
+      showAccountDropdown = "hideAccountDropdown"
+    }
+  
     return (
       <div>
         {modal}
@@ -975,6 +1002,9 @@ class App extends React.Component {
           toggleMobileNav={this.toggleMobileNav}
           userLoggedIn = {this.state.userLoggedIn}
           signOut = {this.signOut}
+          userId= {this.state.userId}
+          showAccountDropdown = {showAccountDropdown}
+          toggleAccountDropdown = {this.toggleAccountDropdown}
         />
         <MobileNav mobileNavToggle={mobileNavToggle} />
         <Section1 />

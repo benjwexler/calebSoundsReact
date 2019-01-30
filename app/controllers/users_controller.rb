@@ -5,6 +5,18 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+
+    p current_user
+
+    @user_id = nil  
+
+
+    if current_user 
+      p  @user_id = current_user.id
+    end 
+
+    
+    p "BLAH"
   end
 
   # GET /users/1

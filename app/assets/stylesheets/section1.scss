@@ -382,6 +382,60 @@ height: 100%;
 
 }
 
+#accountDropdown {
+    height: auto;
+    // border: 2px solid yellow;
+    width: 200px;
+    margin-left: 140px;
+    // margin-left: 84px;
+    // margin-left: 184px;
+    // margin-right: 96px;
+    // margin-right: 86px;
+    background: white;
+    border-radius: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 0px;
+    font-family: 'Josefin Sans', sans-serif !important;
+    font-size: 15px;
+    
+}
+
+.carrotContainer {
+    height: 27px;
+   
+    text-align: center;
+    background: #f2f2f2;
+    position: relative
+    // background: purple;
+}
+
+.carrot {
+    color: white;
+    margin-bottom: -10px;
+    font-size: 39px;
+    // bottom: 0px;
+    // position: absolute;
+    // margin: 0;
+    // padding: 0
+}
+
+.showAccountDropdown {
+    display: block;
+}
+
+.hideAccountDropdown {
+    display: none;
+}
+
+.accountLink {
+    height: 35px;
+    padding-top: 25px;
+    text-align: center;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    // border-bottom: 1px solid black
+}
+
 .logInorSignUp {
     font-family: 'Josefin Sans', sans-serif !important;
     margin-left: 80px;
@@ -417,6 +471,12 @@ height: 100%;
 }
 
 .fa-sign-out-alt {
+    margin-top: -9px;
+    font-size: 26px;
+    color: rgba(45, 51, 221, 0.747) ;
+}
+
+.fa-user-circle {
     margin-top: -9px;
     font-size: 26px;
     color: rgba(45, 51, 221, 0.747) ;
