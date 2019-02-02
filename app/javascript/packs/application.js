@@ -17,6 +17,7 @@ ReactRailsUJS.useContext(componentRequireContext)
 import ReactOnRails from 'react-on-rails';
 
 import App from '../bundles/HelloWorld/components/App.jsx';
+import UserInfo from '../bundles/HelloWorld/components/UserInfo.jsx';
 // import Section2 from '../bundles/HelloWorld/components/Section2.jsx';
 import DrumMachineSection from '../bundles/HelloWorld/components/DrumMachineSection.jsx';
 import Checkout from '../bundles/HelloWorld/components/Checkout.jsx';
@@ -26,6 +27,10 @@ import Checkout from '../bundles/HelloWorld/components/Checkout.jsx';
 
 ReactOnRails.register({
     App
+  });
+
+  ReactOnRails.register({
+    UserInfo
   });
 
 

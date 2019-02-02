@@ -433,7 +433,13 @@ height: 100%;
     text-align: center;
     border-left: 1px solid rgba(0, 0, 0, 0.1);
     border-right: 1px solid rgba(0, 0, 0, 0.1);
+    opacity: .8;
     // border-bottom: 1px solid black
+}
+
+.accountLink:hover {
+    background: rgba(0, 0, 0, 0.016);
+    opacity: 1;
 }
 
 .logInorSignUp {
