@@ -26,7 +26,7 @@ const convertToUsCurrency = new Intl.NumberFormat("en-US", {
 
 // import './Devise.css';
 
-class App extends React.Component {
+class UserInfo extends React.Component {
   constructor(props) {
     super(props);
 
@@ -995,6 +995,77 @@ class App extends React.Component {
     } else {
       showAccountDropdown = "hideAccountDropdown"
     }
+
+    let fullScreenStyle = {
+        height: '100vh',
+        width: '100vw',
+        border: '1px solid yellow',
+        // paddingTop: '200px'
+        // marginTop: '200px',
+    }
+
+    let nameStyle = {
+      fontSize: '20px',
+      color: 'black',
+      marginBottom: '5px'
+      
+  }
+
+  let fontBlue = {
+    color: 'rgba(45, 51, 221, 0.747)',
+    fontSize: '18px' 
+  }
+
+    let modalStyle = {
+        // margin: 'auto',
+        // marginTop: '100px',
+        // width: '100%',
+        // maxWidth: '600px',
+        // height: '400px',
+        // border: '1px solid black',
+        // background: 'white',
+        // borderRadius: '5px',
+        // fontFamily: 'Josefin Sans, sans-serif !important',
+        // boxSizing: 'border-box',
+
+   
+            width: '100%',
+            maxWidth: '500px',
+            padding: '40px',
+            paddingTop: '20px',
+            margin: 'auto',
+            marginTop: '120px',
+            border: 'solid 3px black',
+            display: 'flex',
+            flexDirection: 'column',
+            // justifyContent: 'center',
+            alignItems: 'center',
+            color: 'rgba(45, 51, 221, 0.747)'  ,
+            backgroundColor: 'white',
+            borderRadius: '3%',
+            fontFamily: 'Josefin Sans, sans-serif !important',
+            boxSizing: 'border-box',
+            boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
+            position: 'relative',
+            height: '500px'
+            /* font-family: 'Fjalla One', sans-serif; */
+       
+        
+        
+    
+    }
+
+    let linksContainerStyle = {
+      display : 'flex',
+      height: '200px',
+      width: '100%',
+      border: '1px solid black'
+    }
+
+    let accountInfoStyle = {
+        fontSize: '32px',
+        fontFamily: 'Josefin Sans, sans-serif',
+    }
   
     return (
       <div>
@@ -1011,15 +1082,18 @@ class App extends React.Component {
           toggleAccountDropdown = {this.toggleAccountDropdown}
         />
         <MobileNav mobileNavToggle={mobileNavToggle} />
-        <Section1 />
-        <Section2 samples={samples} click={this.addToCart} loadSounds={this.loadSounds} />
-        {audioPlayer}
-        {latestTracks}
-        
-        <Footer />
+
+        <div style={fullScreenStyle}> 
+            <div style={modalStyle}>
+                <div style={accountInfoStyle}>ACCOUNT INFO</div>
+                <div style={nameStyle}>First Name: <span style={fontBlue}>Ben </span></div>
+                <div style={nameStyle}>Last Name: <span style={fontBlue}>Wexler</span> </div>
+                <div style={linksContainerStyle}></div>
+            </div>
+        </div>
       </div>
     );
   }
 }
 
-export default App;
+export default UserInfo;

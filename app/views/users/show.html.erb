@@ -1,10 +1,12 @@
+<%= react_component("UserInfo", props: { isLoggedIn: user_signed_in?, userId: @user_id})%>
+
 <p id="notice"><%= notice %></p>
 
 <p>
   <strong>First name:</strong>
   <%= @user.first_name %>
 </p>
-
+  
 <p>
   <strong>Last name:</strong>
   <%= @user.last_name %>
