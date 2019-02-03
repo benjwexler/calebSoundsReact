@@ -698,7 +698,7 @@ class App extends React.Component {
     $.ajax({
         type: "POST",
         url: "/users/sign_out",
-        data: { "_method": "delete", "authenticity_token": that.state.railsToken },
+        data: { "_method": "delete", "authenticity_token": that.state.railsToken},
         success: function (json) {
             console.log("trying to delete")
             console.log(json)

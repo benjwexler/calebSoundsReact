@@ -50,6 +50,7 @@ class UserInfo extends React.Component {
       userId: props.userId,
       userFirstName: props.userFirstName,
       userLastName: props.userLastName,
+      relativePath: undefined,
       modalContent: "Sign Up",
       railsToken: ReactOnRails.authenticityToken(),
       ErrorMessage: undefined,
@@ -80,6 +81,14 @@ class UserInfo extends React.Component {
       transition: true,
       showAccountDropdown: false
     };
+  }
+
+  getRelativePath = () => {
+    let path = window.location.pathname+window.location.search
+    this.setState({
+      relativePath: path
+      });
+    
   }
 
   loadSounds = (kitId) => {
@@ -162,6 +171,7 @@ class UserInfo extends React.Component {
 
     componentDidMount() {
       //  this.setState({ in: !this.state.transition });
+      this.getRelativePath()
     window.addEventListener("resize", this.handleResize);
     let that = this;
 
@@ -673,7 +683,7 @@ class UserInfo extends React.Component {
     $.ajax({
         type: "POST",
         url: "/users/sign_out",
-        data: { "_method": "delete", "authenticity_token": that.state.railsToken },
+        data: { "_method": "delete", "authenticity_token": that.state.railsToken, "relativePath": that.state.relativePath  },
         success: function (json) {
             console.log("trying to delete")
             console.log(json)
@@ -683,6 +693,8 @@ class UserInfo extends React.Component {
                 railsToken: json.csrfToken,
                 cart: json.cart
             })
+
+            window.location.href="/"
 
         },
         error: function (xhr) {

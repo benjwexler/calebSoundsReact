@@ -57,11 +57,26 @@ class Users::SessionsController < Devise::SessionsController
 
   def destroy # Assumes only JSON requests
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+
+    # p request.url
+    # p relative_path = params["relativePath"]
+    # if params["relativePath"]
+    #   p match_group = /(?<users>\w+)\/(?<user_id>\d{1,})/.match(relative_path)
+
+    #   p match_group["user_id"]
+
+    #   if match_group["users"] == "users" && (match_group["user_id"].to_i).is_a?(Integer)
+    #     redirect_to root_path
+    #   end 
+    
+    # else
+
     p render :json => {
         'csrfParam' => request_forgery_protection_token,
         'csrfToken' => form_authenticity_token,
         'cart' => session[:temporary_cart]
     }
+    # end
   end
 
 end

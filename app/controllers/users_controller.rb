@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       p  @user_id = current_user.id
     end 
 
-    
+    render :index 
     p "BLAH"
   end
 
@@ -31,6 +31,7 @@ class UsersController < ApplicationController
           redirect_to root_path
         else
           @user_id = current_user.id
+          @relative_path = request.original_url
         end
       }
       format.json { 
