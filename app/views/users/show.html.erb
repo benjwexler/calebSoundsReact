@@ -1,22 +1,4 @@
-<%= react_component("UserInfo", props: { isLoggedIn: user_signed_in?, userId: @user_id})%>
+<%= react_component("UserInfo", props: { isLoggedIn: user_signed_in?, userId: @user_id, userFirstName: @user.first_name, userLastName: @user.last_name})%>
 
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>First name:</strong>
-  <%= @user.first_name %>
-</p>
-  
-<p>
-  <strong>Last name:</strong>
-  <%= @user.last_name %>
-</p>
 
-<p>
-  <strong>Isadmin:</strong>
-  <%= @user.isAdmin %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
-<%= link_to "Change your password", edit_user_registration_path %>

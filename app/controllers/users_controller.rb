@@ -22,6 +22,22 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    
+
+    respond_to do |format|
+        
+      format.html {
+        if !current_user
+          redirect_to root_path
+        else
+          @user_id = current_user.id
+        end
+      }
+      format.json { 
+       
+        render json: {}
+      }
+  end 
   end
 
   # GET /users/new

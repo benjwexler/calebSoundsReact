@@ -48,6 +48,8 @@ class UserInfo extends React.Component {
     this.state = {
       userLoggedIn: props.isLoggedIn,
       userId: props.userId,
+      userFirstName: props.userFirstName,
+      userLastName: props.userLastName,
       modalContent: "Sign Up",
       railsToken: ReactOnRails.authenticityToken(),
       ErrorMessage: undefined,
@@ -104,6 +106,31 @@ class UserInfo extends React.Component {
           })
 
       }
+
+      // getUserInfo = () => {
+      //   // this.setState({ in: false });
+      //   let that = this;
+      //   let kitSounds 
+      //   let padsObj = {};
+    
+      //   fetch(`/kits/${10}?limit=6&offset=${that.state.sampleOffset}`, {
+      //       headers: {
+      //           "Content-Type": "application/json"
+      //         }
+      //   })
+      //     .then(function(response) {
+      //       return response.json();
+      //     })
+      //     .then(function(myJson) {
+      //       kitSounds = that.state.kitSounds.concat(myJson)
+      //       that.setState({
+      //           kitSounds: kitSounds,
+      //           sampleOffset: that.state.sampleOffset + 6,
+      //           transition: false
+      //           }, that.transition);
+      //         })
+    
+      //     }
       
 
      
@@ -138,53 +165,6 @@ class UserInfo extends React.Component {
     window.addEventListener("resize", this.handleResize);
     let that = this;
 
-    this.loadSounds();
-
-    fetch(`/tracks.json?limit=4`, {
-      headers: {
-          "Content-Type": "application/json"
-        }
-    })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(myJson) {
-      let newTracksObj = {};
-      myJson.forEach(function(track, index) {
-        newTracksObj[index] = myJson[index];
-      });
-      that.setState(
-        {
-          tracks: myJson,
-          tracksObj: newTracksObj,
-          counter: 7
-        },
-        that.bindWidget
-      );
-    });
-
-    // $.ajax({
-    //   type: "GET",
-    //   url: "http://localhost:3000/tracks?limit=4",
-    //   success: function(json) {
-    //     console.log(json);
-    //     let newTracksObj = {};
-    //     json.forEach(function(track, index) {
-    //       console.log(json[index]);
-    //       newTracksObj[index] = json[index];
-    //     });
-    //     that.setState(
-    //       {
-    //         tracks: json,
-    //         tracksObj: newTracksObj,
-    //         counter: 7
-    //       },
-    //       that.bindWidget
-    //     );
-    //   },
-    //   error: function(xhr) {},
-    //   dataType: "json"
-    // });
 
     fetch(`/carts`, {
       headers: {
@@ -199,12 +179,7 @@ class UserInfo extends React.Component {
       that.response(myJson)
     });
 
-  //   $.ajax({
-  //     method: "GET",
-  //     url: `/carts`,
-  //     dataType: "json",
-  //     success: this.response
-  //   });
+
   }
 
   bindWidget = () => {
@@ -1062,6 +1037,33 @@ class UserInfo extends React.Component {
       border: '1px solid black'
     }
 
+    let linksContainerStyle2 = {
+      display : 'flex',
+      height: '100px',
+      width: '100%',
+      border: '1px solid black'
+    }
+
+    let col = {
+      width: '30%',
+      height: '44px',
+      background: 'rgba(45, 51, 221, 0.89)',
+      margin: 'auto',
+      position: 'relative',
+      // border: '1px solid black',
+      borderRadius: '25px'
+    }
+
+    let centerText = {
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
+      color: 'rgba(255, 255, 255, 0.961)',
+      fontFamily: 'Fjalla One, sans-serif',
+      textAlign: 'center'
+    }
+
     let accountInfoStyle = {
         fontSize: '32px',
         fontFamily: 'Josefin Sans, sans-serif',
@@ -1086,9 +1088,23 @@ class UserInfo extends React.Component {
         <div style={fullScreenStyle}> 
             <div style={modalStyle}>
                 <div style={accountInfoStyle}>ACCOUNT INFO</div>
-                <div style={nameStyle}>First Name: <span style={fontBlue}>Ben </span></div>
-                <div style={nameStyle}>Last Name: <span style={fontBlue}>Wexler</span> </div>
-                <div style={linksContainerStyle}></div>
+                <div style={nameStyle}>First Name: <span style={fontBlue}>{this.state.userFirstName} </span></div>
+                <div style={nameStyle}>Last Name: <span style={fontBlue}>{this.state.userLastName} </span> </div>
+                <div style={linksContainerStyle}>
+                  
+                </div>
+                <div style={linksContainerStyle2}>
+                <a style={col} href="/">
+                  <div style={centerText}>Back</div>
+                </a>
+                <a style={col} href={"/users/" + this.state.userId + "/edit"}>
+                  <div style={centerText}>Edit Info</div>
+                </a>
+                <a style={col} href="/users/edit">
+                  <div style={centerText}>Change Password</div>
+                </a>
+                  
+                </div>
             </div>
         </div>
       </div>
