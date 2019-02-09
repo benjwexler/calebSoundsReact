@@ -26,7 +26,7 @@ const convertToUsCurrency = new Intl.NumberFormat("en-US", {
 
 // import './Devise.css';
 
-class UserInfo extends React.Component {
+class NewCheckout extends React.Component {
   constructor(props) {
     super(props);
 
@@ -1129,4 +1129,4 @@ class UserInfo extends React.Component {
   }
 }
 
-export default UserInfo;
+export default NewCheckout;
