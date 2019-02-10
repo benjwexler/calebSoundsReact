@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :transactions
   get 'checkout', to: 'checkout#index'
   
   resources :sound_and_kits

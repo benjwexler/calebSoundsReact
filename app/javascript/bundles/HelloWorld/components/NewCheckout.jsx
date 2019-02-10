@@ -48,6 +48,7 @@ class NewCheckout extends React.Component {
     this.state = {
       userLoggedIn: props.isLoggedIn,
       userId: props.userId,
+      userEmail: undefined,
       userFirstName: props.userFirstName,
       userLastName: props.userLastName,
       relativePath: undefined,
@@ -65,7 +66,7 @@ class NewCheckout extends React.Component {
       kitPic: undefined,
       kitName: undefined,
       kitPrice: undefined,
-      kitId: undefined,
+      kitId: 10,
       pads: undefined,
       context: undefined,
       gainNode: undefined,
@@ -93,7 +94,7 @@ class NewCheckout extends React.Component {
 
   onToken = (token) => {
 
-    const data = {...token, amount: this.state.totalPrice * 100}
+    const data = {...token, amount: this.state.totalPrice * 100, userId: this.state.userId, kitId: this.state.kitId}
 
     let that = this 
 
@@ -115,6 +116,30 @@ class NewCheckout extends React.Component {
     tokenResponse = (json) => {
         console.log(json)
     }
+
+  getUserId = () => {
+    let that = this;
+    fetch(`/users/x.json`, {
+      headers: {
+          "Content-Type": "application/json"
+        }
+  })
+    .then(function(response) {
+      // console.log(response.json())
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log(myJson.user_id)
+      that.setState({
+        userId: myJson.user_id,
+        userEmail: myJson.user_email
+      });
+    })
+   
+
+    }
+
+  
 
   loadSounds = (kitId) => {
     // this.setState({ in: false });
@@ -231,7 +256,7 @@ let cartItems = Object.keys(cartObj)
 console.log(cartItems)
 let totalPrice = cartItems.map((item, index) => {
 
-    price = parseInt(cartObj[item].price)
+    price = parseFloat(cartObj[item].price)
     quantity = cartObj[item].quantity
 
     return price * quantity
@@ -247,6 +272,8 @@ return totalPrice
 
     componentDidMount() {
       //  this.setState({ in: !this.state.transition });
+
+      this.getUserId();
       $.ajax({
         method: "GET",
         url: `/carts`,
@@ -1167,6 +1194,7 @@ return totalPrice
     let displayNoneStyle = {
       display: 'none'
     }
+
   
     return (
       <div>
@@ -1214,6 +1242,8 @@ return totalPrice
                   amount={this.state.totalPrice * 100}
                   stripeKey={process.env.stripe_publishable_key}
                   token={this.onToken}
+                  email={this.state.userEmail}
+                  reconfigureOnUpdate={true}
               />
         </div>
         

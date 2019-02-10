@@ -14,7 +14,7 @@ const cart = (props) => {
             <div onClick={props.click} id="emptyBagContainer"> <span id="emptyBagText">Empty Bag</span></div>
             <div id="checkoutBtnOuterContainer">
             <div id="checkoutBtn">
-                <div id="checkoutText">Proceed to Checkout: {props.totalPrice}</div>
+                <a href="/checkout" id="checkoutText">Proceed to Checkout: {props.totalPrice}</a>
             </div>
         </div>
         </div>

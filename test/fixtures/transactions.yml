@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  kit_id: 1
+  price: 1.5
+  email: MyString
+
+two:
+  user_id: 1
+  kit_id: 1
+  price: 1.5
+  email: MyString
