@@ -1119,11 +1119,7 @@ class UserInfo extends React.Component {
                 </div>
             </div>
         </div>
-        <StripeCheckout
-                amount={this.state.totalPrice * 100}
-                stripeKey={process.env.stripe_publishable_key}
-                token={this.onToken}
-            />
+        
       </div>
     );
   }

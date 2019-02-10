@@ -1,42 +1,67 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
 
-    p current_user
+    respond_to do |format| 
+      format.html {
+        @users = User.all
 
-    @user_id = nil  
+        p current_user
+
+        @user_id = nil  
 
 
-    if current_user 
-      p  @user_id = current_user.id
+        if current_user 
+          p  @user_id = current_user.id
+        end 
+
+        render :index 
+        p "BLAH"
+      }
+      format.json { 
+       
+        render json: {}
+      }
     end 
 
-    render :index 
-    p "BLAH"
   end
 
-  # GET /users/1
+  # GET /users/1 
   # GET /users/1.json
   def show
+
+    p params 
+    # p @user
     
 
     respond_to do |format|
         
       format.html {
-        if !current_user
+        if !current_user || params[:id].to_i != current_user.id
           redirect_to root_path
         else
+          @user = current_user
           @user_id = current_user.id
           @relative_path = request.original_url
         end
       }
       format.json { 
+
+        @user_id = nil 
+        @user_email = nil 
+
+
+        if current_user 
+          p  @user_id = current_user.id
+            @user_email = current_user.email 
+        end 
+
+      
        
-        render json: {}
+        render json: {user_id:  @user_id, user_email: @user_email}
       }
   end 
   end
@@ -95,7 +120,15 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      
+      # begin
+      if params[:id] != "x"
+        @user = User.find(params[:id])
+      end 
+      # rescue 
+      #   # redirect_to root_path
+      #   @user = nil 
+      # end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
