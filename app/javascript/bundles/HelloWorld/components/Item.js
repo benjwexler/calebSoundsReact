@@ -4,13 +4,13 @@ import React from 'react';
 const item = (props) => {
 
     return (
-        <div class="item">
-            <div class="itemQuantity">{props.quantity}</div>
-            <div class="itemName">{props.name}</div>
-            <div class="removeItem">
-                    <i onClick={props.deleteItem} class="far fa-trash-alt"></i>
+        <div className="item">
+            <div className="itemQuantity">{props.quantity}</div>
+            <div className="itemName">{props.name}</div>
+            <div className="removeItem">
+                    <i onClick={props.deleteItem} className="far fa-trash-alt"></i>
             </div>
-            <div class="itemTotal">{props.itemPrice}</div>
+            <div className="itemTotal">{props.itemPrice}</div>
         </div>
 
     )

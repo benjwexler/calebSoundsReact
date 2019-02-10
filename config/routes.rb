@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-
+  get 'checkout', to: 'checkout#index'
+  
   resources :sound_and_kits
   resources :charges
   resources :sounds
@@ -18,7 +19,7 @@ Rails.application.routes.draw do
       end
   resources :users
   get 'hello_world', to: 'hello_world#index'
-  get 'checkout', to: 'checkout#index'
+
   # get 'carts', to: 'carts#index'
 
   root to: "users#index"

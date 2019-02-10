@@ -4,7 +4,7 @@ import React from 'react';
 const cart = (props) => {
 
     return (
-        <div id="cart" class={props.showCartBoolean + " " + props.cartHeightZero} onTransitionEnd={props.cartTransitionEnd}>
+        <div id="cart" className={props.showCartBoolean + " " + props.cartHeightZero} onTransitionEnd={props.cartTransitionEnd}>
             <div id="yourCartText">Your Cart</div>
             {props.items}
             <div id="cartTotal">

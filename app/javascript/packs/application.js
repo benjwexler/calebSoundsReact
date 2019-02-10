@@ -18,6 +18,7 @@ import ReactOnRails from 'react-on-rails';
 
 import App from '../bundles/HelloWorld/components/App.jsx';
 import UserInfo from '../bundles/HelloWorld/components/UserInfo.jsx';
+import NewCheckout from '../bundles/HelloWorld/components/NewCheckout.jsx';
 // import Section2 from '../bundles/HelloWorld/components/Section2.jsx';
 import DrumMachineSection from '../bundles/HelloWorld/components/DrumMachineSection.jsx';
 import Checkout from '../bundles/HelloWorld/components/Checkout.jsx';
@@ -31,6 +32,10 @@ ReactOnRails.register({
 
   ReactOnRails.register({
     UserInfo
+  });
+
+  ReactOnRails.register({
+    NewCheckout
   });
 
 

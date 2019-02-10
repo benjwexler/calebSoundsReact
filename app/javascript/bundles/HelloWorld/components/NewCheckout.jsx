@@ -26,7 +26,7 @@ const convertToUsCurrency = new Intl.NumberFormat("en-US", {
 
 // import './Devise.css';
 
-class UserInfo extends React.Component {
+class NewCheckout extends React.Component {
   constructor(props) {
     super(props);
 
@@ -90,6 +90,31 @@ class UserInfo extends React.Component {
       });
     
   }
+
+  onToken = (token) => {
+
+    const data = {...token, amount: this.state.totalPrice * 100}
+
+    let that = this 
+
+        $.ajax({
+            method: "POST",
+            beforeSend: function(request) {
+                request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+              },
+            url: `/charges`,
+            data: data,
+            dataType: 'json',
+            success: this.tokenResponse
+        })
+
+       
+
+    }
+
+    tokenResponse = (json) => {
+        console.log(json)
+    }
 
   loadSounds = (kitId) => {
     // this.setState({ in: false });
@@ -167,11 +192,69 @@ class UserInfo extends React.Component {
 
   transition = () => {
     this.setState({transition: true})
+
+
   }
+
+
+
+
+responseTotalPrice = (json) => {
+
+// let totalPrice = (json) => this.totalPrice(json)
+
+let totalPrice = this.totalPrice(json)
+
+
+
+console.log(json)
+
+this.setState({
+    cart: json,
+    totalPrice: totalPrice
+
+
+} 
+)
+
+
+}
+
+totalPrice = (cartObj) => {
+
+let that = this
+
+let price
+let quantity
+
+let cartItems = Object.keys(cartObj)
+console.log(cartItems)
+let totalPrice = cartItems.map((item, index) => {
+
+    price = parseInt(cartObj[item].price)
+    quantity = cartObj[item].quantity
+
+    return price * quantity
+}).reduce((sum, price) => {
+    return sum + price;
+});
+
+console.log(totalPrice)
+
+return totalPrice
+
+}
 
     componentDidMount() {
       //  this.setState({ in: !this.state.transition });
+      $.ajax({
+        method: "GET",
+        url: `/carts`,
+        dataType: 'json',
+        success: this.responseTotalPrice
+    })
       this.getRelativePath()
+      document.querySelector(".StripeCheckout").click()
     window.addEventListener("resize", this.handleResize);
     let that = this;
 
@@ -1080,6 +1163,10 @@ class UserInfo extends React.Component {
         fontSize: '32px',
         fontFamily: 'Josefin Sans, sans-serif',
     }
+
+    let displayNoneStyle = {
+      display: 'none'
+    }
   
     return (
       <div>
@@ -1097,12 +1184,15 @@ class UserInfo extends React.Component {
         />
         <MobileNav mobileNavToggle={mobileNavToggle} />
 
+       
+
         <div style={fullScreenStyle}> 
             <div style={modalStyle}>
                 <div style={accountInfoStyle}>ACCOUNT INFO</div>
                 <div style={nameStyle}>First Name: <span style={fontBlue}>{this.state.userFirstName} </span></div>
                 <div style={nameStyle}>Last Name: <span style={fontBlue}>{this.state.userLastName} </span> </div>
                 <div style={linksContainerStyle}>
+               
                   
                 </div>
                 <div style={linksContainerStyle2}>
@@ -1119,14 +1209,17 @@ class UserInfo extends React.Component {
                 </div>
             </div>
         </div>
-        <StripeCheckout
-                amount={this.state.totalPrice * 100}
-                stripeKey={process.env.stripe_publishable_key}
-                token={this.onToken}
-            />
+        <div style={displayNoneStyle}>
+          <StripeCheckout
+                  amount={this.state.totalPrice * 100}
+                  stripeKey={process.env.stripe_publishable_key}
+                  token={this.onToken}
+              />
+        </div>
+        
       </div>
     );
   }
 }
 
-export default UserInfo;
+export default NewCheckout;

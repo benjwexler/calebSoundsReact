@@ -5,34 +5,34 @@ const mobileNav = (props) => {
 
     return (
         <div id="navDropdownOuterContainer"> 
-            <div id="mobileLinksContainer"class={props.mobileNavToggle}>
-                <div class="mobileNavLink">
-                <div class="mobileNavLinkName">
+            <div id="mobileLinksContainer" className={props.mobileNavToggle}>
+                <div className="mobileNavLink">
+                <div className="mobileNavLinkName">
                     Sound Packs
                 </div>
             </div>
-            <div class="mobileNavLink">
-                <div class="mobileNavLinkName">
+            <div className="mobileNavLink">
+                <div className="mobileNavLinkName">
                     Beats
                 </div>
             </div>
-            <div class="mobileNavLink">
-                <div class="mobileNavLinkName">
+            <div className="mobileNavLink">
+                <div className="mobileNavLinkName">
                     Tutorials
                 </div>
             </div>
-            <div class="mobileNavLink">
-                <div class="mobileNavLinkName">
+            <div className="mobileNavLink">
+                <div className="mobileNavLinkName">
                     Songs
                 </div>
             </div>
-            <div class="mobileNavLink">
-                <div class="mobileNavLinkName">
+            <div className="mobileNavLink">
+                <div className="mobileNavLinkName">
                     Videos
                 </div>
             </div>
-            <div class="mobileNavLink">
-                <div class="mobileNavLinkName">
+            <div className="mobileNavLink">
+                <div className="mobileNavLinkName">
                     Log in/Sign up
                 </div>
             </div>
