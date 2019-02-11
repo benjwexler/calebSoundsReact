@@ -26,7 +26,7 @@ const convertToUsCurrency = new Intl.NumberFormat("en-US", {
 
 // import './Devise.css';
 
-class UserInfo extends React.Component {
+class EditUserInfo extends React.Component {
   constructor(props) {
     super(props);
 
@@ -50,6 +50,7 @@ class UserInfo extends React.Component {
       userId: props.userId,
       userFirstName: props.userFirstName,
       userLastName: props.userLastName,
+      userEmail: props.userEmail,
       relativePath: undefined,
       modalContent: "Sign Up",
       railsToken: ReactOnRails.authenticityToken(),
@@ -370,6 +371,12 @@ class UserInfo extends React.Component {
     }
   };
 
+  handleChange = (event) => {
+    this.setState({
+      userEmail: event.target.value
+    });
+  }
+
   render() {
 
     
@@ -536,7 +543,7 @@ class UserInfo extends React.Component {
 
     let linksContainerStyle = {
       display : 'flex',
-      height: '200px',
+      height: '800px',
       width: '100%',
       border: '1px solid black'
     }
@@ -571,6 +578,7 @@ class UserInfo extends React.Component {
     let accountInfoStyle = {
         fontSize: '32px',
         fontFamily: 'Josefin Sans, sans-serif',
+        marginBottom: '50px',
     }
   
     return (
@@ -591,11 +599,74 @@ class UserInfo extends React.Component {
 
         <div style={fullScreenStyle}> 
             <div style={modalStyle}>
-                <div style={accountInfoStyle}>ACCOUNT INFO</div>
-                <div style={nameStyle}>First Name: <span style={fontBlue}>{this.state.userFirstName} </span></div>
-                <div style={nameStyle}>Last Name: <span style={fontBlue}>{this.state.userLastName} </span> </div>
+                <div style={accountInfoStyle}>EDIT INFO</div>
                 <div style={linksContainerStyle}>
-                  
+                <form className="edit_user" id="edit_user" action="/users" accept-charset="UTF-8" method="post">
+                  <input name="utf8" type="hidden" value="✓"/>
+                  <input type="hidden" name="_method" value="put"/>
+                  <input type="hidden" name="authenticity_token" value={this.state.railsToken}/>
+  
+
+  
+
+  <div className="field" >
+                  <div className="modalIconContainer">
+                          <input onChange={this.handleChange} id="user_email" autofocus="autofocus" autocomplete="email" value={this.state.userEmail} className="form" placeholder="Email" type="email"  name="user[email]" />
+                          <i className="far fa-envelope modalIcon"></i>
+                  </div>
+                      
+  </div>
+
+  <div className="field">
+                  <div className="pwdMinText">(6 character min)</div>
+                  <div className="modalIconContainer">
+                      <input id="user_password" autocomplete="new-password" className="form" placeholder="New Password" type="password" name="user[password]"/>
+                      <i className="fas fa-unlock-alt modalIcon"></i>
+                  </div>
+              </div>
+  
+              <div className="field">
+                  <div className="pwdMinText">(6 character min)</div>
+                  <div className="modalIconContainer">
+                      <input id="user_password_confirmation" autocomplete="new-password" className="form" placeholder="Confirm New Password" type="password" name="user[password_confirmation]" />
+                      <i className="fas fa-unlock-alt modalIcon"></i>
+                  </div>
+              </div>
+
+           
+
+               <div className="field">
+                  <div className="pwdMinText">(6 character min)</div>
+                  <div className="modalIconContainer">
+                      <input id="user_current_password" autocomplete="current-password" className="form" placeholder="Current Password" type="password" name="user[current_password]" />
+                      <i className="fas fa-unlock-alt modalIcon"></i>
+                  </div>
+              </div>
+
+  
+
+
+  <div className="field">
+    <label for="user_password">Password</label> <i>(leave blank if you don't want to change it)</i><br/>
+    <input autocomplete="new-password" type="password" name="user[password]" id="user_password"/>
+      <br/>
+      <em>6 characters minimum</em>
+  </div>
+
+  <div className="field">
+    <label for="user_password_confirmation">Password confirmation</label><br/>
+    <input autocomplete="new-password" type="password" name="user[password_confirmation]" id="user_password_confirmation"/>
+  </div>
+
+  <div className="field">
+    <label for="user_current_password">Current password</label> <i>(we need your current password to confirm your changes)</i><br/>
+    <input autocomplete="current-password" type="password" name="user[current_password]" id="user_current_password"/>
+  </div>
+
+  <div className="actions">
+    <input type="submit" name="commit" value="Update" data-disable-with="Update"/>
+  </div>
+</form>
                 </div>
                 <div style={linksContainerStyle2}>
                 <a style={col} href="/">
@@ -617,4 +688,4 @@ class UserInfo extends React.Component {
   }
 }
 
-export default UserInfo;
+export default EditUserInfo;
