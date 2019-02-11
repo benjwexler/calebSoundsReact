@@ -35,7 +35,7 @@ const track = (props) => {
                             </a>
                         </div>
                         <div className="logoContainer">
-                            <a class={props.soundcloudNoStreaming} href={props.soundcloudLink}>
+                            <a className={props.soundcloudNoStreaming} href={props.soundcloudLink}>
                                 <i className="fab streamingLogo  fa-soundcloud"></i>
                             </a>
                         </div>
@@ -46,7 +46,7 @@ const track = (props) => {
                         </div>
                         
                         <div className="logoContainer">
-                            <a class={props.youtubeNoStreaming} href={props.youtubeLink}>
+                            <a className={props.youtubeNoStreaming} href={props.youtubeLink}>
                                 <i className="fab streamingLogo  fa-youtube"></i>
                             </a>
                         </div>

@@ -36,4 +36,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         end
       end
 
+      def edit
+        p "Haha"
+      end 
 end
