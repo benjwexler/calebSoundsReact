@@ -3,6 +3,10 @@ class Users::SessionsController < Devise::SessionsController
   respond_to :json
   
   def new
+
+    if !current_user
+      redirect_to root_path
+    else 
   
     p "before?" 
     p sign_in_params
@@ -12,6 +16,7 @@ class Users::SessionsController < Devise::SessionsController
 
     
     respond_with(resource, serialize_options(resource))
+  end
   end
 
   def create

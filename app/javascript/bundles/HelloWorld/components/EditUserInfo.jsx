@@ -578,7 +578,11 @@ class EditUserInfo extends React.Component {
     let accountInfoStyle = {
         fontSize: '32px',
         fontFamily: 'Josefin Sans, sans-serif',
-        marginBottom: '50px',
+        marginBottom: '20px',
+    }
+
+    let marginAutoStyle = {
+      margin: 'auto',
     }
   
     return (
@@ -601,7 +605,7 @@ class EditUserInfo extends React.Component {
             <div style={modalStyle}>
                 <div style={accountInfoStyle}>EDIT INFO</div>
                 <div style={linksContainerStyle}>
-                <form className="edit_user" id="edit_user" action="/users" accept-charset="UTF-8" method="post">
+                <form style={marginAutoStyle} className="edit_user" id="edit_user" action="/users" accept-charset="UTF-8" method="post">
                   <input name="utf8" type="hidden" value="✓"/>
                   <input type="hidden" name="_method" value="put"/>
                   <input type="hidden" name="authenticity_token" value={this.state.railsToken}/>
@@ -626,7 +630,7 @@ class EditUserInfo extends React.Component {
               </div>
   
               <div className="field">
-                  <div className="pwdMinText">(6 character min)</div>
+               
                   <div className="modalIconContainer">
                       <input id="user_password_confirmation" autocomplete="new-password" className="form" placeholder="Confirm New Password" type="password" name="user[password_confirmation]" />
                       <i className="fas fa-unlock-alt modalIcon"></i>
@@ -636,7 +640,7 @@ class EditUserInfo extends React.Component {
            
 
                <div className="field">
-                  <div className="pwdMinText">(6 character min)</div>
+            
                   <div className="modalIconContainer">
                       <input id="user_current_password" autocomplete="current-password" className="form" placeholder="Current Password" type="password" name="user[current_password]" />
                       <i className="fas fa-unlock-alt modalIcon"></i>
@@ -646,26 +650,14 @@ class EditUserInfo extends React.Component {
   
 
 
-  <div className="field">
-    <label for="user_password">Password</label> <i>(leave blank if you don't want to change it)</i><br/>
-    <input autocomplete="new-password" type="password" name="user[password]" id="user_password"/>
-      <br/>
-      <em>6 characters minimum</em>
-  </div>
 
-  <div className="field">
-    <label for="user_password_confirmation">Password confirmation</label><br/>
-    <input autocomplete="new-password" type="password" name="user[password_confirmation]" id="user_password_confirmation"/>
-  </div>
 
-  <div className="field">
-    <label for="user_current_password">Current password</label> <i>(we need your current password to confirm your changes)</i><br/>
-    <input autocomplete="current-password" type="password" name="user[current_password]" id="user_current_password"/>
-  </div>
-
-  <div className="actions">
+  {/* <div className="actions">
     <input type="submit" name="commit" value="Update" data-disable-with="Update"/>
-  </div>
+  </div> */}
+  <div className="actions">
+      <input  type="submit" name="commit" value="Update" className="btn" data-disable-with="Update"/>
+    </div>
 </form>
                 </div>
                 <div style={linksContainerStyle2}>

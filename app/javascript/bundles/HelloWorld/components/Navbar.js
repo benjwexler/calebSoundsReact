@@ -53,22 +53,22 @@ const navbar = (props) => {
         <div id="nav">
             <div id="navContainer">
                 <i onClick={props.toggleMobileNav} className="fas fa-bars"></i>
-                <div id="navTitle">Caleb Elias G sounds</div>
+                <a href="/" id="navTitle">Caleb Elias G sounds</a>
                 <div className="navLink">Sound Packs</div>
                 <div className="navLink">Latest Tracks</div>
                 <div id="navStreamingIcons">
-                        <div className="navLink">
+                        <a href="https://open.spotify.com/artist/3KfwtF94LanpNpDp6yVCji?si=TZgT40K1Ry-StUGIRznfFw" className="navLink">
                                 <i className="fab fa-spotify"></i>
-                        </div>
-                        <div className="navLink">
+                        </a>
+                        <a href="https://soundcloud.com/calebeliasgmusic" className="navLink">
                             <i className="fab fa-soundcloud"></i>
-                        </div>
-                        <div className="navLink">
+                        </a>
+                        <a href="https://itunes.apple.com/us/artist/caleb-elias-g/1441180549" className="navLink">
                             <i className="fab fa-apple"></i>
-                        </div>
-                        <div className="navLink">
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCTtEZQLWH7zD5XLguxAu-8Q" className="navLink">
                                 <i className="fab fa-youtube"></i>
-                        </div>
+                        </a>
                     </div>
                
                     {loginSignUp}
