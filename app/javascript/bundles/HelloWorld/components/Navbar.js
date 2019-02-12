@@ -57,16 +57,16 @@ const navbar = (props) => {
                 <div className="navLink">Sound Packs</div>
                 <div className="navLink">Latest Tracks</div>
                 <div id="navStreamingIcons">
-                        <a href="https://open.spotify.com/artist/3KfwtF94LanpNpDp6yVCji?si=TZgT40K1Ry-StUGIRznfFw" className="navLink">
+                        <a href="https://open.spotify.com/artist/3KfwtF94LanpNpDp6yVCji?si=TZgT40K1Ry-StUGIRznfFw" target="_blank" className="navLink">
                                 <i className="fab fa-spotify"></i>
                         </a>
-                        <a href="https://soundcloud.com/calebeliasgmusic" className="navLink">
+                        <a href="https://soundcloud.com/calebeliasgmusic" target="_blank" className="navLink">
                             <i className="fab fa-soundcloud"></i>
                         </a>
-                        <a href="https://itunes.apple.com/us/artist/caleb-elias-g/1441180549" className="navLink">
+                        <a href="https://itunes.apple.com/us/artist/caleb-elias-g/1441180549" target="_blank" className="navLink">
                             <i className="fab fa-apple"></i>
                         </a>
-                        <a href="https://www.youtube.com/channel/UCTtEZQLWH7zD5XLguxAu-8Q" className="navLink">
+                        <a href="https://www.youtube.com/channel/UCTtEZQLWH7zD5XLguxAu-8Q" target="_blank" className="navLink">
                                 <i className="fab fa-youtube"></i>
                         </a>
                     </div>

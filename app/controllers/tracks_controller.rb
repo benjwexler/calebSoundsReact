@@ -34,6 +34,12 @@ class TracksController < ApplicationController
   # GET /tracks/new
   def new
     @track = Track.new
+
+    if !current_user
+      redirect_to root_path
+    elsif !current_user.isAdmin
+      redirect_to root_path
+    end 
   end
 
   # GET /tracks/1/edit
