@@ -40,7 +40,7 @@ const track = (props) => {
                             </a>
                         </div>
                         <div className="logoContainer">
-                            <a href={props.appleMusicLink}>
+                            <a className={props.appleMusicNoStreaming} href={props.appleMusicLink}>
                                 <i className="fab streamingLogo  fa-apple"></i>
                             </a>
                         </div>

@@ -31,7 +31,7 @@ const mobileNav = (props) => {
                     Videos
                 </div>
             </div>
-            <div className="mobileNavLink">
+            <div onClick={props.openModal} className="mobileNavLink">
                 <div className="mobileNavLinkName">
                     Log in/Sign up
                 </div>

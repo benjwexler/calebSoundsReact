@@ -95,6 +95,8 @@ class App extends React.Component {
         return response.json();
       })
       .then(function(myJson) {
+        console.log(myJson)
+
         kitSounds = that.state.kitSounds.concat(myJson)
         that.setState({
             kitSounds: kitSounds,
@@ -140,7 +142,7 @@ class App extends React.Component {
 
     this.loadSounds();
 
-    fetch(`/tracks.json?limit=4`, {
+    fetch(`/tracks.json?limit=6`, {
       headers: {
           "Content-Type": "application/json"
         }
@@ -802,6 +804,8 @@ class App extends React.Component {
       sampleNumber={i} 
       playSample={this.setSample}  
       currentSample={currentSample}
+      tempo={this.state.kitSounds[i].tempo} 
+      musicalKey={this.state.kitSounds[i].key} 
       sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
       inProp={this.state.transition && (i>= this.state.sampleOffset - 6)}
       key={i}
@@ -1014,7 +1018,10 @@ class App extends React.Component {
           showAccountDropdown = {showAccountDropdown}
           toggleAccountDropdown = {this.toggleAccountDropdown}
         />
-        <MobileNav mobileNavToggle={mobileNavToggle} />
+        <MobileNav 
+          mobileNavToggle={mobileNavToggle} 
+          openModal={this.toggleModal}
+          />
         <Section1 />
         <Section2 samples={samples} click={this.addToCart} loadSounds={this.loadSounds} />
         {audioPlayer}
