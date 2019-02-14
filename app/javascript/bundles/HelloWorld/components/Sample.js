@@ -22,9 +22,6 @@ const sample = (props, { in: inProp}) => {
 
     let tempo = props.tempo;
 
-    let key = props.key
-    console.log(key)
-
     if(parseFloat(tempo) === 0) {
         tempo = "N/A"
     }

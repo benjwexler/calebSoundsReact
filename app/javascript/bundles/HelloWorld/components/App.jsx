@@ -142,7 +142,7 @@ class App extends React.Component {
 
     this.loadSounds();
 
-    fetch(`/tracks.json?limit=4`, {
+    fetch(`/tracks.json?limit=6`, {
       headers: {
           "Content-Type": "application/json"
         }
@@ -1018,7 +1018,10 @@ class App extends React.Component {
           showAccountDropdown = {showAccountDropdown}
           toggleAccountDropdown = {this.toggleAccountDropdown}
         />
-        <MobileNav mobileNavToggle={mobileNavToggle} />
+        <MobileNav 
+          mobileNavToggle={mobileNavToggle} 
+          openModal={this.toggleModal}
+          />
         <Section1 />
         <Section2 samples={samples} click={this.addToCart} loadSounds={this.loadSounds} />
         {audioPlayer}
