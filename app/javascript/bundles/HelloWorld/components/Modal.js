@@ -4,6 +4,13 @@ import React from 'react';
 const modal = (props) => {
 
     let pwdConfirm
+    let errorMessage 
+
+    if(props.errorMessage) {
+        console.log("error Blah Blah")
+        console.log(props.errorMessage)
+        errorMessage = <div>{props.errorMessage}</div>
+    }
 
     if(props.submitBtnText === 'Sign Up') {
 
@@ -53,12 +60,18 @@ const modal = (props) => {
               </div>
 
               {pwdConfirm}
+
+              
           
 
           <br/>
               <div className="actions">
                   <input  onClick={props.submit} type="submit" name="commit" value={props.submitBtnText} className="btn" data-disable-with="Sign up"/>
               </div>
+              <br/>
+             
+
+              {errorMessage}
         </div>
       </form>
 

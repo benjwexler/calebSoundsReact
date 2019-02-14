@@ -50,7 +50,7 @@ class App extends React.Component {
       userId: props.userId,
       modalContent: "Sign Up",
       railsToken: ReactOnRails.authenticityToken(),
-      ErrorMessage: undefined,
+      errorMessage: undefined,
       cart: undefined,
       totalPrice: undefined,
       showCart: false,
@@ -575,7 +575,8 @@ class App extends React.Component {
     this.setState({
       showModal: !this.state.showModal,
       showCart: false,
-      showMobileNav: false
+      showMobileNav: false,
+      errorMessage: undefined
     });
   };
 
@@ -588,7 +589,8 @@ class App extends React.Component {
     }
 
     this.setState({
-      modalContent: modalContent
+      modalContent: modalContent,
+      errorMessage: undefined 
     });
     // document.getElementById("modalButton").click()
   };
@@ -685,8 +687,9 @@ class App extends React.Component {
         }
       },
       error: function(xhr) {
+        console.log("error")
         that.setState({
-          errorMessage: "Sorry, could not sign you in"
+          errorMessage: "Your Email and/or Password is incorrect"
         });
       },
       dataType: "json"
@@ -970,6 +973,7 @@ class App extends React.Component {
           loginInSwitch={loginInSwitch}
           signUpSwitch={signUpSwitch}
           submit = {this.submitForm}
+          errorMessage = {this.state.errorMessage}
         />
       );
     }
