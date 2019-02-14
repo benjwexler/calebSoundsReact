@@ -30,8 +30,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
           clean_up_passwords resource
           set_minimum_password_length
 
+          p sign_up_params[:email]
+          p User.find_by_email(sign_up_params[:email]) == nil 
+          p "Check if user exists"
+          error_message = "Sorry, Couldn't sign you up"
+          if sign_up_params[:password] != sign_up_params[:password_confirmation] 
+            error_message = "Your Passwords do not match"
+          elsif User.find_by_email(sign_up_params[:email]) != nil  
+            error_message = "This email is already in registered in our system"
+          end 
+
+  
           p render :json => {
-        'errorMessage' => "Sorry, Couldn't sign you up"
+        'errorMessage' => error_message
         }
         end
       end
