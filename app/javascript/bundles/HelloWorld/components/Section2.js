@@ -1,8 +1,8 @@
 import React from 'react';
 
 const tableStyle = {
-    // maxHeight: '600px',
-    // overflowY: 'auto',
+    maxHeight: '700px',
+    overflowY: 'auto',
     // width: '500px,'
   };
 
