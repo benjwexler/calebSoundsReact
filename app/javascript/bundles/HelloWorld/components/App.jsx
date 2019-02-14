@@ -95,6 +95,8 @@ class App extends React.Component {
         return response.json();
       })
       .then(function(myJson) {
+        console.log(myJson)
+
         kitSounds = that.state.kitSounds.concat(myJson)
         that.setState({
             kitSounds: kitSounds,
@@ -802,6 +804,8 @@ class App extends React.Component {
       sampleNumber={i} 
       playSample={this.setSample}  
       currentSample={currentSample}
+      tempo={this.state.kitSounds[i].tempo} 
+      musicalKey={this.state.kitSounds[i].key} 
       sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
       inProp={this.state.transition && (i>= this.state.sampleOffset - 6)}
       key={i}

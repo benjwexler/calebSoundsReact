@@ -20,6 +20,15 @@ const transitionStyles = {
 
 const sample = (props, { in: inProp}) => {
 
+    let tempo = props.tempo;
+
+    let key = props.key
+    console.log(key)
+
+    if(parseFloat(tempo) === 0) {
+        tempo = "N/A"
+    }
+
 
     let icon = <i className="fas fa-play samplePlayIcon"></i>
 
@@ -42,8 +51,8 @@ const sample = (props, { in: inProp}) => {
             <td>{props.name}</td>
             <td>Rock</td>
             <td className="smallPhoneHide">Category</td>
-            <td>97</td>
-            <td className="mobileHide">Energy</td>
+            <td>{tempo}</td>
+            <td className="mobileHide">{props.musicalKey}</td>
            
         </tr>
        

@@ -5,6 +5,12 @@ class SoundsController < ApplicationController
   # GET /sounds.json
   def index
     @sounds = Sound.all
+
+    # @sounds = @sounds.map { |sound|
+    #     # p "What is going"
+    #     # p url_for(sound.soundfile)
+    #       sound.as_json.merge({ soundfile: url_for(sound.soundfile), filename: sound.soundfile.blob.filename })
+    #     }
   end
 
   # GET /sounds/1

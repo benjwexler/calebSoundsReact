@@ -265,6 +265,9 @@
 
 .noStreamingLink {
     opacity: .3;
+    // cursor: default; 
+    cursor:not-allowed;
+    pointer-events: none;
 }
 
 .soundclouds {

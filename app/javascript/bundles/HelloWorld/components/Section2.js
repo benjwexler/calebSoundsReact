@@ -34,7 +34,7 @@ const section2 = (props) => {
                         <th>Genre</th>
                         <th className="smallPhoneHide">Category</th>
                         <th>BPM</th>
-                        <th className="mobileHide">Energy</th>
+                        <th className="mobileHide">Key</th>
                     </tr>
 
                     {props.samples}
