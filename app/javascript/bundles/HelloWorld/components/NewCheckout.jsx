@@ -46,6 +46,7 @@ class NewCheckout extends React.Component {
     };
 
     this.state = {
+      showLoadingGif: true,
       userLoggedIn: props.isLoggedIn,
       userId: props.userId,
       userEmail: undefined,
@@ -866,6 +867,19 @@ return totalPrice
     }
   };
 
+  onOpened = () => {
+    console.log("Opened")
+
+    this.setState({
+      showLoadingGif: false
+    });
+    
+  }
+
+  onClosed = () => {
+    console.log("closed")
+  }
+
   render() {
     let samples 
     if (this.state.kitSounds.length > 0) {
@@ -1144,7 +1158,7 @@ return totalPrice
             boxSizing: 'border-box',
             boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
             position: 'relative',
-            height: '500px'
+            height: '400px'
             /* font-family: 'Fjalla One', sans-serif; */
        
         
@@ -1189,10 +1203,23 @@ return totalPrice
     let accountInfoStyle = {
         fontSize: '32px',
         fontFamily: 'Josefin Sans, sans-serif',
+        marginBottom: '20px'
     }
 
     let displayNoneStyle = {
       display: 'none'
+    }
+
+    let loadingGifStyle = {
+      width: '80%',
+      height: '80%',
+      margin: 'auto',
+    }
+
+    let loadingGif 
+
+    if(this.state.showLoadingGif) {
+      loadingGif = <img style={loadingGifStyle} src="/pics/Spinner-1s-200px.gif"/>
     }
 
   
@@ -1216,11 +1243,9 @@ return totalPrice
 
         <div style={fullScreenStyle}> 
             <div style={modalStyle}>
-                <div style={accountInfoStyle}>ACCOUNT INFO</div>
-                <div style={nameStyle}>First Name: <span style={fontBlue}>{this.state.userFirstName} </span></div>
-                <div style={nameStyle}>Last Name: <span style={fontBlue}>{this.state.userLastName} </span> </div>
+                <div style={accountInfoStyle}>Checkout</div>
                 <div style={linksContainerStyle}>
-               
+                  {loadingGif}
                   
                 </div>
                 <div style={linksContainerStyle2}>
@@ -1244,6 +1269,8 @@ return totalPrice
                   token={this.onToken}
                   email={this.state.userEmail}
                   reconfigureOnUpdate={true}
+                  opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
+                  closed={this.onClosed}
               />
         </div>
         
