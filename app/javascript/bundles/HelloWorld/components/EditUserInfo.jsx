@@ -46,6 +46,7 @@ class EditUserInfo extends React.Component {
     };
 
     this.state = {
+      userWantsToChangePassword: false,
       userLoggedIn: props.isLoggedIn,
       userId: props.userId,
       userFirstName: props.userFirstName,
@@ -235,63 +236,7 @@ class EditUserInfo extends React.Component {
     // document.getElementById("modalButton").click()
   };
 
-  submitForm = e => {
-    let that = this;
-    e.preventDefault();
-    let signUpObj = {};
-    signUpObj.utf8 = "✓";
-    signUpObj.authenticity_token = that.state.railsToken;
-    signUpObj["user[email]"] = document.getElementById("userEmailInput").value;
-    signUpObj["user[password]"] = document.getElementById("userPasswordInput").value;
-    signUpObj.commit = "Log in";
-    // signUpObj['CSRFToken'] = that.state.railsToken
-    let url = "/users/sign_in.json";
-    if (this.state.modalContent === "Sign Up") {
-      url = "/users.json";
-    signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value;
-
-    }
-
-      
-    $.ajax({
-      type: "POST",
-
-      url: url,
-      data: signUpObj,
-      success: function(json) {
-        if (json.errorMessage) {
-          that.setState({
-            errorMessage: json.errorMessage
-          });
-        } else {
-          console.log("signed in or signed up");
-          // document.getElementById("modalButton").click();
-          console.log(json);
-          that.setState(
-            {
-              railsToken: json.csrfToken,
-              userLoggedIn: true,
-              userId: JSON.parse(json.user_id),
-              errorMessage: undefined,
-              cart: JSON.parse(json.cart)
-            },
-            () => {
-              console.log(that.state);
-              that.setState({
-                showModal: false
-              })
-            }
-          );
-        }
-      },
-      error: function(xhr) {
-        that.setState({
-          errorMessage: "Sorry, could not sign you in"
-        });
-      },
-      dataType: "json"
-    });
-  };
+  
 
   signOut = () => {
     let that = this
@@ -371,9 +316,16 @@ class EditUserInfo extends React.Component {
     }
   };
 
-  handleChange = (event) => {
+  handleUserEmailChange = (event) => {
     this.setState({
       userEmail: event.target.value
+    });
+  }
+
+  togglePasswordChangeForm = () => {
+
+    this.setState({
+      userWantsToChangePassword: !this.state.userWantsToChangePassword
     });
   }
 
@@ -545,7 +497,7 @@ class EditUserInfo extends React.Component {
       display : 'flex',
       height: '800px',
       width: '100%',
-      border: '1px solid black'
+      // border: '1px solid black'
     }
 
     let linksContainerStyle2 = {
@@ -583,6 +535,90 @@ class EditUserInfo extends React.Component {
 
     let marginAutoStyle = {
       margin: 'auto',
+      marginTop: '45px'
+    }
+
+    let switchStyle = {
+      position: 'relative',
+      display: 'inline-block',
+      width: '60px',
+      height: '34px',
+      opacity: '0',
+      width: '0',
+      height: '0'
+    }
+
+    let inputStyle = {
+      opacity: '0',
+      width: '0',
+      height: '0',
+    }
+    
+    
+
+    let sliderStyle = {
+      
+        position: "absolute",
+        cursor: "pointer",
+        top: "0",
+        left: "0",
+        right: "0",
+        bottom: "0",
+        backgroundColor: "#ccc",
+        transition: ".4s",
+      
+    }
+
+    let changePasswordContainerStyle = {
+      display: 'flex',
+      
+    }
+
+    let changePasswordStyle = {
+      width: '100%',
+      position: 'relative',
+      color: '#23a184',
+      
+    }
+
+    let centerDiv = {
+      position: 'absolute',
+      left: '0%',
+      top: '50%',
+      transform: 'translate(0%, -50%)',
+      fontSize: '18px',
+      whiteSpace: 'nowrap',
+      // color: 'black'
+    }
+
+
+    let sliderContainerStyle = {
+      marginRight: '0px',
+      width: '50%',
+      marginLeft: '50px'
+    }
+
+    let changePasswordInputs
+
+    if(this.state.userWantsToChangePassword) {
+      changePasswordInputs = (
+        <React.Fragment>
+        <div className="field">
+        <div className="modalIconContainer">
+            <input id="user_password" autocomplete="new-password" className="form" placeholder="New Password (6 char min)" type="password" name="user[password]"/>
+            <i className="fas fa-unlock-alt modalIcon"></i>
+        </div>
+    </div>
+
+    <div className="field">
+     
+        <div className="modalIconContainer">
+            <input id="user_password_confirmation" autocomplete="new-password" className="form" placeholder="Confirm New Password" type="password" name="user[password_confirmation]" />
+            <i className="fas fa-unlock-alt modalIcon"></i>
+        </div>
+    </div>
+    </React.Fragment>
+      )
     }
   
     return (
@@ -604,7 +640,7 @@ class EditUserInfo extends React.Component {
         <div style={fullScreenStyle}> 
             <div style={modalStyle}>
                 <div style={accountInfoStyle}>EDIT INFO</div>
-                <div style={linksContainerStyle}>
+                <div className="formBorder" style={linksContainerStyle}>
                 <form style={marginAutoStyle} className="edit_user" id="edit_user" action="/users" accept-charset="UTF-8" method="post">
                   <input name="utf8" type="hidden" value="✓"/>
                   <input type="hidden" name="_method" value="put"/>
@@ -615,37 +651,41 @@ class EditUserInfo extends React.Component {
 
   <div className="field" >
                   <div className="modalIconContainer">
-                          <input onChange={this.handleChange} id="user_email" autofocus="autofocus" autocomplete="email" value={this.state.userEmail} className="form" placeholder="Email" type="email"  name="user[email]" />
+                          <input onChange={this.handleUserEmailChange} id="user_email" autofocus="autofocus" autocomplete="email" value={this.state.userEmail} className="form" placeholder="Email" type="email"  name="user[email]" />
                           <i className="far fa-envelope modalIcon"></i>
                   </div>
                       
   </div>
 
   <div className="field">
-                  <div className="pwdMinText">(6 character min)</div>
-                  <div className="modalIconContainer">
-                      <input id="user_password" autocomplete="new-password" className="form" placeholder="New Password" type="password" name="user[password]"/>
-                      <i className="fas fa-unlock-alt modalIcon"></i>
-                  </div>
-              </div>
+            
+            <div className="modalIconContainer">
+                <input id="user_current_password" autocomplete="current-password" className="form" placeholder="Current Password" type="password" name="user[current_password]" />
+                <i className="fas fa-unlock-alt modalIcon"></i>
+            </div>
+        </div>
+
+  <div style={changePasswordContainerStyle}>
+
+  <div style={changePasswordStyle}> 
+   <div style={centerDiv}> Change Password: </div>
+    </div>
   
-              <div className="field">
-               
-                  <div className="modalIconContainer">
-                      <input id="user_password_confirmation" autocomplete="new-password" className="form" placeholder="Confirm New Password" type="password" name="user[password_confirmation]" />
-                      <i className="fas fa-unlock-alt modalIcon"></i>
-                  </div>
-              </div>
+
+  <div style={sliderContainerStyle}>
+    <label  class="switch">
+    <input onClick={this.togglePasswordChangeForm} type="checkbox"/>
+    <span class="slider round"></span>
+  </label>
+</div>
+
+</div>
+
+  {changePasswordInputs}
 
            
 
-               <div className="field">
-            
-                  <div className="modalIconContainer">
-                      <input id="user_current_password" autocomplete="current-password" className="form" placeholder="Current Password" type="password" name="user[current_password]" />
-                      <i className="fas fa-unlock-alt modalIcon"></i>
-                  </div>
-              </div>
+               
 
   
 
@@ -660,20 +700,11 @@ class EditUserInfo extends React.Component {
     </div>
 </form>
                 </div>
-                <div style={linksContainerStyle2}>
-                <a style={col} href="/">
-                  <div style={centerText}>Back</div>
-                </a>
-                <a style={col} href={"/users/" + this.state.userId + "/edit"}>
-                  <div style={centerText}>Edit Info</div>
-                </a>
-                <a style={col} href="/users/edit">
-                  <div style={centerText}>Change Password</div>
-                </a>
-                  
-                </div>
+                
             </div>
         </div>
+
+        <Footer footerId="stickyFooter" />
         
       </div>
     );
