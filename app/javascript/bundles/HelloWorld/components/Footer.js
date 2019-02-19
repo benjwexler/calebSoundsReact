@@ -4,7 +4,7 @@ import React from 'react';
 const footer = (props) => {
 
     return (
-        <div id="footer">
+        <div id={props.footerId}>
         <div id="email">calebeliasg@gmail.com</div>
         <div id="phoneNum">416-230-2601</div>
         <div id="socialMediaContainer">

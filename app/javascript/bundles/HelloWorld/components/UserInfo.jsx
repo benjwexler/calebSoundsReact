@@ -48,6 +48,7 @@ class UserInfo extends React.Component {
     this.state = {
       userLoggedIn: props.isLoggedIn,
       userId: props.userId,
+      userEmail: props.userEmail,
       userFirstName: props.userFirstName,
       userLastName: props.userLastName,
       relativePath: undefined,
@@ -370,6 +371,10 @@ class UserInfo extends React.Component {
     }
   };
 
+  deleteAccount = () => {
+    document.getElementById("hiddenDeleteButton").click()
+  }
+
   render() {
 
     
@@ -483,16 +488,27 @@ class UserInfo extends React.Component {
         // marginTop: '200px',
     }
 
+    let positonAbsoluteBgPicStyle =  {
+      position: 'absolute',
+      top: '20px',
+      left: '0',
+      height: '100vh',
+        width: '100vw',
+        background: 'url(/pics/calebWithBand.jpg) center center scroll',
+        opacity: '.3'
+    }
+
     let nameStyle = {
-      fontSize: '20px',
+      fontSize: '24px',
       color: 'black',
-      marginBottom: '5px'
+      // marginBottom: '5px',
+      margin: 'auto',
       
   }
 
   let fontBlue = {
     color: 'rgba(45, 51, 221, 0.747)',
-    fontSize: '18px' 
+    fontSize: '22px' 
   }
 
     let modalStyle = {
@@ -526,7 +542,7 @@ class UserInfo extends React.Component {
             boxSizing: 'border-box',
             boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
             position: 'relative',
-            height: '500px'
+            height: '450px'
             /* font-family: 'Fjalla One', sans-serif; */
        
         
@@ -571,6 +587,7 @@ class UserInfo extends React.Component {
     let accountInfoStyle = {
         fontSize: '32px',
         fontFamily: 'Josefin Sans, sans-serif',
+        marginBottom: '30px'
     }
   
     return (
@@ -590,27 +607,41 @@ class UserInfo extends React.Component {
         <MobileNav mobileNavToggle={mobileNavToggle} />
 
         <div style={fullScreenStyle}> 
+        {/* <div style={positonAbsoluteBgPicStyle}></div> */}
             <div style={modalStyle}>
                 <div style={accountInfoStyle}>ACCOUNT INFO</div>
-                <div style={nameStyle}>First Name: <span style={fontBlue}>{this.state.userFirstName} </span></div>
-                <div style={nameStyle}>Last Name: <span style={fontBlue}>{this.state.userLastName} </span> </div>
+             
+                
                 <div style={linksContainerStyle}>
-                  
+                <div style={nameStyle}>Email: <span style={fontBlue}>{this.state.userEmail} </span> </div>
                 </div>
                 <div style={linksContainerStyle2}>
                 <a style={col} href="/">
                   <div style={centerText}>Back</div>
                 </a>
-                <a style={col} href={"/users/" + this.state.userId + "/edit"}>
+                <a style={col} href="/users/edit">
                   <div style={centerText}>Edit Info</div>
                 </a>
-                <a style={col} href="/users/edit">
-                  <div style={centerText}>Change Password</div>
-                </a>
-                  
+                <div onClick={this.deleteAccount} style={col}>
+                  <div style={centerText}>Cancel Account</div>
                 </div>
+
+                  
+              
+                <form  style={{display: 'none'}}method="post" action="/users">
+                <input type="hidden" name="_method" value="delete"/>
+                
+                <input  id="hiddenDeleteButton" data-confirm="Are you sure?" type="submit" value="Cancel my account"/>
+                  
+                  
+                <input type="hidden" name="authenticity_token" value={this.state.railsToken}/>
+
+                </form>
+               
+               </div>
             </div>
         </div>
+        <Footer footerId="stickyFooter" />
         
       </div>
     );

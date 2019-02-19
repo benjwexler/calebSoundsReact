@@ -7,6 +7,17 @@
     z-index: 100;
 }
 
+#stickyFooter {
+    width: 100vw;
+    height: 150px;
+    background: rgba(0, 0, 0, 0.94);
+    background: rgb(9, 10, 16);
+    margin-bottom: 3px;
+    z-index: 100;
+    position: fixed;
+    bottom: 0px;
+}
+
 #email {
     margin: auto;
     text-align: center;

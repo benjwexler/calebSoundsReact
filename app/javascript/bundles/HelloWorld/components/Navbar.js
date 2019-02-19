@@ -31,15 +31,23 @@ const navbar = (props) => {
             <div className="carrotContainer">
                 <i class="carrot fas fa-caret-up"></i>
             </div>
-            <div className="accountLink">
-            <a href={'/users/' + props.userId}>Update Info</a>
             
+            <a href={'/users/' + props.userId}>
+            <div className="accountLink">
+            Account Info
             </div>
+            </a>
+            
+            
             <hr/>
-            <div className="accountLink">
-            <a href="/users/edit">Change Password</a>
             
+            <a href="/users/edit">
+            <div className="accountLink">
+            Update Info
             </div>
+            </a>
+            
+            
             <hr/>
             <div onClick={props.signOut} className="accountLink">Sign Out</div>
         </div>

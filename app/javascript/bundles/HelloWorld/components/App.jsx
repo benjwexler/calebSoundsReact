@@ -831,6 +831,7 @@ class App extends React.Component {
         let currentHoverTrack;
         let currentHoverPlayIcon;
         let currentTrack = false;
+        let lastTwoTracks;
 
         if (i === that.state.currentHoverTrack) {
           currentHoverTrack = "showCircle";
@@ -857,9 +858,14 @@ class App extends React.Component {
           youtubeNoStreaming = "noStreamingLink";
         }
 
+        if(i>3) {
+          lastTwoTracks = "lastTwoTracks"
+        }
+
         tracks.push(
           <Track
             name={that.state.tracks[i].name}
+            lastTwoTracks ={lastTwoTracks}
             spotifyLink={that.state.tracks[i].spotify_url}
             spotifyNoStreaming={spotifyNoStreaming}
             soundcloudLink={that.state.tracks[i].soundcloud_url}
@@ -1027,7 +1033,7 @@ class App extends React.Component {
         {audioPlayer}
         {latestTracks}
         
-        <Footer />
+        <Footer footerId="footer" />
       </div>
     );
   }
