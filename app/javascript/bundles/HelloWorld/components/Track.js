@@ -55,7 +55,7 @@ const track = (props) => {
 
                 </div>
 
-                 <iframe  className="soundclouds" id={"sc-widget" + "index"} src={"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" + props.soundcloud_id + "&visual=true"}></iframe>
+                 <iframe  className="soundclouds" id={"sc-widget" + "index"} allow="autoplay"  src={"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" + props.soundcloud_id + "&visual=true"}></iframe>
             </div>
     )
 };

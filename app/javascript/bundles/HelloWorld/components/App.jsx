@@ -76,7 +76,8 @@ class App extends React.Component {
       currentSample: undefined,
       sampleCurrentlyPlaying: false,
       transition: true,
-      showAccountDropdown: false
+      showAccountDropdown: false,
+      userInteractedWithPage: false,
     };
   }
 
@@ -138,6 +139,8 @@ class App extends React.Component {
     componentDidMount() {
       //  this.setState({ in: !this.state.transition });
     window.addEventListener("resize", this.handleResize);
+    // window.addEventListener("mousemove", this.handleMousemove);
+   
     let that = this;
 
     this.loadSounds();
@@ -225,8 +228,17 @@ class App extends React.Component {
         soundcloudWidget = soundclouds[i];
         window[`widget${i}`] = SC.Widget(soundcloudWidget);
         //   console.log(soundcloudWidget)
-
+        console.log(window[`widget${i}`].Events)
         window[`widget${i}`].bind(SC.Widget.Events.READY, function() {});
+        window[`widget${i}`].bind(SC.Widget.Events.FINISH, function() {
+          console.log("Song is finished!")
+          that.setState({
+            currentlyPlaying: false,
+          });
+        });
+        
+        // console.log(window[`widget${i}`])
+
       }
     }
   };
@@ -572,6 +584,18 @@ class App extends React.Component {
         })
       }
   };
+
+  // handleMousemove = () => {
+
+  //   if(!this.state.userInteractedWithPage) {
+  //     console.log("MOUSEMOVE")
+  //     this.setState({
+  //       userInteractedWithPage: true
+  //     }, window.removeEventListener("mousemove", this.handleMousemove))
+      
+
+  //   }
+  // };
 
   toggleModal = () => {
     this.setState({
