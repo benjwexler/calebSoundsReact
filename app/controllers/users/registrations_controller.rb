@@ -13,10 +13,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
           if resource.active_for_authentication?
             set_flash_message! :notice, :signed_up
             sign_up(resource_name, resource)
+
+            p current_user.id
             
             p render :json => {
         'csrfParam' => request_forgery_protection_token,
         'csrfToken' => form_authenticity_token,
+        'user_id' => current_user.id,
         'cart' => "{}"
     }
           else
