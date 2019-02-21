@@ -368,6 +368,7 @@ height: 100%;
     margin-left: 104px;
     margin-right: 96px;
     margin-right: 76px;
+    color: rgba(45, 51, 221, 0.747)  ;
     cursor: pointer;
 
 }
@@ -447,7 +448,7 @@ height: 100%;
     font-family: 'Josefin Sans', sans-serif !important;
     margin-left: 80px;
     margin-right: 10px;
-    color: rgba(45, 51, 221, 0.747)  ;
+    // color: rgba(45, 51, 221, 0.747)  ;
     font-weight: bold !important;
     font-size: 12px;
     /* margin-top: -20px; */
@@ -466,7 +467,7 @@ height: 100%;
 .fa-user-lock {
     margin-top: -9px;
     font-size: 26px;
-    color: rgba(45, 51, 221, 0.747) ;
+    // color: rgba(45, 51, 221, 0.747) ;
     /* padding-top: 20px;  */
 }
 
@@ -585,10 +586,16 @@ height: 100%;
     cursor: pointer;
     position: relative;
     z-index: 2;
-    opacity: 1;
+    // opacity: .95;
     background: white;
+    // opacity: .98
+    // transition: 50ms border;
+    opacity: .98;
+    // border: 1px solid white
 
 }
+
+
 
 #previewSecretBackground {
     width: 100%;
@@ -603,7 +610,3 @@ height: 100%;
     opacity: 1;
 }
 
-#previewButton:hover {
-    background: rgb(41, 47, 206);
-    color: rgb(255, 255, 255);
-}
