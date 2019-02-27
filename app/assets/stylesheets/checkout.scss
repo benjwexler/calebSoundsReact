@@ -1,3 +1,18 @@
 .StripeCheckout {
     display: none;
 }
+
+#checkoutCoverArt {
+    width: 100%;
+    height: 100%;
+}
+
+.showLoad {
+    display: flex;
+
+}
+
+.hideLoad {
+    display: none;
+    
+}
