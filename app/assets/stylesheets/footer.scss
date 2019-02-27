@@ -10,12 +10,23 @@
 #stickyFooter {
     width: 100vw;
     height: 150px;
+    height: 120px;
     background: rgba(0, 0, 0, 0.94);
     background: rgb(9, 10, 16);
-    margin-bottom: 3px;
+    margin-bottom: 1px;
     z-index: 100;
     position: fixed;
     bottom: 0px;
+}
+
+#emailStickFooter {
+
+    margin: auto;
+    text-align: center;
+    color:  white;
+    padding-top: 40px;
+    font-family: 'Josefin Sans', sans-serif !important;
+
 }
 
 #email {

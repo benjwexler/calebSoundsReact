@@ -867,6 +867,18 @@ return totalPrice
     }
   };
 
+  stripeClick = () => {
+    this.setState({
+      showLoadingGif: true
+      }, () => {
+        document.querySelector(".StripeCheckout").click()
+      });
+
+    
+                  
+
+  }
+
   onOpened = () => {
     console.log("Opened")
 
@@ -1110,7 +1122,7 @@ return totalPrice
     let fullScreenStyle = {
         height: '100vh',
         width: '100vw',
-        border: '1px solid yellow',
+        border: '1px solid black',
         // paddingTop: '200px'
         // marginTop: '200px',
     }
@@ -1158,7 +1170,7 @@ return totalPrice
             boxSizing: 'border-box',
             boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
             position: 'relative',
-            height: '400px'
+            height: '600px'
             /* font-family: 'Fjalla One', sans-serif; */
        
         
@@ -1168,9 +1180,10 @@ return totalPrice
 
     let linksContainerStyle = {
       display : 'flex',
-      height: '200px',
+      height: '400px',
       width: '100%',
-      border: '1px solid black'
+      border: '1px solid black',
+      position: 'relative'
     }
 
     let linksContainerStyle2 = {
@@ -1181,13 +1194,14 @@ return totalPrice
     }
 
     let col = {
-      width: '30%',
+      width: '42%',
       height: '44px',
       background: 'rgba(45, 51, 221, 0.89)',
       margin: 'auto',
       position: 'relative',
       // border: '1px solid black',
-      borderRadius: '25px'
+      borderRadius: '25px',
+      cursor: 'pointer'
     }
 
     let centerText = {
@@ -1197,7 +1211,9 @@ return totalPrice
       transform: 'translate(-50%, -50%)',
       color: 'rgba(255, 255, 255, 0.961)',
       fontFamily: 'Fjalla One, sans-serif',
-      textAlign: 'center'
+      textAlign: 'center',
+      cursor: 'pointer'
+      // zIndex: '-1'
     }
 
     let accountInfoStyle = {
@@ -1214,12 +1230,37 @@ return totalPrice
       width: '80%',
       height: '80%',
       margin: 'auto',
+      position: 'absolute',
+
+  left: '50%',
+  top: '50%',
+  
+ 
+  transform: 'translate(-50%, -50%)',
+  
     }
 
-    let loadingGif 
+    let loadingGifHideStyle = {
+      width: '80%',
+      height: '80%',
+      margin: 'auto',
+      position: 'absolute',
+      display: 'none',
+
+  left: '50%',
+  top: '50%',
+  
+ 
+  transform: 'translate(-50%, -50%)',
+  
+    }
+
+    let loadingGif
 
     if(this.state.showLoadingGif) {
-      loadingGif = <img style={loadingGifStyle} src="/pics/Spinner-1s-200px.gif"/>
+      loadingGif = <img class="showLoad" style={loadingGifStyle} src="/pics/loadingGifBlack.gif"/>
+    } else {
+      loadingGif = <img class="hideLoad" style={loadingGifStyle} src="/pics/loadingGifBlack.gif"/>
     }
 
   
@@ -1246,23 +1287,25 @@ return totalPrice
                 <div style={accountInfoStyle}>Checkout</div>
                 <div style={linksContainerStyle}>
                   {loadingGif}
+                  <img id="checkoutCoverArt" src="pics/gtrv3.jpg"/>
                   
                 </div>
                 <div style={linksContainerStyle2}>
-                <a style={col} href="/">
+                {/* <a style={col} href="/">
                   <div style={centerText}>Back</div>
-                </a>
-                <a style={col} href={"/users/" + this.state.userId + "/edit"}>
-                  <div style={centerText}>Edit Info</div>
-                </a>
-                <a style={col} href="/users/edit">
+                </a> */}
+                <div style={col} onClick={()=> this.stripeClick()}>
+                  <div onClick={()=> this.stripeClick()} style={centerText}>Pay With Card</div>
+                </div>
+                {/* <a style={col} href="/users/edit">
                   <div style={centerText}>Change Password</div>
-                </a>
+                </a> */}
                   
                 </div>
             </div>
         </div>
-        <div style={displayNoneStyle}>
+        {/* style={displayNoneStyle} */}
+        <div >
           <StripeCheckout
                   amount={this.state.totalPrice * 100}
                   stripeKey={process.env.stripe_publishable_key}
@@ -1273,7 +1316,7 @@ return totalPrice
                   closed={this.onClosed}
               />
         </div>
-        
+        <Footer footerId="stickyFooter" />
       </div>
     );
   }
