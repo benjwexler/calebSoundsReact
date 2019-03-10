@@ -62,20 +62,20 @@ const navbar = (props) => {
             <div id="navContainer">
                 <i onClick={props.toggleMobileNav} className="fas fa-bars"></i>
                 <a href="/" id="navTitle">Caleb Elias G sounds</a>
-                <div className="navLink">Sound Packs</div>
-                <div className="navLink">Latest Tracks</div>
+                <div onClick={() => document.getElementById("section2").scrollIntoView(false)} className="navLink">Sound Packs</div>
+                <div onClick={() => document.getElementById("section3").scrollIntoView()} className="navLink">Latest Tracks</div>
                 <div id="navStreamingIcons">
                         <a href="https://open.spotify.com/artist/3KfwtF94LanpNpDp6yVCji?si=TZgT40K1Ry-StUGIRznfFw" target="_blank" className="navLink">
-                                <i className="fab fa-spotify"></i>
+                                <i className="fab fa-spotify streamingIcon"></i>
                         </a>
                         <a href="https://soundcloud.com/calebeliasgmusic" target="_blank" className="navLink">
-                            <i className="fab fa-soundcloud"></i>
+                            <i className="fab fa-soundcloud streamingIcon"></i>
                         </a>
                         <a href="https://itunes.apple.com/us/artist/caleb-elias-g/1441180549" target="_blank" className="navLink">
-                            <i className="fab fa-apple"></i>
+                            <i className="fab fa-apple streamingIcon"></i>
                         </a>
                         <a href="https://www.youtube.com/channel/UCTtEZQLWH7zD5XLguxAu-8Q" target="_blank" className="navLink">
-                                <i className="fab fa-youtube"></i>
+                                <i className="fab fa-youtube streamingIcon"></i>
                         </a>
                     </div>
                

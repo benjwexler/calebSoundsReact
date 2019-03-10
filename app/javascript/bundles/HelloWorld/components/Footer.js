@@ -5,7 +5,7 @@ const footer = (props) => {
 
     return (
         <div id={props.footerId}>
-        <div id="email">calebeliasg@gmail.com</div>
+        <div id={props.emailDivStyle}>calebeliasg@gmail.com</div>
         <div id="phoneNum">416-230-2601</div>
         <div id="socialMediaContainer">
             <a href="https://www.facebook.com/calebeliasgmusic/" target="_blank"><i className="fab fa-facebook-square socialMediaLogo"></i></a>

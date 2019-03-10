@@ -16,3 +16,37 @@
     display: none;
     
 }
+
+#payWithCard {
+    background: rgba(45, 51, 221, 0.89);
+    min-width: 180px;
+}
+
+#checkoutContainer {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    padding-top: 20px;
+    margin: auto;
+    margin-top: 120px;
+    border: solid 3px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgba(45, 51, 221, 0.747)  ;
+    background-color: white;
+    border-radius: 3%;
+    font-family: Josefin Sans, sans-serif !important;
+    box-sizing: border-box;
+    box-shadow: 1px 3px rgba(0, 0, 0, 0.322);
+    position: relative;
+    height: 600px
+}
+
+#checkoutCoverArtContainer {
+    display : flex;
+    height: 400px;
+    width: 100%;
+    border: 1px solid black;
+    position: relative
+}

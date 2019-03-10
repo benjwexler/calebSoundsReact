@@ -3,17 +3,17 @@
     height: 170px;
     background: rgba(0, 0, 0, 0.94);
     background: rgb(9, 10, 16);
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     z-index: 100;
 }
 
 #stickyFooter {
     width: 100vw;
-    height: 150px;
+    // height: 150px;
     height: 120px;
     background: rgba(0, 0, 0, 0.94);
     background: rgb(9, 10, 16);
-    margin-bottom: 1px;
+    margin-bottom: 2px;
     z-index: 100;
     position: fixed;
     bottom: 0px;
@@ -24,7 +24,7 @@
     margin: auto;
     text-align: center;
     color:  white;
-    padding-top: 40px;
+    padding-top: 28px;
     font-family: 'Josefin Sans', sans-serif !important;
 
 }
@@ -62,4 +62,20 @@
     color: white;
     text-align: center;
     padding: 5px;
+   
 }
+
+.socialMediaLogo:hover {
+    color: rgb(243, 243, 243);
+    font-size: 18px;
+    // font-size: 17px;
+}
+
+// .fa-twitter:hover {
+//     color: #00aced;
+// }
+
+// .fa-facebook-square:hover {
+//     color: #3b5998;
+// }
+

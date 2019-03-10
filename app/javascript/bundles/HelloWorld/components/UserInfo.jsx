@@ -641,7 +641,7 @@ class UserInfo extends React.Component {
                </div>
             </div>
         </div>
-        <Footer footerId="stickyFooter" />
+        <Footer footerId="stickyFooter" emailDivStyle="emailStickFooter" />
         
       </div>
     );

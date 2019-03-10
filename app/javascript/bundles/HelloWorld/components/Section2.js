@@ -1,7 +1,5 @@
 import React from 'react';
 
-console.log("git test")
-
 const tableStyle = {
     maxHeight: '700px',
     overflowY: 'auto',
@@ -15,6 +13,14 @@ const tableStyle = {
   
   }
 
+    let picStyle = {
+      width: '80px',
+      height: '80px',
+      marginTop: '20px',
+      borderRadius: '5px',
+      marginLeft: '3px'
+  }
+
 
 const section2 = (props) => {
 
@@ -23,7 +29,8 @@ const section2 = (props) => {
     return (
         <div id="section2">
             <div id="section2topRow">
-                <div id="whatsInside">$24.99 - CEG Guitar Essentials Vol 1.</div>
+            <img id="coverArt" style={picStyle} src="pics/gtrv3.jpg"/>
+                <div id="whatsInside">$8.99 <span id="mobileDashRemove">-</span> <span id="mobilePackTitle"><br/></span>CEG Guitar Essentials Vol. 1</div>
                 <div onClick={props.click} id="addToCart">Add to Cart</div>
             </div>
             <div>
@@ -34,7 +41,6 @@ const section2 = (props) => {
                         <th></th>
                         <th>Sample Name</th>
                         <th>Genre</th>
-                        <th className="smallPhoneHide">Category</th>
                         <th>BPM</th>
                         <th className="mobileHide">Key</th>
                     </tr>

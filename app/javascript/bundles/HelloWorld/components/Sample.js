@@ -47,7 +47,6 @@ const sample = (props, { in: inProp}) => {
             </td>
             <td>{props.name}</td>
             <td>Rock</td>
-            <td className="smallPhoneHide">Category</td>
             <td>{tempo}</td>
             <td className="mobileHide">{props.musicalKey}</td>
            

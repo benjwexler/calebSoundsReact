@@ -1122,7 +1122,8 @@ return totalPrice
     let fullScreenStyle = {
         height: '100vh',
         width: '100vw',
-        border: '1px solid black',
+        border: '1px solid white',
+        overflow: 'hidden'
         // paddingTop: '200px'
         // marginTop: '200px',
     }
@@ -1196,7 +1197,7 @@ return totalPrice
     let col = {
       width: '42%',
       height: '44px',
-      background: 'rgba(45, 51, 221, 0.89)',
+      // background: 'rgba(45, 51, 221, 0.89)',
       margin: 'auto',
       position: 'relative',
       // border: '1px solid black',
@@ -1283,9 +1284,9 @@ return totalPrice
        
 
         <div style={fullScreenStyle}> 
-            <div style={modalStyle}>
+            <div id="checkoutContainer" >
                 <div style={accountInfoStyle}>Checkout</div>
-                <div style={linksContainerStyle}>
+                <div id="checkoutCoverArtContainer" >
                   {loadingGif}
                   <img id="checkoutCoverArt" src="pics/gtrv3.jpg"/>
                   
@@ -1294,8 +1295,8 @@ return totalPrice
                 {/* <a style={col} href="/">
                   <div style={centerText}>Back</div>
                 </a> */}
-                <div style={col} onClick={()=> this.stripeClick()}>
-                  <div onClick={()=> this.stripeClick()} style={centerText}>Pay With Card</div>
+                <div id="payWithCard" style={col} onClick={()=> this.stripeClick()}>
+                  <div  onClick={()=> this.stripeClick()} style={centerText}>Pay With Card</div>
                 </div>
                 {/* <a style={col} href="/users/edit">
                   <div style={centerText}>Change Password</div>
@@ -1316,7 +1317,7 @@ return totalPrice
                   closed={this.onClosed}
               />
         </div>
-        <Footer footerId="stickyFooter" />
+        <Footer footerId="stickyFooter" emailDivStyle="emailStickFooter"/>
       </div>
     );
   }

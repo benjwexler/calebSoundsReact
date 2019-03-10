@@ -233,6 +233,8 @@ height: 100%;
     height: 75px;
     width: 100vw;
     -webkit-backface-visibility: hidden;
+
+    // border-bottom: 2px solid black; 
 }
 
 #outerNavContainer {
@@ -280,7 +282,8 @@ height: 100%;
 
 #mobileLinksContainer {
     width: 100%;
-    height: 400px;
+    // height: 400px;
+    height: 268px;
     background: white;
     /* position: absolute; */
     z-index: 9999999;
@@ -293,7 +296,8 @@ height: 100%;
 }
 
 .mobileNavLink {
-    height: 16.66%;
+    // height: 16.66%;
+    height: 25%;
     width: 100vw;
     border-bottom: 1px solid black;
     border-bottom: 1px solid rgb(233, 233, 233);
@@ -306,6 +310,7 @@ height: 100%;
 
 .mobileNavLink:hover {
     background: rgba(0, 0, 0, 0.016);
+    
 }
 
 .mobileNavLinkName {
@@ -340,6 +345,7 @@ height: 100%;
     margin-right: 50px;
     font-size: 18px;
     cursor: pointer;
+    white-space: nowrap;
     /* text-shadow: -2px -2px #8e8e8e; */
 
 
@@ -350,10 +356,15 @@ height: 100%;
     font-family: 'Josefin Sans', sans-serif !important;
     margin-right: 20px;
     cursor: pointer;
-     /* color: rgba(0, 0, 0, 0.5); */
+    white-space: nowrap;
+}
 
-     /* for scroll */
-     /* color: white; */
+.navLinkMobile {
+    font-family: 'Josefin Sans', sans-serif !important;
+    // margin-right: 20px;
+    margin: 0px 10px;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 #navStreamingIcons {
@@ -452,6 +463,7 @@ height: 100%;
     // color: rgba(45, 51, 221, 0.747)  ;
     font-weight: bold !important;
     font-size: 12px;
+    white-space: nowrap;
     /* margin-top: -20px; */
 }
 
@@ -609,5 +621,9 @@ height: 100%;
     left: 0;
     z-index: -99999;
     opacity: 1;
+}
+
+.streamingIcon:hover {
+    text-shadow: 1px 1px white;
 }
 

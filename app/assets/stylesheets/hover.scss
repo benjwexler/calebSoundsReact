@@ -24,6 +24,9 @@
   .navLink:hover {
     color: rgba(0, 0, 0, 0.781);
     color: rgba(0, 0, 0, 0.815);
+
+    
+    // text-shadow: 0px 1px rgba(199, 199, 199, 0.692);
   }
 
 #loadMoreSounds:hover {
@@ -42,7 +45,9 @@
   // background: rgb(41, 47, 206);
   // color: rgb(255, 255, 255);
   // opacity: .98;
-  opacity: 1;
+  opacity: .95;
+  // box-shadow: 2px 2px rgba(255, 255, 255, 0.178);
+
 
   // border: 1px solid whites
   // background: rgba(33, 40, 236, 0.89);
@@ -62,9 +67,14 @@
 
 .circle:hover {
   background: rgba(33, 40, 236, 0.89);
+  box-shadow: 2px 2px rgba(255, 255, 255, 0.178);
 }
 
 #checkoutBtn:hover {
+  background: rgba(33, 40, 236, 0.836);
+}
+
+#payWithCard:hover {
   background: rgba(33, 40, 236, 0.836);
 }
 
@@ -72,5 +82,14 @@
   background: rgba(33, 40, 236, 0.753);
   cursor: pointer;
 }
+
+.streamingLogo:hover {
+  font-size: 27px !important;
+  text-shadow: 1px 1px white;
+}
+
+// #addToCart:hover {
+//   background: rgba(0, 47, 255, 0.007);
+// }
 
 

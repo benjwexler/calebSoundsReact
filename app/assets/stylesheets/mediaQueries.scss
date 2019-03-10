@@ -13,7 +13,12 @@
     }
 
    #whatsInside {
-        margin-left: 40px;
+        // margin-left: 40px;
+    }
+
+    #coverArt {
+        padding-left: 10px;
+        border-radius: 3px !important;
     }
 
     .fa-bars {
@@ -95,6 +100,7 @@
 
      .track {
         height: 160px;
+        box-shadow: 2px 2px rgba(0, 0, 0, 0.712);
      }
 
      .trackName {
@@ -104,9 +110,15 @@
      .streamingLogo {
          font-size: 20px !important;
      }
+
+     .streamingLogo:hover {
+        font-size: 22px !important;
+        text-shadow: 1px 1px white;
+      }
      
 
   }
+
 
   @media only screen and (max-width: 600px) {
 
@@ -150,6 +162,11 @@
     .lastTwoTracks {
         display: none;
     }
+
+    .streamingLogo:hover {
+        font-size: 18px !important;
+        text-shadow: 1px 1px white;
+      }
     
 
   }
@@ -160,12 +177,65 @@
         
     } */
 
+    #mobilePackTitle {
+        display: inline;
+        font-size: 10px !important;
+    }
+
+    // #mobileDashRemove {
+    //     display: none;
+    // }
+   
+
+    #section1 {
+        height: 70vh;
+
+    }
+
+    #stickyFooter {
+        height: 100px;
+        margin-bottom: 0px;
+    }
+
+    #footer {
+        height: 140px;
+        margin-bottom: 0px;
+    }
+
+    #emailStickFooter {
+        padding-top: 16px;
+    }
+
+    #email {
+        padding-top: 35px;
+    }
+
+    #tracksContainer {
+        padding-left: 0px;
+    padding-right: 0px;
+    }
+
     #whatsInside {
-        margin-left: 20px;
+        // margin-left: 20px;
+        // padding-top: 39px;
+        padding-top: 29px;
     }
 
     #addToCart {
         margin-right: 25px;
+    }
+    .mobileHide {
+        display: none;
+    }
+
+    #checkoutContainer{
+        margin-top: 75px;
+        border: 0px;
+        box-shadow: none;
+    }
+
+    #checkoutCoverArtContainer {
+        height: 220px;
     }
 
     
@@ -180,13 +250,17 @@
         font-size: 18px;
     }
 
+    
+
     #bigText {
         font-size: 40px;
         margin-bottom: 0px;
     }
 
     #bigTextContainer {
-        margin-top: 100px;
+        // margin-top: 100px;
+        margin-top: 90px;
+        // margin-top: 85px;
         width: 70%;
     }
 
@@ -194,7 +268,12 @@
         width: 130px;
         height: 37px;
         padding-top: 13px;
-        margin-top: -30px;
+        // margin-top: -30px;
+        // margin: auto;
+        // margin-left: 0px;
+        margin-top: 20px;
+        font-size: 16px;
+        
     }
 
     .smallPhoneHide {
@@ -207,6 +286,10 @@
 
   @media only screen and (max-width: 320px) {
 
+    #checkoutCoverArtContainer {
+        height: 220px;
+    }
+
   
 
     #bigTextContainer {
@@ -218,25 +301,18 @@
   @media only screen and (max-width: 700px) {
 
 
-    .mobileHide {
-        display: none;
-    }
+    
 
     #whatsInside {
-        margin-left: 15px;
+        // margin-left: 15px;
+        font-size: 16px;
     }
 
     #addToCart {
         margin-right: 15px;
+        font-size: 14px;
+        margin-top: 25px;
     }
-
-   
-
-    
-
-   
-
-   
 
    
   }
@@ -250,16 +326,16 @@
     } */
 
     .trackPlayIcon {
-        opacity: 1;
+        opacity: .8;
     }
 
     .trackCircle {
-        opacity: 1;
+        opacity: .8;
 
     }
 
     .trackPauseIcon {
-        opacity: 1
+        opacity: .8
     }
 
    

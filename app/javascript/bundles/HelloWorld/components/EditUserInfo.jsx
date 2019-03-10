@@ -704,7 +704,7 @@ class EditUserInfo extends React.Component {
             </div>
         </div>
 
-        <Footer footerId="stickyFooter" />
+        <Footer footerId="stickyFooter" emailDivStyle="emailStickFooter"/>
         
       </div>
     );

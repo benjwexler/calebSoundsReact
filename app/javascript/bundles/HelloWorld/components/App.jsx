@@ -985,6 +985,7 @@ class App extends React.Component {
         cartTransitionEnd={this.cartTransitionEnd}
         cartHeightZero={cartHeightZero}
         click={this.clearCart}
+        toggleCart={this.toggleCart}
       />
     );
 
@@ -1051,13 +1052,14 @@ class App extends React.Component {
         <MobileNav 
           mobileNavToggle={mobileNavToggle} 
           openModal={this.toggleModal}
+          toggleMobileNav={this.toggleMobileNav}
           />
         <Section1 />
         <Section2 samples={samples} click={this.addToCart} loadSounds={this.loadSounds} />
         {audioPlayer}
         {latestTracks}
         
-        <Footer footerId="footer" />
+        <Footer footerId="footer" emailDivStyle="email"/>
       </div>
     );
   }

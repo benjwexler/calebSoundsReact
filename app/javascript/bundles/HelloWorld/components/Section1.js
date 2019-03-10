@@ -7,7 +7,7 @@ const section1 = (props) => {
         <div id="section1">
         <div id="bigTextContainer">
             <div id="bigText">SAMPLE PACK VOL. 1 OUT NOW</div>
-            <div id="previewButton">Preview
+            <div onClick={() => document.getElementById("section2").scrollIntoView(false)} id="previewButton">Preview
                 <div id="previewSecretBackground"></div>
             </div>
         </div>
