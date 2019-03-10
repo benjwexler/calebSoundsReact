@@ -483,7 +483,9 @@ class UserInfo extends React.Component {
     let fullScreenStyle = {
         height: '100vh',
         width: '100vw',
-        border: '1px solid yellow',
+        // border: '1px solid white',
+        overflow: 'hidden',
+        position: 'fixed'
         // paddingTop: '200px'
         // marginTop: '200px',
     }
@@ -528,9 +530,10 @@ class UserInfo extends React.Component {
             maxWidth: '500px',
             padding: '40px',
             paddingTop: '20px',
-            margin: 'auto',
-            marginTop: '120px',
-            border: 'solid 3px black',
+            textAlign: 'center',
+            // margin: 'auto',
+            // marginTop: '120px',
+            // border: 'solid 3px black',
             display: 'flex',
             flexDirection: 'column',
             // justifyContent: 'center',
@@ -540,9 +543,9 @@ class UserInfo extends React.Component {
             borderRadius: '3%',
             fontFamily: 'Josefin Sans, sans-serif !important',
             boxSizing: 'border-box',
-            boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
+            // boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
             position: 'relative',
-            height: '450px'
+            // height: '450px'
             /* font-family: 'Fjalla One', sans-serif; */
        
         
@@ -552,7 +555,7 @@ class UserInfo extends React.Component {
 
     let linksContainerStyle = {
       display : 'flex',
-      height: '200px',
+      // height: '150px',
       width: '100%',
       border: '1px solid black'
     }
@@ -608,11 +611,11 @@ class UserInfo extends React.Component {
 
         <div style={fullScreenStyle}> 
         {/* <div style={positonAbsoluteBgPicStyle}></div> */}
-            <div style={modalStyle}>
+            <div className="editUserInfoContainer"  style={modalStyle}>
                 <div style={accountInfoStyle}>ACCOUNT INFO</div>
              
                 
-                <div style={linksContainerStyle}>
+                <div className="accountInfoBorder" style={linksContainerStyle}>
                 <div style={nameStyle}>Email: <span style={fontBlue}>{this.state.userEmail} </span> </div>
                 </div>
                 <div style={linksContainerStyle2}>

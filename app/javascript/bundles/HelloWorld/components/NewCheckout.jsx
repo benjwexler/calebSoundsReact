@@ -1122,8 +1122,10 @@ return totalPrice
     let fullScreenStyle = {
         height: '100vh',
         width: '100vw',
-        border: '1px solid white',
-        overflow: 'hidden'
+        // border: '1px solid white',
+        overflow: 'hidden',
+        overflow: 'hidden',
+        position: 'fixed'
         // paddingTop: '200px'
         // marginTop: '200px',
     }
@@ -1285,7 +1287,7 @@ return totalPrice
 
         <div style={fullScreenStyle}> 
             <div id="checkoutContainer" >
-                <div style={accountInfoStyle}>Checkout</div>
+                <div id="checkoutText2" style={accountInfoStyle}>Checkout</div>
                 <div id="checkoutCoverArtContainer" >
                   {loadingGif}
                   <img id="checkoutCoverArt" src="pics/gtrv3.jpg"/>
