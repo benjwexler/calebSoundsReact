@@ -3,14 +3,45 @@ import React from 'react';
 
 const mobileNav = (props) => {
 
-    return (
-        <div id="navDropdownOuterContainer"> 
-            <div id="mobileLinksContainer" className={props.mobileNavToggle}>
-            <div onClick={props.openModal} className="mobileNavLink">
+    let loggedOutLinks = (
+        <React.Fragment>
+        <div onClick={props.openModal} className="mobileNavLink">
                 <div className="mobileNavLinkName">
                     Log in/Sign up
                 </div>
             </div>
+        </React.Fragment>
+
+    )
+
+    let loggedInLinks = (
+        <React.Fragment>
+        
+        <a href={'/users/' + props.userId} className="mobileNavLink">
+                <div className="mobileNavLinkName">
+                    Account Info
+                </div>
+            </a>
+            
+            <a href="/users/edit" className="mobileNavLink">
+                <div className="mobileNavLinkName">
+                    Update Info
+                </div>
+            </a>
+            <div onClick={() => {props.toggleMobileNav(); props.signOut()} } className="mobileNavLink">
+                <div className="mobileNavLinkName">
+                    Sign Out
+                </div>
+            </div>
+            </React.Fragment>
+    )
+
+    return (
+        <div id="navDropdownOuterContainer"> 
+            <div id="mobileLinksContainer" className={props.mobileNavToggle}>
+
+            {props.userLoggedIn ? loggedInLinks : loggedOutLinks}
+            
                 <div onClick={() => {document.getElementById("section2").scrollIntoView(false); props.toggleMobileNav()}} className="mobileNavLink">
                 <div className="mobileNavLinkName">
                     Sound Packs

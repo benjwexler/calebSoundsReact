@@ -1053,6 +1053,9 @@ class App extends React.Component {
           mobileNavToggle={mobileNavToggle} 
           openModal={this.toggleModal}
           toggleMobileNav={this.toggleMobileNav}
+          userLoggedIn = {this.state.userLoggedIn}
+          signOut = {this.signOut}
+          userId= {this.state.userId}
           />
         <Section1 />
         <Section2 samples={samples} click={this.addToCart} loadSounds={this.loadSounds} />
