@@ -177,6 +177,10 @@
         
     } */
 
+    #checkoutText2 {
+        display: none;
+    }
+
     #mobilePackTitle {
         display: inline;
         font-size: 10px !important;
@@ -232,11 +236,29 @@
         margin-top: 75px;
         border: 0px;
         box-shadow: none;
+        padding-left: 50px;
+        padding-right: 50px;
     }
 
     #checkoutCoverArtContainer {
-        height: 220px;
+        height: 240px;
     }
+
+    .edit_user {
+        margin-top: 0px;
+      }
+
+      .editUserInfoContainer {
+        margin-top: 75px;
+        border: none;
+        box-shadow: none;
+        // height: 100px;
+        height: auto;
+      }
+
+      .track {
+        background: rgb(247, 247, 247);
+      }
 
     
   }
@@ -346,6 +368,11 @@
   @media only screen and (max-width: 375px) {
     .formBorder {
         border: 0px solid black
+    }
+
+    .accountInfoBorder {
+        border: 0px solid black;
+        height: 150px;
     }
 
     // .trackPlayIcon {

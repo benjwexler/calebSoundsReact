@@ -173,6 +173,7 @@
 #modalBtnsContainer {
     display: flex;
     width: 70%;
+    min-width: 270px;
     margin: auto;
     margin-bottom: 30px;
     
@@ -251,11 +252,12 @@
     border-radius: 0.25rem;
     border-radius: 10px;
     background: rgba(45, 51, 221, 0.747);
+    -webkit-appearance: none;
     /* background: rgba(45, 51, 221, 0.904); */
     font-family: 'Josefin Sans', sans-serif !important;
     color: white;
     width: 270px;
     margin: auto;
     font-size: 24px;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    // transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }

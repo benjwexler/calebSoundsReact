@@ -437,7 +437,9 @@ class EditUserInfo extends React.Component {
     let fullScreenStyle = {
         height: '100vh',
         width: '100vw',
-        border: '1px solid yellow',
+        // border: '1px solid yellow',
+        overflow:  'hidden',
+        position: 'fixed'
         // paddingTop: '200px'
         // marginTop: '200px',
     }
@@ -471,9 +473,10 @@ class EditUserInfo extends React.Component {
             maxWidth: '500px',
             padding: '40px',
             paddingTop: '20px',
-            margin: 'auto',
-            marginTop: '120px',
-            border: 'solid 3px black',
+            // margin: 'auto',
+            // marginTop: '120px',
+            // border: 'solid 3px black',
+            // boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
             display: 'flex',
             flexDirection: 'column',
             // justifyContent: 'center',
@@ -483,9 +486,9 @@ class EditUserInfo extends React.Component {
             borderRadius: '3%',
             fontFamily: 'Josefin Sans, sans-serif !important',
             boxSizing: 'border-box',
-            boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
+            
             position: 'relative',
-            height: '500px'
+            // height: '500px'
             /* font-family: 'Fjalla One', sans-serif; */
        
         
@@ -638,10 +641,10 @@ class EditUserInfo extends React.Component {
         <MobileNav mobileNavToggle={mobileNavToggle} />
 
         <div style={fullScreenStyle}> 
-            <div style={modalStyle}>
+            <div className="editUserInfoContainer" style={modalStyle}>
                 <div style={accountInfoStyle}>EDIT INFO</div>
                 <div className="formBorder" style={linksContainerStyle}>
-                <form style={marginAutoStyle} className="edit_user" id="edit_user" action="/users" accept-charset="UTF-8" method="post">
+                <form  className="edit_user" id="edit_user" action="/users" accept-charset="UTF-8" method="post">
                   <input name="utf8" type="hidden" value="✓"/>
                   <input type="hidden" name="_method" value="put"/>
                   <input type="hidden" name="authenticity_token" value={this.state.railsToken}/>
