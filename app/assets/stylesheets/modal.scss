@@ -2,6 +2,7 @@
     position: fixed;
     height: 100vh;
     width: 100vw;
+    
     background: rgba(0, 0, 0, 0.075);
     background: rgba(0, 0, 0, 0.151);
     background: rgba(0, 0, 0, 0.571);
@@ -260,4 +261,15 @@
     margin: auto;
     font-size: 24px;
     // transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#forgotPasswordLink {
+    color: rgba(45, 51, 221, 0.747);
+    // text-decoration: underline;
+    // border: 2px solid black;
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-align: center;
+  
+
 }

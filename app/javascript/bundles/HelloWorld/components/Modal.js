@@ -9,7 +9,7 @@ const modal = (props) => {
     if(props.errorMessage) {
         console.log("error Blah Blah")
         console.log(props.errorMessage)
-        errorMessage = <div>{props.errorMessage}</div>
+        errorMessage = <div style={{marginBottom: '10px', color: 'black'}}>{props.errorMessage}</div>
     }
 
     if(props.submitBtnText === 'Sign Up') {
@@ -72,6 +72,13 @@ const modal = (props) => {
              
 
               {errorMessage}
+              <a id="forgotPasswordLink" href="/users/password/new">
+              Forgot Password?
+              <br/>
+            <span 
+            // style={{color: 'rgba(45, 51, 221, 0.747)'}}
+            >Click Here</span>
+            </a>
         </div>
       </form>
 
