@@ -1,0 +1,33 @@
+.containerStyle {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgba(45, 51, 221, 0.747);
+    background-color: white;
+    border-radius: 3%;
+    font-family: Josefin Sans, sans-serif !important;
+    box-sizing: border-box;
+    position: relative;
+    height: 300px;
+    margin: 120px auto auto;
+    border: solid 3px black;
+    box-shadow: 1px 3px rgba(0, 0, 0, 0.322);
+    height: 500px;
+}
+
+.titleStyle {
+    font-size: 32px;
+    font-family: Josefin Sans, sans-serif;
+    margin-bottom: 20px;
+}
+
+.innerContainerStyle {
+    display : flex;
+    height: 800px;
+    width: 100%;
+    border: 1px solid black
+  }

@@ -151,6 +151,7 @@
 
      .wrapper {
          margin-top: 75px;
+         margin-top: 25px
      }
 
      .track {
@@ -232,12 +233,17 @@
         display: none;
     }
 
-    #checkoutContainer{
+    #checkoutContainer, .containerStyle  {
         margin-top: 75px;
         border: 0px;
         box-shadow: none;
         padding-left: 50px;
         padding-right: 50px;
+    }
+
+    .innerContainerStyle {
+        width: auto;
+        border: 0px;
     }
 
     #checkoutCoverArtContainer {

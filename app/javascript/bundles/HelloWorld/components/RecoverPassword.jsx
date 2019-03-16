@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Navbar from "./Navbar.js";
 import FullScreen from "./FullScreen.js";
 import Container from "./Container.js";
+import Footer from "./Footer.js";
 
 
 
@@ -48,6 +49,7 @@ class RecoverPassword extends React.Component {
 
           </Container>
         </FullScreen>
+        <Footer footerId="stickyFooter" emailDivStyle="emailStickFooter"/>
       </div>
     )
   }
