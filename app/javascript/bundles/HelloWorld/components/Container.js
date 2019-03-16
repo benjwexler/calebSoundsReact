@@ -40,9 +40,9 @@ const container = (props) => {
 
 
     return (
-        <div style={modalStyle}>
-        <div style={titleStyle}>{props.title}</div>
-            <div style={innerContainerStyle}>
+        <div className="containerStyle">
+        <div className="titleStyle">{props.title}</div>
+            <div className="innerContainerStyle">
                 {props.children}
             </div>
 
