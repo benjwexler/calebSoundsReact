@@ -948,21 +948,6 @@ class App extends React.Component {
       </React.Fragment>
     );
 
-    // let items = []
-    // let totalPrice = 0
-    // let itemPrice = 75
-
-    // for(let i=0; i<2; i++) {
-    //     items.push(<Item
-    //         itemPrice = {itemPrice}
-    //     />)
-
-    //     totalPrice+= itemPrice
-    // }
-
-    // items = <React.Fragment>{items}</React.Fragment>;
-
-
     let showCartBoolean;
 
     let cartHeightZero;
@@ -984,7 +969,7 @@ class App extends React.Component {
         totalPrice={convertToUsCurrency.format(sum)}
         cartTransitionEnd={this.cartTransitionEnd}
         cartHeightZero={cartHeightZero}
-        click={this.clearCart}
+        clearCart={this.clearCart}
         toggleCart={this.toggleCart}
       />
     );

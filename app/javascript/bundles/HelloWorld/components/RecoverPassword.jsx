@@ -2,6 +2,7 @@ import ReactOnRails from "react-on-rails";
 import React, { Component } from "react";
 
 import Cart from "./Cart.js";
+import Item from "./Item.js";
 import Navbar from "./Navbar.js";
 import MobileNav from "./MobileNav.js";
 import FullScreen from "./FullScreen.js";
@@ -23,7 +24,7 @@ class RecoverPassword extends React.Component {
       showMobileNav: false,
       showCart: false,
       cartHeightZero: true,
-      totalPrice: undefined,
+      totalPrice: undefined
     };
   }
 
@@ -47,6 +48,25 @@ class RecoverPassword extends React.Component {
     }
   };
 
+  clearCart = () => {
+    let that = this;
+    fetch(`http://localhost:3000/carts/all`, {
+      method: "DELETE",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": that.state.railsToken
+      }
+    })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        that.setCart(myJson);
+      })
+      .catch(err => {});
+  };
+
   toggleCart = () => {
     let that = this;
 
@@ -61,7 +81,7 @@ class RecoverPassword extends React.Component {
     );
   };
 
-  setCart = (json) => {
+  setCart = json => {
     let that = this;
 
     this.setState({
@@ -69,25 +89,53 @@ class RecoverPassword extends React.Component {
     });
   };
 
-  componentDidMount() {
+  deleteItem = e => {
+    let kitId = e.target.dataset.kitId;
+
     let that = this;
-    fetch(`/carts`, {
+
+    // let kitId = this.state.kitId
+
+    fetch(`http://localhost:3000/carts/${1}`, {
+      method: "DELETE",
+      credentials: 'same-origin',
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-CSRF-Token": that.state.railsToken,
+          
         }
   })
     .then(function(response) {
       return response.json();
     })
     .then(function(myJson) {
-      console.log(myJson)
-      that.setCart(myJson)
+      
+      that.setCart(myJson) 
+      
+    })
+    .catch((err) => {
+
     });
+
+  };
+
+  componentDidMount() {
+    let that = this;
+    fetch(`/carts`, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+        that.setCart(myJson);
+      });
 
     window.addEventListener("resize", this.handleResize);
   }
-
-
 
   render() {
     let emailInputStyle = {
@@ -115,9 +163,47 @@ class RecoverPassword extends React.Component {
       cartHeightZero = "cartHeightZero";
     }
 
+    let unsortedItems;
+    if (this.state.cart) {
+      unsortedItems = Object.keys(this.state.cart);
+      unsortedItems.sort(this.compare);
+    } else {
+      unsortedItems = [];
+    }
+    let sum = 0;
+
+    let items = (
+      <React.Fragment>
+        {unsortedItems.map((item, index) => {
+          sum += this.state.cart[item].price * this.state.cart[item].quantity;
+          return (
+            <Item
+              quantity={this.state.cart[item].quantity}
+              name={this.state.cart[item].name}
+              key={item}
+              deleteItem={e => this.deleteItem(e)}
+              kitId={item}
+              kitData={item}
+              increaseQuantity={e => this.addToCart(e)}
+              decreaseQuantity={e => this.decreaseQuantity(e)}
+              itemPrice={convertToUsCurrency.format(
+                this.state.cart[item].price * this.state.cart[item].quantity
+              )}
+            />
+          );
+        })}
+      </React.Fragment>
+    );
+
     return (
       <div>
-        <Cart showCartBoolean={showCartBoolean} toggleCart={this.toggleCart} />
+        <Cart
+          showCartBoolean={showCartBoolean}
+          toggleCart={this.toggleCart}
+          items={items}
+          totalPrice={convertToUsCurrency.format(sum)}
+          clearCart={this.clearCart}
+        />
         <Navbar
           toggleMobileNav={this.toggleMobileNav}
           toggleCart={this.toggleCart}
