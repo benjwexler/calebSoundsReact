@@ -17,7 +17,6 @@ import Item from "./Item.js";
 import { LinkedList, Node } from "./linkedList.js";
 import StripeCheckout from "react-stripe-checkout";
 
-
 const convertToUsCurrency = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -77,96 +76,92 @@ class App extends React.Component {
       sampleCurrentlyPlaying: false,
       transition: true,
       showAccountDropdown: false,
-      userInteractedWithPage: false,
+      userInteractedWithPage: false
     };
   }
 
-  loadSounds = (kitId) => {
+  loadSounds = kitId => {
     // this.setState({ in: false });
     let that = this;
-    let kitSounds 
+    let kitSounds;
     let padsObj = {};
 
     fetch(`/kits/${10}?limit=6&offset=${that.state.sampleOffset}`, {
-        headers: {
-            "Content-Type": "application/json"
-          }
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
       .then(function(response) {
         return response.json();
       })
       .then(function(myJson) {
-        console.log(myJson)
+        console.log(myJson);
 
-        kitSounds = that.state.kitSounds.concat(myJson)
-        that.setState({
+        kitSounds = that.state.kitSounds.concat(myJson);
+        that.setState(
+          {
             kitSounds: kitSounds,
             sampleOffset: that.state.sampleOffset + 6,
             transition: false
-            }, that.transition);
-          })
+          },
+          that.transition
+        );
+      });
+  };
 
-      }
-      
+  // $.ajax({
+  //   type: "GET",
+  //   url: `http://localhost:3000/kits/${7}?limit=6`,
+  //   success: function(json) {
+  //     // json.forEach((sound, index) => {
+  //     //     padsObj[index] = sound.soundfile
+  //     // })
 
-     
+  //     that.setState({
+  //       kitSounds: json
+  //     });
+  //   },
+  //   error: function(xhr) {},
+  //   dataType: "json"
+  // });
 
-    // $.ajax({
-    //   type: "GET",
-    //   url: `http://localhost:3000/kits/${7}?limit=6`,
-    //   success: function(json) {
-    //     // json.forEach((sound, index) => {
-    //     //     padsObj[index] = sound.soundfile
-    //     // })
-
-    //     that.setState({
-    //       kitSounds: json
-    //     });
-    //   },
-    //   error: function(xhr) {},
-    //   dataType: "json"
-    // });
-  
-
-  loadMoreSounds = () => {
-
-  }
+  loadMoreSounds = () => {};
 
   transition = () => {
-    this.setState({transition: true})
-  }
+    this.setState({ transition: true });
+  };
 
-    componentDidMount() {
-      //  this.setState({ in: !this.state.transition });
+  componentDidMount() {
+    //  this.setState({ in: !this.state.transition });
     window.addEventListener("resize", this.handleResize);
     // window.addEventListener("mousemove", this.handleMousemove);
-   
+
     let that = this;
 
     this.loadSounds();
 
     fetch(`/tracks.json?limit=6`, {
       headers: {
-          "Content-Type": "application/json"
-        }
+        "Content-Type": "application/json"
+      }
     })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(myJson) {
-      let newTracksObj = {};
-      myJson.forEach(function(track, index) {
-        newTracksObj[index] = myJson[index];
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        let newTracksObj = {};
+        myJson.forEach(function(track, index) {
+          newTracksObj[index] = myJson[index];
+        });
+        that.setState(
+          {
+            tracks: myJson,
+            tracksObj: newTracksObj,
+            counter: 7
+          },
+          that.bindWidget
+        );
       });
-      that.setState(
-        {
-          tracks: myJson,
-          tracksObj: newTracksObj,
-          counter: 7
-        },
-        that.bindWidget
-      );
-    });
 
     // $.ajax({
     //   type: "GET",
@@ -193,23 +188,23 @@ class App extends React.Component {
 
     fetch(`/carts`, {
       headers: {
-          "Content-Type": "application/json"
-        }
-  })
-    .then(function(response) {
-      return response.json();
+        "Content-Type": "application/json"
+      }
     })
-    .then(function(myJson) {
-      console.log(myJson)
-      that.response(myJson)
-    });
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+        that.response(myJson);
+      });
 
-  //   $.ajax({
-  //     method: "GET",
-  //     url: `/carts`,
-  //     dataType: "json",
-  //     success: this.response
-  //   });
+    //   $.ajax({
+    //     method: "GET",
+    //     url: `/carts`,
+    //     dataType: "json",
+    //     success: this.response
+    //   });
   }
 
   bindWidget = () => {
@@ -228,22 +223,21 @@ class App extends React.Component {
         soundcloudWidget = soundclouds[i];
         window[`widget${i}`] = SC.Widget(soundcloudWidget);
         //   console.log(soundcloudWidget)
-        console.log(window[`widget${i}`].Events)
+        console.log(window[`widget${i}`].Events);
         window[`widget${i}`].bind(SC.Widget.Events.READY, function() {});
         window[`widget${i}`].bind(SC.Widget.Events.FINISH, function() {
-          console.log("Song is finished!")
+          console.log("Song is finished!");
           that.setState({
-            currentlyPlaying: false,
+            currentlyPlaying: false
           });
         });
-        
-        // console.log(window[`widget${i}`])
 
+        // console.log(window[`widget${i}`])
       }
     }
   };
 
-  response = (json) => {
+  response = json => {
     let that = this;
 
     this.setState({
@@ -251,14 +245,17 @@ class App extends React.Component {
     });
   };
 
-  setSample = (e) => {
-    let sampleNumber = e.currentTarget.dataset.sampleNumber
+  setSample = e => {
+    let sampleNumber = e.currentTarget.dataset.sampleNumber;
 
     let sampleCurrentlyPlaying = true;
 
     // console.log(sampleNumber)
 
-    if (this.state.sampleCurrentlyPlaying && (this.state.currentSample === parseInt(sampleNumber))) {
+    if (
+      this.state.sampleCurrentlyPlaying &&
+      this.state.currentSample === parseInt(sampleNumber)
+    ) {
       sampleCurrentlyPlaying = false;
     }
 
@@ -266,17 +263,18 @@ class App extends React.Component {
     //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
     // });
 
-    this.setState({
-      currentSample: parseInt(sampleNumber),
-      sampleCurrentlyPlaying: sampleCurrentlyPlaying
-    }, this.playSample);
-  }
+    this.setState(
+      {
+        currentSample: parseInt(sampleNumber),
+        sampleCurrentlyPlaying: sampleCurrentlyPlaying
+      },
+      this.playSample
+    );
+  };
 
-  playSample = (sampleNumber) => {
+  playSample = sampleNumber => {
     let audioPlayer = document.getElementById("audioPlayer");
     // let sampleCurrentlyPlaying = true;
-
-
 
     // if (this.state.sampleCurrentlyPlaying && (this.state.currentSample === parseInt(sampleNumber))) {
     //   sampleCurrentlyPlaying = false;
@@ -286,44 +284,39 @@ class App extends React.Component {
     //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
     // });
 
-    if(this.state.currentTrack || this.state.currentTrack === 0) {
-     
-      window[`widget${this.state.currentTrack}`].pause()
+    if (this.state.currentTrack || this.state.currentTrack === 0) {
+      window[`widget${this.state.currentTrack}`].pause();
       window[`widget${this.state.currentTrack}`].seekTo(0);
-      
-      
-    } 
+    }
 
     this.setState({
-      currentlyPlaying: false,
+      currentlyPlaying: false
       // sampleCurrentlyPlaying: sampleCurrentlyPlaying
     });
 
-    let audioPlayerState = audioPlayer.readyState
+    let audioPlayerState = audioPlayer.readyState;
 
     // while(audioPlayerState !== 4) {
-      
+
     //   audioPlayerState = audioPlayer.readyState
     //   console.log(audioPlayerState)
     // }
 
     // var playPromise = audioPlayer.play();
 
-    if(audioPlayer.paused) {
-      audioPlayer.play()
-      .then(function() {
+    if (audioPlayer.paused) {
+      audioPlayer.play().then(function() {
         // Automatic playback started!
-
-      })
+      });
     } else {
-      audioPlayer.pause()
+      audioPlayer.pause();
     }
 
     // if (playPromise !== undefined) {
     //   playPromise.then(_ => {
     //     // Automatic playback started!
     //     // Show playing UI.
-       
+
     //   })
     //   .catch(error => {
     //     console.log("PROBLEMS")
@@ -331,17 +324,13 @@ class App extends React.Component {
     //     // Show paused UI.
     //   });
     // }
-    
-  
-    
-
-  }
+  };
 
   audioEnded = () => {
     this.setState({
       sampleCurrentlyPlaying: false
     });
-  }
+  };
 
   addToCart = () => {
     let kitId;
@@ -351,7 +340,6 @@ class App extends React.Component {
     let name;
     let that = this;
 
-
     // data = `authenticity_token=${this.state.railsToken}&kitId=${
     //   this.state.kitId
     // }&coverArtPic=${this.state.kitPic}&price=${this.state.kitPrice}&name=${
@@ -360,39 +348,33 @@ class App extends React.Component {
     // data = `authenticity_token=${that.state.railsToken}&kitId=${"1"}&price=${"25.99"}&name=${"4blahblah"}`;
 
     data = {
-    // "authenticity_token":that.state.railsToken,
-    "kitId": 1,
-    "price": 25.99,
-    "name": "5blahblah"
-    }
+      // "authenticity_token":that.state.railsToken,
+      kitId: 1,
+      price: 25.99,
+      name: "5blahblah"
+    };
 
-
-    fetch('/carts', {
-        method: "POST",
-        body: JSON.stringify(data),
-        credentials: 'same-origin',
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": that.state.railsToken,
-            
-          }
+    fetch("/carts", {
+      method: "POST",
+      body: JSON.stringify(data),
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": that.state.railsToken
+      }
     })
       .then(function(response) {
         return response.json();
       })
       .then(function(myJson) {
-        
         that.setState({
-            cart: myJson
-          });
+          cart: myJson
+        });
       })
-      .catch((err) => {
+      .catch(err => {
         // Handle any error that occurred in any of the previous
         // promises in the chain.
       });
-      
-
-
 
     // $.ajax({
     //   method: "POST",
@@ -431,25 +413,22 @@ class App extends React.Component {
 
     fetch(`carts/${1}`, {
       method: "DELETE",
-      credentials: 'same-origin',
+      credentials: "same-origin",
       headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": that.state.railsToken,
-          
-        }
-  })
-    .then(function(response) {
-      return response.json();
+        "Content-Type": "application/json",
+        "X-CSRF-Token": that.state.railsToken
+      }
     })
-    .then(function(myJson) {
-      
-      that.response(myJson) 
-      
-    })
-    .catch((err) => {
-      // Handle any error that occurred in any of the previous
-      // promises in the chain.
-    });
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        that.response(myJson);
+      })
+      .catch(err => {
+        // Handle any error that occurred in any of the previous
+        // promises in the chain.
+      });
 
     // $.ajax({
     //   method: "DELETE",
@@ -470,26 +449,23 @@ class App extends React.Component {
 
     fetch(`carts/all`, {
       method: "DELETE",
-      credentials: 'same-origin',
+      credentials: "same-origin",
       headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": that.state.railsToken,
-          
-        }
-  })
-    .then(function(response) {
-      return response.json();
+        "Content-Type": "application/json",
+        "X-CSRF-Token": that.state.railsToken
+      }
     })
-    .then(function(myJson) {
-
-      that.response(myJson) 
-      
-    })
-    .catch((err) => {
-      // Handle any error that occurred in any of the previous
-      // promises in the chain.
-    });
-  }
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        that.response(myJson);
+      })
+      .catch(err => {
+        // Handle any error that occurred in any of the previous
+        // promises in the chain.
+      });
+  };
   //   $.ajax({
   //     method: "DELETE",
   //     beforeSend: function(request) {
@@ -550,7 +526,7 @@ class App extends React.Component {
     //  console.log(this.state.tracksObj[this.state.currentTrack].soundcloud_id)
 
     let audioPlayer = document.getElementById("audioPlayer");
-    audioPlayer.pause()
+    audioPlayer.pause();
     audioPlayer.currentTime = 0;
 
     this.setState({
@@ -568,21 +544,18 @@ class App extends React.Component {
       window[`widget${currentTrack}`].play();
       // isTrackPlaying = true
     }
-
-
   };
 
   handleResize = () => {
-    if (window.innerWidth > 1120){
-        this.setState({
-          showMobileNav: false
-        })
-        
-      } else {
-        this.setState({
-          showAccountDropdown: false
-        })
-      }
+    if (window.innerWidth > 1120) {
+      this.setState({
+        showMobileNav: false
+      });
+    } else {
+      this.setState({
+        showAccountDropdown: false
+      });
+    }
   };
 
   // handleMousemove = () => {
@@ -592,7 +565,6 @@ class App extends React.Component {
   //     this.setState({
   //       userInteractedWithPage: true
   //     }, window.removeEventListener("mousemove", this.handleMousemove))
-      
 
   //   }
   // };
@@ -607,18 +579,14 @@ class App extends React.Component {
   };
 
   setModalContent = e => {
-
     let modalContent = "Sign Up";
-
     if (e.currentTarget.id === "switchToLogin") {
       modalContent = "Log In";
     }
-
     this.setState({
       modalContent: modalContent,
-      errorMessage: undefined 
+      errorMessage: undefined
     });
-    // document.getElementById("modalButton").click()
   };
 
   submitForm = e => {
@@ -628,59 +596,62 @@ class App extends React.Component {
     signUpObj.utf8 = "✓";
     signUpObj.authenticity_token = that.state.railsToken;
     signUpObj["user[email]"] = document.getElementById("userEmailInput").value;
-    signUpObj["user[password]"] = document.getElementById("userPasswordInput").value;
+    signUpObj["user[password]"] = document.getElementById(
+      "userPasswordInput"
+    ).value;
     signUpObj.commit = "Log in";
     // signUpObj['CSRFToken'] = that.state.railsToken
     let url = "/users/sign_in.json";
     if (this.state.modalContent === "Sign Up") {
       url = "/users.json";
-    signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value;
-
+      signUpObj["user[password_confirmation]"] = document.getElementById(
+        "userPasswordConfirmationInput"
+      ).value;
     }
 
-  //   fetch(url, {
-  //     method: "POST",
-  //     mode: 'cors',
-  //     body: JSON.stringify(signUpObj),
-  //     credentials: 'same-origin',
-  //     headers: {
-  //         "Content-Type": "application/json",
-  //         'Accept': 'application/json',
-  //         'Access-Control-Allow-Origin':'*',
-  //         "X-CSRF-Token": that.state.railsToken,
-  //         "Authorization": that.state.railsToken,
-          
-  //       }
-  // })
-  //   .then(function(response) {
-  //     return response.json();
-  //   })
-  //   .then(function(myJson) {
-      
-  //     console.log("wtf")
-      
-  //     that.setState(
-  //       {
-  //         railsToken: myJson.csrfToken,
-  //         userLoggedIn: true,
-  //         errorMessage: undefined,
-  //         cart: JSON.parse(myJson.cart)
-  //       },
-  //       () => {
-  //         console.log(that.state);
-  //         that.setState({
-  //           showModal: false
-  //         })
-  //       }
-  //     );
-  //   })
-  //   .catch((err) => {
-  //     // Handle any error that occurred in any of the previous
-  //     // promises in the chain.
-  //     console.log(err)
-  //     console.log("there was an error")
-  //   });
-      
+    //   fetch(url, {
+    //     method: "POST",
+    //     mode: 'cors',
+    //     body: JSON.stringify(signUpObj),
+    //     credentials: 'same-origin',
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         'Accept': 'application/json',
+    //         'Access-Control-Allow-Origin':'*',
+    //         "X-CSRF-Token": that.state.railsToken,
+    //         "Authorization": that.state.railsToken,
+
+    //       }
+    // })
+    //   .then(function(response) {
+    //     return response.json();
+    //   })
+    //   .then(function(myJson) {
+
+    //     console.log("wtf")
+
+    //     that.setState(
+    //       {
+    //         railsToken: myJson.csrfToken,
+    //         userLoggedIn: true,
+    //         errorMessage: undefined,
+    //         cart: JSON.parse(myJson.cart)
+    //       },
+    //       () => {
+    //         console.log(that.state);
+    //         that.setState({
+    //           showModal: false
+    //         })
+    //       }
+    //     );
+    //   })
+    //   .catch((err) => {
+    //     // Handle any error that occurred in any of the previous
+    //     // promises in the chain.
+    //     console.log(err)
+    //     console.log("there was an error")
+    //   });
+
     $.ajax({
       type: "POST",
 
@@ -707,13 +678,13 @@ class App extends React.Component {
               console.log(that.state);
               that.setState({
                 showModal: false
-              })
+              });
             }
           );
         }
       },
       error: function(xhr) {
-        console.log("error")
+        console.log("error");
         that.setState({
           errorMessage: "Your Email and/or Password is incorrect"
         });
@@ -723,28 +694,25 @@ class App extends React.Component {
   };
 
   signOut = () => {
-    let that = this
+    let that = this;
     $.ajax({
-        type: "POST",
-        url: "/users/sign_out",
-        data: { "_method": "delete", "authenticity_token": that.state.railsToken},
-        success: function (json) {
-            console.log("trying to delete")
-            console.log(json)
+      type: "POST",
+      url: "/users/sign_out",
+      data: { _method: "delete", authenticity_token: that.state.railsToken },
+      success: function(json) {
+        console.log("trying to delete");
+        console.log(json);
 
-            that.setState({
-                userLoggedIn: false,
-                railsToken: json.csrfToken,
-                cart: json.cart
-            })
-
-        },
-        error: function (xhr) {
-        },
-        dataType: "json"
+        that.setState({
+          userLoggedIn: false,
+          railsToken: json.csrfToken,
+          cart: json.cart
+        });
+      },
+      error: function(xhr) {},
+      dataType: "json"
     });
-}
-
+  };
 
   toggleMobileNav = () => {
     let that = this;
@@ -762,7 +730,7 @@ class App extends React.Component {
       {
         showCart: !that.state.showCart,
         showMobileNav: false,
-        showAccountDropdown: false,
+        showAccountDropdown: false
       },
       this.checkToggleCart
     );
@@ -777,7 +745,7 @@ class App extends React.Component {
         showAccountDropdown: !this.state.showAccountDropdown,
         showCart: false,
         showMobileNav: false
-      },
+      }
       // this.checkToggleCart
     );
   };
@@ -799,46 +767,46 @@ class App extends React.Component {
   };
 
   render() {
-    let samples 
+    let samples;
     if (this.state.kitSounds.length > 0) {
-    samples = [];
-    let oddRow = "";
-    
-    let that = this
-    
-    // let currentSample = false;
-    for (let i = 0; i < this.state.kitSounds.length; i++) {
-      let currentSample = false;
-      if (i % 2 === 1) {
-        oddRow = "oddRow";
-      } else {
-        oddRow = "";
+      samples = [];
+      let oddRow = "";
+
+      let that = this;
+
+      // let currentSample = false;
+      for (let i = 0; i < this.state.kitSounds.length; i++) {
+        let currentSample = false;
+        if (i % 2 === 1) {
+          oddRow = "oddRow";
+        } else {
+          oddRow = "";
+        }
+
+        if (i === that.state.currentSample) {
+          currentSample = true;
+        }
+
+        samples.push(
+          <Sample
+            oddRow={oddRow}
+            name={this.state.kitSounds[i].filename}
+            soundfile={this.state.kitSounds[i].soundfile}
+            sampleNumber={i}
+            playSample={this.setSample}
+            currentSample={currentSample}
+            tempo={this.state.kitSounds[i].tempo}
+            musicalKey={this.state.kitSounds[i].key}
+            sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
+            inProp={this.state.transition && i >= this.state.sampleOffset - 6}
+            key={i}
+            delay={i * 70}
+          />
+        );
       }
 
-      
-
-      if (i === that.state.currentSample) {
-        currentSample = true;
-      }
-
-      samples.push(<Sample 
-      oddRow={oddRow} 
-      name={this.state.kitSounds[i].filename} 
-      soundfile={this.state.kitSounds[i].soundfile} 
-      sampleNumber={i} 
-      playSample={this.setSample}  
-      currentSample={currentSample}
-      tempo={this.state.kitSounds[i].tempo} 
-      musicalKey={this.state.kitSounds[i].key} 
-      sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
-      inProp={this.state.transition && (i>= this.state.sampleOffset - 6)}
-      key={i}
-      delay={i * 70}
-      />);
+      samples = <React.Fragment>{samples}</React.Fragment>;
     }
-
-    samples = <React.Fragment>{samples}</React.Fragment>;
-  }
 
     let latestTracks;
     let tracks = [];
@@ -882,14 +850,14 @@ class App extends React.Component {
           youtubeNoStreaming = "noStreamingLink";
         }
 
-        if(i>3) {
-          lastTwoTracks = "lastTwoTracks"
+        if (i > 3) {
+          lastTwoTracks = "lastTwoTracks";
         }
 
         tracks.push(
           <Track
             name={that.state.tracks[i].name}
-            lastTwoTracks ={lastTwoTracks}
+            lastTwoTracks={lastTwoTracks}
             spotifyLink={that.state.tracks[i].spotify_url}
             spotifyNoStreaming={spotifyNoStreaming}
             soundcloudLink={that.state.tracks[i].soundcloud_url}
@@ -992,8 +960,8 @@ class App extends React.Component {
           submitBtnText={this.state.modalContent}
           loginInSwitch={loginInSwitch}
           signUpSwitch={signUpSwitch}
-          submit = {this.submitForm}
-          errorMessage = {this.state.errorMessage}
+          submit={this.submitForm}
+          errorMessage={this.state.errorMessage}
         />
       );
     }
@@ -1004,22 +972,30 @@ class App extends React.Component {
       mobileNavToggle = "showMobileNav";
     }
 
-    let audioPlayer
-    let currentSampleSrc 
-    if(this.state.currentSample || this.state.currentSample === 0) {
-      
-      currentSampleSrc = this.state.kitSounds[this.state.currentSample].soundfile
+    let audioPlayer;
+    let currentSampleSrc;
+    if (this.state.currentSample || this.state.currentSample === 0) {
+      currentSampleSrc = this.state.kitSounds[this.state.currentSample]
+        .soundfile;
     }
-    audioPlayer = <audio onEnded={this.audioEnded} id="audioPlayer" autoplay src={currentSampleSrc}  type="audio/wav"/>
+    audioPlayer = (
+      <audio
+        onEnded={this.audioEnded}
+        id="audioPlayer"
+        autoplay
+        src={currentSampleSrc}
+        type="audio/wav"
+      />
+    );
 
-    let showAccountDropdown
-    
-    if(this.state.showAccountDropdown) {
-      showAccountDropdown = "showAccountDropdown"
+    let showAccountDropdown;
+
+    if (this.state.showAccountDropdown) {
+      showAccountDropdown = "showAccountDropdown";
     } else {
-      showAccountDropdown = "hideAccountDropdown"
+      showAccountDropdown = "hideAccountDropdown";
     }
-  
+
     return (
       <div>
         {modal}
@@ -1028,26 +1004,30 @@ class App extends React.Component {
           toggleCart={this.toggleCart}
           openModal={this.toggleModal}
           toggleMobileNav={this.toggleMobileNav}
-          userLoggedIn = {this.state.userLoggedIn}
-          signOut = {this.signOut}
-          userId= {this.state.userId}
-          showAccountDropdown = {showAccountDropdown}
-          toggleAccountDropdown = {this.toggleAccountDropdown}
+          userLoggedIn={this.state.userLoggedIn}
+          signOut={this.signOut}
+          userId={this.state.userId}
+          showAccountDropdown={showAccountDropdown}
+          toggleAccountDropdown={this.toggleAccountDropdown}
         />
-        <MobileNav 
-          mobileNavToggle={mobileNavToggle} 
+        <MobileNav
+          mobileNavToggle={mobileNavToggle}
           openModal={this.toggleModal}
           toggleMobileNav={this.toggleMobileNav}
-          userLoggedIn = {this.state.userLoggedIn}
-          signOut = {this.signOut}
-          userId= {this.state.userId}
-          />
+          userLoggedIn={this.state.userLoggedIn}
+          signOut={this.signOut}
+          userId={this.state.userId}
+        />
         <Section1 />
-        <Section2 samples={samples} click={this.addToCart} loadSounds={this.loadSounds} />
+        <Section2
+          samples={samples}
+          click={this.addToCart}
+          loadSounds={this.loadSounds}
+        />
         {audioPlayer}
         {latestTracks}
-        
-        <Footer footerId="footer" emailDivStyle="email"/>
+
+        <Footer footerId="footer" emailDivStyle="email" />
       </div>
     );
   }
