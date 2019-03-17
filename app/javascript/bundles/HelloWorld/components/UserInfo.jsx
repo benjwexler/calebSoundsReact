@@ -436,7 +436,7 @@ class UserInfo extends React.Component {
         totalPrice={convertToUsCurrency.format(sum)}
         cartTransitionEnd={this.cartTransitionEnd}
         cartHeightZero={cartHeightZero}
-        click={this.clearCart}
+        clearCart={this.clearCart}
       />
     );
 

@@ -12,7 +12,7 @@ const cart = (props) => {
                 <div id="totalLeft">Total:</div>
                 <div id="totalRight">{props.totalPrice}</div>
             </div>
-            <div onClick={props.click} id="emptyBagContainer"> <span id="emptyBagText">Empty Bag</span></div>
+            <div onClick={props.clearCart} id="emptyBagContainer"> <span id="emptyBagText">Empty Bag</span></div>
             <div id="checkoutBtnOuterContainer">
             <div id="checkoutBtn">
                 <a href="/checkout" id="checkoutText">Proceed to Checkout: {props.totalPrice}</a>
