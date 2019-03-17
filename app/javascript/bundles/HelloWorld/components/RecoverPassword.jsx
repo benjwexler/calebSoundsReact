@@ -1,6 +1,7 @@
 import ReactOnRails from "react-on-rails";
 import React, { Component } from "react";
 
+import Modal from "./Modal.js";
 import Cart from "./Cart.js";
 import Item from "./Item.js";
 import Navbar from "./Navbar.js";
@@ -24,7 +25,11 @@ class RecoverPassword extends React.Component {
       showMobileNav: false,
       showCart: false,
       cartHeightZero: true,
-      totalPrice: undefined
+      totalPrice: undefined,
+      showModal: false,
+      modalContent: "Sign Up",
+      errorMessage: undefined,
+      cartHeightZero: true
     };
   }
 
@@ -67,6 +72,26 @@ class RecoverPassword extends React.Component {
       .catch(err => {});
   };
 
+  setModalContent = e => {
+    let modalContent = "Sign Up";
+    if (e.currentTarget.id === "switchToLogin") {
+      modalContent = "Log In";
+    }
+    this.setState({
+      modalContent: modalContent,
+      errorMessage: undefined
+    });
+  };
+
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal,
+      showCart: false,
+      showMobileNav: false,
+      errorMessage: undefined
+    });
+  };
+
   toggleCart = () => {
     let that = this;
 
@@ -79,6 +104,22 @@ class RecoverPassword extends React.Component {
       },
       this.checkToggleCart
     );
+  };
+
+  checkToggleCart = () => {
+    if (this.state.showCart) {
+      this.setState({
+        cartHeightZero: false
+      });
+    }
+  };
+
+  cartTransitionEnd = () => {
+    if (!this.state.showCart) {
+      this.setState({
+        cartHeightZero: true
+      });
+    }
   };
 
   setCart = json => {
@@ -151,13 +192,15 @@ class RecoverPassword extends React.Component {
 
     let showCartBoolean;
 
-    let cartHeightZero;
+    
 
     if (this.state.showCart) {
       showCartBoolean = "showCart";
     } else {
       showCartBoolean = "hideCart";
     }
+
+    let cartHeightZero;
 
     if (this.state.cartHeightZero) {
       cartHeightZero = "cartHeightZero";
@@ -195,22 +238,53 @@ class RecoverPassword extends React.Component {
       </React.Fragment>
     );
 
+    let modal 
+
+    let loginInSwitch = "inactiveBtn";
+    let signUpSwitch = "switchFormBtn";
+
+    if (this.state.modalContent === "Log In") {
+      loginInSwitch = "switchFormBtn";
+      signUpSwitch = "inactiveBtn";
+    }
+
+    if (this.state.showModal) {
+      modal = (
+        <Modal
+          exitModal={this.toggleModal}
+          setModalContent={this.setModalContent}
+          submitBtnText={this.state.modalContent}
+          loginInSwitch={loginInSwitch}
+          signUpSwitch={signUpSwitch}
+          // submit = {this.submitForm}
+          // errorMessage = {this.state.errorMessage}
+        />
+      );
+    }
+
+  
+
     return (
       <div>
+      {modal}
         <Cart
           showCartBoolean={showCartBoolean}
           toggleCart={this.toggleCart}
           items={items}
           totalPrice={convertToUsCurrency.format(sum)}
           clearCart={this.clearCart}
+          cartTransitionEnd={this.cartTransitionEnd}
+          cartHeightZero={cartHeightZero}
         />
         <Navbar
           toggleMobileNav={this.toggleMobileNav}
           toggleCart={this.toggleCart}
+          openModal={this.toggleModal}
         />
         <MobileNav
           toggleMobileNav={this.toggleMobileNav}
           mobileNavToggle={mobileNavToggle}
+          openModal={this.toggleModal}
         />
         <FullScreen>
           <Container title="Recover Password">
