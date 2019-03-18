@@ -1281,7 +1281,9 @@ return totalPrice
           showAccountDropdown = {showAccountDropdown}
           toggleAccountDropdown = {this.toggleAccountDropdown}
         />
-        <MobileNav mobileNavToggle={mobileNavToggle} />
+        <MobileNav mobileNavToggle={mobileNavToggle} 
+          userLoggedIn={this.state.userLoggedIn}
+        />
 
        
 
