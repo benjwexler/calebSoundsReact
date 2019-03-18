@@ -30,7 +30,7 @@ const track = (props) => {
                     </div>
                     <div className="streamContainer">
                         <div style={{borderLeft: "1px"}} className="logoContainer">
-                            <a class={props.spotifyNoStreaming} href={props.spotifyLink} target="_blank">
+                            <a className={props.spotifyNoStreaming} href={props.spotifyLink} target="_blank">
                                 <i className="fab streamingLogo  fa-spotify"></i>
                             </a>
                         </div>
