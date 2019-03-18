@@ -72,6 +72,68 @@ class RecoverPassword extends React.Component {
       .catch(err => {});
   };
 
+  submitForm = e => {
+    let that = this;
+    e.preventDefault();
+    let signUpObj = {};
+    signUpObj.utf8 = "✓";
+    signUpObj.authenticity_token = that.state.railsToken;
+    signUpObj["user[email]"] = document.getElementById("userEmailInput").value;
+    signUpObj["user[password]"] = document.getElementById(
+      "userPasswordInput"
+    ).value;
+    signUpObj.commit = "Log in";
+    // signUpObj['CSRFToken'] = that.state.railsToken
+    let url = "/users/sign_in.json";
+    if (this.state.modalContent === "Sign Up") {
+      url = "/users.json";
+      signUpObj["user[password_confirmation]"] = document.getElementById(
+        "userPasswordConfirmationInput"
+      ).value;
+    }
+
+    $.ajax({
+      type: "POST",
+
+      url: url,
+      data: signUpObj,
+      success: function(json) {
+        if (json.errorMessage) {
+          that.setState({
+            errorMessage: json.errorMessage
+          });
+        } else {
+          console.log("signed in or signed up");
+          // document.getElementById("modalButton").click();
+          console.log(json);
+          window.location=`http://localhost:3000`
+          that.setState(
+            {
+              railsToken: json.csrfToken,
+              userLoggedIn: true,
+              userId: JSON.parse(json.user_id),
+              errorMessage: undefined,
+              cart: JSON.parse(json.cart)
+            },
+            () => {
+              console.log(that.state);
+              that.setState({
+                showModal: false
+              });
+            }
+          );
+        }
+      },
+      error: function(xhr) {
+        console.log("error");
+        that.setState({
+          errorMessage: "Your Email and/or Password is incorrect"
+        });
+      },
+      dataType: "json"
+    });
+  };
+
   setModalContent = e => {
     let modalContent = "Sign Up";
     if (e.currentTarget.id === "switchToLogin") {
@@ -256,8 +318,8 @@ class RecoverPassword extends React.Component {
           submitBtnText={this.state.modalContent}
           loginInSwitch={loginInSwitch}
           signUpSwitch={signUpSwitch}
-          // submit = {this.submitForm}
-          // errorMessage = {this.state.errorMessage}
+          submit = {this.submitForm}
+          errorMessage = {this.state.errorMessage}
         />
       );
     }

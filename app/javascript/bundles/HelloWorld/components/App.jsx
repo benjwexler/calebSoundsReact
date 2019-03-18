@@ -609,49 +609,6 @@ class App extends React.Component {
       ).value;
     }
 
-    //   fetch(url, {
-    //     method: "POST",
-    //     mode: 'cors',
-    //     body: JSON.stringify(signUpObj),
-    //     credentials: 'same-origin',
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //         'Accept': 'application/json',
-    //         'Access-Control-Allow-Origin':'*',
-    //         "X-CSRF-Token": that.state.railsToken,
-    //         "Authorization": that.state.railsToken,
-
-    //       }
-    // })
-    //   .then(function(response) {
-    //     return response.json();
-    //   })
-    //   .then(function(myJson) {
-
-    //     console.log("wtf")
-
-    //     that.setState(
-    //       {
-    //         railsToken: myJson.csrfToken,
-    //         userLoggedIn: true,
-    //         errorMessage: undefined,
-    //         cart: JSON.parse(myJson.cart)
-    //       },
-    //       () => {
-    //         console.log(that.state);
-    //         that.setState({
-    //           showModal: false
-    //         })
-    //       }
-    //     );
-    //   })
-    //   .catch((err) => {
-    //     // Handle any error that occurred in any of the previous
-    //     // promises in the chain.
-    //     console.log(err)
-    //     console.log("there was an error")
-    //   });
-
     $.ajax({
       type: "POST",
 

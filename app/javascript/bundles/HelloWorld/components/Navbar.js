@@ -3,6 +3,20 @@ import React from 'react';
 
 const navbar = (props) => {
 
+    let goToSection = (section, scrollIntoViewBool) => {
+
+        console.log(window.location.pathname)
+
+        let pathname = window.location.pathname;
+
+        if(pathname === "/") {
+            document.getElementById(`${section}`).scrollIntoView(scrollIntoViewBool)
+        } else {
+            window.location=`http://localhost:3000#${section}`
+        }
+       
+    }
+
     let loginSignUp
 
     if(!props.userLoggedIn) {
@@ -62,8 +76,8 @@ const navbar = (props) => {
             <div id="navContainer">
                 <i onClick={props.toggleMobileNav} className="fas fa-bars"></i>
                 <a href="/" id="navTitle">Caleb Elias G sounds</a>
-                <div onClick={() => document.getElementById("section2").scrollIntoView(false)} className="navLink">Sound Packs</div>
-                <div onClick={() => document.getElementById("section3").scrollIntoView()} className="navLink">Latest Tracks</div>
+                <div onClick={() => goToSection("section2", false)} className="navLink">Sound Packs</div>
+                <div onClick={() => goToSection("section3", true)} className="navLink">Latest Tracks</div>
                 <div id="navStreamingIcons">
                         <a href="https://open.spotify.com/artist/3KfwtF94LanpNpDp6yVCji?si=TZgT40K1Ry-StUGIRznfFw" target="_blank" className="navLink">
                                 <i className="fab fa-spotify streamingIcon"></i>

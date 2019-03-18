@@ -3,6 +3,20 @@ import React from 'react';
 
 const mobileNav = (props) => {
 
+    let goToSection = (section, scrollIntoViewBool) => {
+
+        console.log(window.location.pathname)
+
+        let pathname = window.location.pathname;
+
+        if(pathname === "/") {
+            document.getElementById(`${section}`).scrollIntoView(scrollIntoViewBool)
+        } else {
+            window.location=`http://localhost:3000#${section}`
+        }
+       
+    }
+
     let loggedOutLinks = (
         <React.Fragment>
         <div onClick={props.openModal} className="mobileNavLink">
@@ -42,12 +56,12 @@ const mobileNav = (props) => {
 
             {props.userLoggedIn ? loggedInLinks : loggedOutLinks}
             
-                <div onClick={() => {document.getElementById("section2").scrollIntoView(false); props.toggleMobileNav()}} className="mobileNavLink">
+                <div onClick={() => {goToSection("section2", false); props.toggleMobileNav()}} className="mobileNavLink">
                 <div className="mobileNavLinkName">
                     Sound Packs
                 </div>
             </div>
-            <div onClick={() => {document.getElementById("section3").scrollIntoView(); props.toggleMobileNav()}} className="mobileNavLink">
+            <div onClick={() => {goToSection("section3", true); props.toggleMobileNav()}} className="mobileNavLink">
                 <div className="mobileNavLinkName">
                     Latest Tracks
                 </div>
