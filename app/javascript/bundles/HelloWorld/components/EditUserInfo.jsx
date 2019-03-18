@@ -17,7 +17,6 @@ import Item from "./Item.js";
 import { LinkedList, Node } from "./linkedList.js";
 import StripeCheckout from "react-stripe-checkout";
 
-
 const convertToUsCurrency = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -86,43 +85,37 @@ class EditUserInfo extends React.Component {
   }
 
   getRelativePath = () => {
-    let path = window.location.pathname+window.location.search
+    let path = window.location.pathname + window.location.search;
     this.setState({
       relativePath: path
-      });
-    
-  }
-
+    });
+  };
 
   transition = () => {
-    this.setState({transition: true})
-  }
+    this.setState({ transition: true });
+  };
 
-    componentDidMount() {
-      //  this.setState({ in: !this.state.transition });
-      this.getRelativePath()
+  componentDidMount() {
+    //  this.setState({ in: !this.state.transition });
+    this.getRelativePath();
     window.addEventListener("resize", this.handleResize);
     let that = this;
 
-
     fetch(`/carts`, {
       headers: {
-          "Content-Type": "application/json"
-        }
-  })
-    .then(function(response) {
-      return response.json();
+        "Content-Type": "application/json"
+      }
     })
-    .then(function(myJson) {
-      console.log(myJson)
-      that.response(myJson)
-    });
-
-
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+        that.response(myJson);
+      });
   }
 
-
-  response = (json) => {
+  response = json => {
     let that = this;
 
     this.setState({
@@ -139,25 +132,22 @@ class EditUserInfo extends React.Component {
 
     fetch(`carts/${1}`, {
       method: "DELETE",
-      credentials: 'same-origin',
+      credentials: "same-origin",
       headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": that.state.railsToken,
-          
-        }
-  })
-    .then(function(response) {
-      return response.json();
+        "Content-Type": "application/json",
+        "X-CSRF-Token": that.state.railsToken
+      }
     })
-    .then(function(myJson) {
-      
-      that.response(myJson) 
-      
-    })
-    .catch((err) => {
-      // Handle any error that occurred in any of the previous
-      // promises in the chain.
-    });
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        that.response(myJson);
+      })
+      .catch(err => {
+        // Handle any error that occurred in any of the previous
+        // promises in the chain.
+      });
 
     // $.ajax({
     //   method: "DELETE",
@@ -178,40 +168,34 @@ class EditUserInfo extends React.Component {
 
     fetch(`carts/all`, {
       method: "DELETE",
-      credentials: 'same-origin',
+      credentials: "same-origin",
       headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": that.state.railsToken,
-          
-        }
-  })
-    .then(function(response) {
-      return response.json();
+        "Content-Type": "application/json",
+        "X-CSRF-Token": that.state.railsToken
+      }
     })
-    .then(function(myJson) {
-
-      that.response(myJson) 
-      
-    })
-    .catch((err) => {
-      // Handle any error that occurred in any of the previous
-      // promises in the chain.
-    });
-  }
-
-
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        that.response(myJson);
+      })
+      .catch(err => {
+        // Handle any error that occurred in any of the previous
+        // promises in the chain.
+      });
+  };
 
   handleResize = () => {
-    if (window.innerWidth > 1120){
-        this.setState({
-          showMobileNav: false
-        })
-        
-      } else {
-        this.setState({
-          showAccountDropdown: false
-        })
-      }
+    if (window.innerWidth > 1120) {
+      this.setState({
+        showMobileNav: false
+      });
+    } else {
+      this.setState({
+        showAccountDropdown: false
+      });
+    }
   };
 
   toggleModal = () => {
@@ -223,7 +207,6 @@ class EditUserInfo extends React.Component {
   };
 
   setModalContent = e => {
-
     let modalContent = "Sign Up";
 
     if (e.currentTarget.id === "switchToLogin") {
@@ -236,33 +219,32 @@ class EditUserInfo extends React.Component {
     // document.getElementById("modalButton").click()
   };
 
-  
-
   signOut = () => {
-    let that = this
+    let that = this;
     $.ajax({
-        type: "POST",
-        url: "/users/sign_out",
-        data: { "_method": "delete", "authenticity_token": that.state.railsToken, "relativePath": that.state.relativePath  },
-        success: function (json) {
-            console.log("trying to delete")
-            console.log(json)
+      type: "POST",
+      url: "/users/sign_out",
+      data: {
+        _method: "delete",
+        authenticity_token: that.state.railsToken,
+        relativePath: that.state.relativePath
+      },
+      success: function(json) {
+        console.log("trying to delete");
+        console.log(json);
 
-            that.setState({
-                userLoggedIn: false,
-                railsToken: json.csrfToken,
-                cart: json.cart
-            })
+        that.setState({
+          userLoggedIn: false,
+          railsToken: json.csrfToken,
+          cart: json.cart
+        });
 
-            window.location.href="/"
-
-        },
-        error: function (xhr) {
-        },
-        dataType: "json"
+        window.location.href = "/";
+      },
+      error: function(xhr) {},
+      dataType: "json"
     });
-}
-
+  };
 
   toggleMobileNav = () => {
     let that = this;
@@ -280,7 +262,7 @@ class EditUserInfo extends React.Component {
       {
         showCart: !that.state.showCart,
         showMobileNav: false,
-        showAccountDropdown: false,
+        showAccountDropdown: false
       },
       this.checkToggleCart
     );
@@ -295,7 +277,7 @@ class EditUserInfo extends React.Component {
         showAccountDropdown: !this.state.showAccountDropdown,
         showCart: false,
         showMobileNav: false
-      },
+      }
       // this.checkToggleCart
     );
   };
@@ -316,24 +298,20 @@ class EditUserInfo extends React.Component {
     }
   };
 
-  handleUserEmailChange = (event) => {
+  handleUserEmailChange = event => {
     this.setState({
       userEmail: event.target.value
     });
-  }
+  };
 
   togglePasswordChangeForm = () => {
-
     this.setState({
       userWantsToChangePassword: !this.state.userWantsToChangePassword
     });
-  }
+  };
 
   render() {
-
-    
-    let that = this
-
+    let that = this;
 
     let unsortedItems;
     if (this.state.cart) {
@@ -366,8 +344,6 @@ class EditUserInfo extends React.Component {
         })}
       </React.Fragment>
     );
-
-
 
     let showCartBoolean;
 
@@ -412,7 +388,7 @@ class EditUserInfo extends React.Component {
           submitBtnText={this.state.modalContent}
           loginInSwitch={loginInSwitch}
           signUpSwitch={signUpSwitch}
-          submit = {this.submitForm}
+          submit={this.submitForm}
         />
       );
     }
@@ -423,207 +399,204 @@ class EditUserInfo extends React.Component {
       mobileNavToggle = "showMobileNav";
     }
 
+    let showAccountDropdown;
 
-   
-
-    let showAccountDropdown
-    
-    if(this.state.showAccountDropdown) {
-      showAccountDropdown = "showAccountDropdown"
+    if (this.state.showAccountDropdown) {
+      showAccountDropdown = "showAccountDropdown";
     } else {
-      showAccountDropdown = "hideAccountDropdown"
+      showAccountDropdown = "hideAccountDropdown";
     }
 
     let fullScreenStyle = {
-        height: '100vh',
-        width: '100vw',
-        // border: '1px solid yellow',
-        overflow:  'hidden',
-        position: 'fixed'
-        // paddingTop: '200px'
-        // marginTop: '200px',
-    }
+      height: "100vh",
+      width: "100vw",
+      // border: '1px solid yellow',
+      overflow: "hidden",
+      position: "fixed"
+      // paddingTop: '200px'
+      // marginTop: '200px',
+    };
 
     let nameStyle = {
-      fontSize: '20px',
-      color: 'black',
-      marginBottom: '5px'
-      
-  }
+      fontSize: "20px",
+      color: "black",
+      marginBottom: "5px"
+    };
 
-  let fontBlue = {
-    color: 'rgba(45, 51, 221, 0.747)',
-    fontSize: '18px' 
-  }
+    let fontBlue = {
+      color: "rgba(45, 51, 221, 0.747)",
+      fontSize: "18px"
+    };
 
     let modalStyle = {
-        // margin: 'auto',
-        // marginTop: '100px',
-        // width: '100%',
-        // maxWidth: '600px',
-        // height: '400px',
-        // border: '1px solid black',
-        // background: 'white',
-        // borderRadius: '5px',
-        // fontFamily: 'Josefin Sans, sans-serif !important',
-        // boxSizing: 'border-box',
+      // margin: 'auto',
+      // marginTop: '100px',
+      // width: '100%',
+      // maxWidth: '600px',
+      // height: '400px',
+      // border: '1px solid black',
+      // background: 'white',
+      // borderRadius: '5px',
+      // fontFamily: 'Josefin Sans, sans-serif !important',
+      // boxSizing: 'border-box',
 
-   
-            width: '100%',
-            maxWidth: '500px',
-            padding: '40px',
-            paddingTop: '20px',
-            // margin: 'auto',
-            // marginTop: '120px',
-            // border: 'solid 3px black',
-            // boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
-            display: 'flex',
-            flexDirection: 'column',
-            // justifyContent: 'center',
-            alignItems: 'center',
-            color: 'rgba(45, 51, 221, 0.747)'  ,
-            backgroundColor: 'white',
-            borderRadius: '3%',
-            fontFamily: 'Josefin Sans, sans-serif !important',
-            boxSizing: 'border-box',
-            
-            position: 'relative',
-            // height: '500px'
-            /* font-family: 'Fjalla One', sans-serif; */
-       
-        
-        
-    
-    }
+      width: "100%",
+      maxWidth: "500px",
+      padding: "40px",
+      paddingTop: "20px",
+      // margin: 'auto',
+      // marginTop: '120px',
+      // border: 'solid 3px black',
+      // boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
+      display: "flex",
+      flexDirection: "column",
+      // justifyContent: 'center',
+      alignItems: "center",
+      color: "rgba(45, 51, 221, 0.747)",
+      backgroundColor: "white",
+      borderRadius: "3%",
+      fontFamily: "Josefin Sans, sans-serif !important",
+      boxSizing: "border-box",
+
+      position: "relative"
+      // height: '500px'
+      /* font-family: 'Fjalla One', sans-serif; */
+    };
 
     let linksContainerStyle = {
-      display : 'flex',
-      height: '800px',
-      width: '100%',
+      display: "flex",
+      height: "800px",
+      width: "100%"
       // border: '1px solid black'
-    }
+    };
 
     let linksContainerStyle2 = {
-      display : 'flex',
-      height: '100px',
-      width: '100%',
-      border: '1px solid black'
-    }
+      display: "flex",
+      height: "100px",
+      width: "100%",
+      border: "1px solid black"
+    };
 
     let col = {
-      width: '30%',
-      height: '44px',
-      background: 'rgba(45, 51, 221, 0.89)',
-      margin: 'auto',
-      position: 'relative',
+      width: "30%",
+      height: "44px",
+      background: "rgba(45, 51, 221, 0.89)",
+      margin: "auto",
+      position: "relative",
       // border: '1px solid black',
-      borderRadius: '25px'
-    }
+      borderRadius: "25px"
+    };
 
     let centerText = {
-      position: 'absolute',
-      left: '50%',
-      top: '50%',
-      transform: 'translate(-50%, -50%)',
-      color: 'rgba(255, 255, 255, 0.961)',
-      fontFamily: 'Fjalla One, sans-serif',
-      textAlign: 'center'
-    }
+      position: "absolute",
+      left: "50%",
+      top: "50%",
+      transform: "translate(-50%, -50%)",
+      color: "rgba(255, 255, 255, 0.961)",
+      fontFamily: "Fjalla One, sans-serif",
+      textAlign: "center"
+    };
 
     let accountInfoStyle = {
-        fontSize: '32px',
-        fontFamily: 'Josefin Sans, sans-serif',
-        marginBottom: '20px',
-    }
+      fontSize: "32px",
+      fontFamily: "Josefin Sans, sans-serif",
+      marginBottom: "20px"
+    };
 
     let marginAutoStyle = {
-      margin: 'auto',
-      marginTop: '45px'
-    }
+      margin: "auto",
+      marginTop: "45px"
+    };
 
     let switchStyle = {
-      position: 'relative',
-      display: 'inline-block',
-      width: '60px',
-      height: '34px',
-      opacity: '0',
-      width: '0',
-      height: '0'
-    }
+      position: "relative",
+      display: "inline-block",
+      width: "60px",
+      height: "34px",
+      opacity: "0",
+      width: "0",
+      height: "0"
+    };
 
     let inputStyle = {
-      opacity: '0',
-      width: '0',
-      height: '0',
-    }
-    
-    
+      opacity: "0",
+      width: "0",
+      height: "0"
+    };
 
     let sliderStyle = {
-      
-        position: "absolute",
-        cursor: "pointer",
-        top: "0",
-        left: "0",
-        right: "0",
-        bottom: "0",
-        backgroundColor: "#ccc",
-        transition: ".4s",
-      
-    }
+      position: "absolute",
+      cursor: "pointer",
+      top: "0",
+      left: "0",
+      right: "0",
+      bottom: "0",
+      backgroundColor: "#ccc",
+      transition: ".4s"
+    };
 
     let changePasswordContainerStyle = {
-      display: 'flex',
-      
-    }
+      display: "flex"
+    };
 
     let changePasswordStyle = {
-      width: '100%',
-      position: 'relative',
-      color: '#23a184',
-      
-    }
+      width: "100%",
+      position: "relative",
+      color: "#23a184"
+    };
 
     let centerDiv = {
-      position: 'absolute',
-      left: '0%',
-      top: '50%',
-      transform: 'translate(0%, -50%)',
-      fontSize: '18px',
-      whiteSpace: 'nowrap',
+      position: "absolute",
+      left: "0%",
+      top: "50%",
+      transform: "translate(0%, -50%)",
+      fontSize: "18px",
+      whiteSpace: "nowrap"
       // color: 'black'
-    }
-
+    };
 
     let sliderContainerStyle = {
-      marginRight: '0px',
-      width: '50%',
-      marginLeft: '50px'
-    }
+      marginRight: "0px",
+      width: "50%",
+      marginLeft: "50px"
+    };
 
-    let changePasswordInputs
+    let changePasswordInputs;
 
-    if(this.state.userWantsToChangePassword) {
+    if (this.state.userWantsToChangePassword) {
       changePasswordInputs = (
         <React.Fragment>
-        <div className="field">
-        <div className="modalIconContainer">
-            <input id="user_password" autocomplete="new-password" className="form" placeholder="New Password (6 char min)" type="password" name="user[password]"/>
-            <i className="fas fa-unlock-alt modalIcon"></i>
-        </div>
-    </div>
+          <div className="field">
+            <div className="modalIconContainer">
+              <input
+                id="user_password"
+                autocomplete="new-password"
+                className="form"
+                placeholder="New Password (6 char min)"
+                type="password"
+                name="user[password]"
+              />
+              <i className="fas fa-unlock-alt modalIcon" />
+            </div>
+          </div>
 
-    <div className="field">
-     
-        <div className="modalIconContainer">
-            <input id="user_password_confirmation" autocomplete="new-password" className="form" placeholder="Confirm New Password" type="password" name="user[password_confirmation]" />
-            <i className="fas fa-unlock-alt modalIcon"></i>
-        </div>
-    </div>
-    </React.Fragment>
-      )
+          <div className="field">
+            <div className="modalIconContainer">
+              <input
+                id="user_password_confirmation"
+                autocomplete="new-password"
+                className="form"
+                placeholder="Confirm New Password"
+                type="password"
+                name="user[password_confirmation]"
+              />
+              <i className="fas fa-unlock-alt modalIcon" />
+            </div>
+          </div>
+        </React.Fragment>
+      );
     }
-  
+
     return (
       <div>
         {modal}
@@ -632,83 +605,103 @@ class EditUserInfo extends React.Component {
           toggleCart={this.toggleCart}
           openModal={this.toggleModal}
           toggleMobileNav={this.toggleMobileNav}
-          userLoggedIn = {this.state.userLoggedIn}
-          signOut = {this.signOut}
-          userId= {this.state.userId}
-          showAccountDropdown = {showAccountDropdown}
-          toggleAccountDropdown = {this.toggleAccountDropdown}
+          userLoggedIn={this.state.userLoggedIn}
+          signOut={this.signOut}
+          userId={this.state.userId}
+          showAccountDropdown={showAccountDropdown}
+          toggleAccountDropdown={this.toggleAccountDropdown}
         />
-        <MobileNav mobileNavToggle={mobileNavToggle} />
+        <MobileNav
+          mobileNavToggle={mobileNavToggle}
+          userLoggedIn={this.state.userLoggedIn}
+        />
 
-        <div style={fullScreenStyle}> 
-            <div className="editUserInfoContainer" style={modalStyle}>
-                <div style={accountInfoStyle}>EDIT INFO</div>
-                <div className="formBorder" style={linksContainerStyle}>
-                <form  className="edit_user" id="edit_user" action="/users" accept-charset="UTF-8" method="post">
-                  <input name="utf8" type="hidden" value="✓"/>
-                  <input type="hidden" name="_method" value="put"/>
-                  <input type="hidden" name="authenticity_token" value={this.state.railsToken}/>
-  
+        <div style={fullScreenStyle}>
+          <div className="editUserInfoContainer" style={modalStyle}>
+            <div style={accountInfoStyle}>EDIT INFO</div>
+            <div className="formBorder" style={linksContainerStyle}>
+              <form
+                className="edit_user"
+                id="edit_user"
+                action="/users"
+                accept-charset="UTF-8"
+                method="post"
+              >
+                <input name="utf8" type="hidden" value="✓" />
+                <input type="hidden" name="_method" value="put" />
+                <input
+                  type="hidden"
+                  name="authenticity_token"
+                  value={this.state.railsToken}
+                />
 
-  
-
-  <div className="field" >
+                <div className="field">
                   <div className="modalIconContainer">
-                          <input onChange={this.handleUserEmailChange} id="user_email" autofocus="autofocus" autocomplete="email" value={this.state.userEmail} className="form" placeholder="Email" type="email"  name="user[email]" />
-                          <i className="far fa-envelope modalIcon"></i>
+                    <input
+                      onChange={this.handleUserEmailChange}
+                      id="user_email"
+                      autofocus="autofocus"
+                      autocomplete="email"
+                      value={this.state.userEmail}
+                      className="form"
+                      placeholder="Email"
+                      type="email"
+                      name="user[email]"
+                    />
+                    <i className="far fa-envelope modalIcon" />
                   </div>
-                      
-  </div>
+                </div>
 
-  <div className="field">
-            
-            <div className="modalIconContainer">
-                <input id="user_current_password" autocomplete="current-password" className="form" placeholder="Current Password" type="password" name="user[current_password]" />
-                <i className="fas fa-unlock-alt modalIcon"></i>
-            </div>
-        </div>
+                <div className="field">
+                  <div className="modalIconContainer">
+                    <input
+                      id="user_current_password"
+                      autocomplete="current-password"
+                      className="form"
+                      placeholder="Current Password"
+                      type="password"
+                      name="user[current_password]"
+                    />
+                    <i className="fas fa-unlock-alt modalIcon" />
+                  </div>
+                </div>
 
-  <div style={changePasswordContainerStyle}>
+                <div style={changePasswordContainerStyle}>
+                  <div style={changePasswordStyle}>
+                    <div style={centerDiv}> Change Password: </div>
+                  </div>
 
-  <div style={changePasswordStyle}> 
-   <div style={centerDiv}> Change Password: </div>
-    </div>
-  
+                  <div style={sliderContainerStyle}>
+                    <label class="switch">
+                      <input
+                        onClick={this.togglePasswordChangeForm}
+                        type="checkbox"
+                      />
+                      <span class="slider round" />
+                    </label>
+                  </div>
+                </div>
 
-  <div style={sliderContainerStyle}>
-    <label  class="switch">
-    <input onClick={this.togglePasswordChangeForm} type="checkbox"/>
-    <span class="slider round"></span>
-  </label>
-</div>
+                {changePasswordInputs}
 
-</div>
-
-  {changePasswordInputs}
-
-           
-
-               
-
-  
-
-
-
-
-  {/* <div className="actions">
+                {/* <div className="actions">
     <input type="submit" name="commit" value="Update" data-disable-with="Update"/>
   </div> */}
-  <div className="actions">
-      <input  type="submit" name="commit" value="Update" className="btn" data-disable-with="Update"/>
-    </div>
-</form>
+                <div className="actions">
+                  <input
+                    type="submit"
+                    name="commit"
+                    value="Update"
+                    className="btn"
+                    data-disable-with="Update"
+                  />
                 </div>
-                
+              </form>
             </div>
+          </div>
         </div>
 
-        <Footer footerId="stickyFooter" emailDivStyle="emailStickFooter"/>
-        
+        <Footer footerId="stickyFooter" emailDivStyle="emailStickFooter" />
       </div>
     );
   }
