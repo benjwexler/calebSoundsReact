@@ -10,7 +10,7 @@ import Cart from "./Cart.js";
 import Section2 from "./Section2.js";
 import Section3 from "./Section3.js";
 import Sample from "./Sample.js";
-import Track from "./Track.js";
+// import Track from "./track";
 import Footer from "./Footer.js";
 import DrumMachineSection from "./DrumMachineSection.jsx";
 import Item from "./Item.js";

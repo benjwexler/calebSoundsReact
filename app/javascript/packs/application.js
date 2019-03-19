@@ -15,7 +15,7 @@ var ReactRailsUJS = require("react_ujs")
 ReactRailsUJS.useContext(componentRequireContext)
 
 import ReactOnRails from 'react-on-rails';
-
+import Track from '../bundles/HelloWorld/components/Track.jsx';
 import App from '../bundles/HelloWorld/components/App.jsx';
 import UserInfo from '../bundles/HelloWorld/components/UserInfo.jsx';
 import EditUserInfo from '../bundles/HelloWorld/components/EditUserInfo.jsx';
@@ -24,6 +24,7 @@ import NewCheckout from '../bundles/HelloWorld/components/NewCheckout.jsx';
 import DrumMachineSection from '../bundles/HelloWorld/components/DrumMachineSection.jsx';
 import Checkout from '../bundles/HelloWorld/components/Checkout.jsx';
 import RecoverPassword from '../bundles/HelloWorld/components/RecoverPassword.jsx';
+
 
 // This is how react_on_rails can see the HelloWorld in the browser.
 
@@ -46,6 +47,10 @@ ReactOnRails.register({
 
   ReactOnRails.register({
     RecoverPassword
+  });
+
+  ReactOnRails.register({
+    Track
   });
 
 
