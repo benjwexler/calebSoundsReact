@@ -987,6 +987,7 @@ class App extends React.Component {
           userId={this.state.userId}
           showAccountDropdown={showAccountDropdown}
           toggleAccountDropdown={this.toggleAccountDropdown}
+          showMobileNav={this.state.showMobileNav}
         />
         <MobileNav
           mobileNavToggle={mobileNavToggle}

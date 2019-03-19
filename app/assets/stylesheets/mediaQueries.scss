@@ -21,7 +21,7 @@
         border-radius: 3px !important;
     }
 
-    .fa-bars {
+    .fa-bars, .hamburgerX, .hamburgerX {
         display: initial;
         // margin-left: -20px;
         margin-left: 0px;
@@ -53,11 +53,19 @@
 
   @media only screen and (max-width: 1090px) {
 
-    .fa-bars {
+    .fa-bars, .hamburgerX {
 
         margin-left: 25px;
         margin-right: 20px;
         
+    }
+
+    // .fa-times, {
+    //     margin-right: 23px;
+    // }
+
+    .hamburgerX {
+        margin-right: 18px;
     }
 
     .floatRight{

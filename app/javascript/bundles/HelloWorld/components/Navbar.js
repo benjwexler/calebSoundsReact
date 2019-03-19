@@ -69,6 +69,14 @@ const navbar = (props) => {
 )
 }
 
+// let hamburgerIcon 
+
+// if(!props.showMobileNav) {
+//     hamburgerIcon = "fas fa-bars"
+// } else {
+//     hamburgerIcon ="hamburgerX fas fa-times-circle"
+// }
+
 
     return (
         <div id="outerNavContainer">
