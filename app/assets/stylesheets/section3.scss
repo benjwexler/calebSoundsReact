@@ -79,6 +79,16 @@
     transition: box-shaddow .3s;
     // border-radius: 15px;
     box-shadow: 2px 2px rgba(0, 0, 0, 0.637);
+    backface-visibility: hidden;
+    opacity: 0;
+    // transition-property: transform;
+
+    // transition-timing-function: cubic-bezier(.25,.46,.45,.94);
+    // transition-duration: 2s;
+    // transition-timing-function: ease;
+    transform: perspective(2500px) rotateX(100deg);
+
+    transition: transform 2s cubic-bezier(.25,.46,.45,.94), opacity 1s;
     // box-shadow: 2px 2px rgba(0, 0, 0, 0.712);
 }
 
@@ -345,4 +355,14 @@
     // background: rgba(226, 226, 226, 0.589);
     border-radius: 50%;
     opacity: .8;
+}
+
+.flipDown {
+   
+    transform: perspective(2500px) rotateX(0);
+    opacity: 1
+}
+
+.flipUp {
+    // transform: perspective(2500px) rotateX(100deg);
 }

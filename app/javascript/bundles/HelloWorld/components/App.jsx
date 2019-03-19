@@ -1,5 +1,7 @@
 import ReactOnRails from "react-on-rails";
 import React, { Component } from "react";
+import { Waypoint } from 'react-waypoint';
+
 import Modal from "./Modal.js";
 import Navbar from "./Navbar.js";
 import "./test.css";
@@ -10,7 +12,7 @@ import Cart from "./Cart.js";
 import Section2 from "./Section2.js";
 import Section3 from "./Section3.js";
 import Sample from "./Sample.js";
-import Track from "./Track.js";
+import Track from "./Track.jsx";
 import Footer from "./Footer.js";
 import DrumMachineSection from "./DrumMachineSection.jsx";
 import Item from "./Item.js";
@@ -130,6 +132,16 @@ class App extends React.Component {
   transition = () => {
     this.setState({ transition: true });
   };
+
+  enterWaypoint = (props) => {
+    console.log("enterWayPoint")
+    console.log(props)
+  }
+
+  exitWaypoint = (props) => {
+    console.log("exitWayPoint")
+    console.log(props)
+  }
 
   componentDidMount() {
     //  this.setState({ in: !this.state.transition });
@@ -839,7 +851,15 @@ class App extends React.Component {
 
       tracks = <React.Fragment>{tracks}</React.Fragment>;
       latestTracks = <Section3 tracks={tracks} />;
+
+    //   LatestTracks = React.forwardRef((props, ref) => {
+    //     return <Section3 tracks={tracks} innerRef={ref} {...props} />
+    //   })
     }
+
+    // const BlockWithRef = React.forwardRef((props, ref) => {
+    //   return <Section3 innerRef={ref} {...props} />
+    // })
 
     let unsortedItems;
     if (this.state.cart) {
@@ -982,8 +1002,22 @@ class App extends React.Component {
           loadSounds={this.loadSounds}
         />
         {audioPlayer}
-        {latestTracks}
 
+        {/* <Waypoint
+  onEnter={this.enterWaypoint}
+  onLeave={this.exitWaypoint}
+
+ 
+/> */}
+
+{/* <Waypoint onEnter={this.enterWaypoint} onLeave={this.exitWaypoint}>
+<div>
+
+</div>
+</Waypoint> */}
+
+  {latestTracks}
+    
         <Footer footerId="footer" emailDivStyle="email" />
       </div>
     );
