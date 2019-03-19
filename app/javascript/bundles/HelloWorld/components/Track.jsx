@@ -25,9 +25,9 @@ class Track extends React.Component {
     
       exitWaypoint = (props) => {
 
-        this.setState({ 
-            className: "flipUp"
-        });
+        // this.setState({ 
+        //     className: "flipUp"
+        // });
         console.log("exitWayPoint")
         console.log(props)
       }

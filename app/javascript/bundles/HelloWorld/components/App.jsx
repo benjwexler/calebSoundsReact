@@ -144,6 +144,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+
     //  this.setState({ in: !this.state.transition });
     window.addEventListener("resize", this.handleResize);
     // window.addEventListener("mousemove", this.handleMousemove);
