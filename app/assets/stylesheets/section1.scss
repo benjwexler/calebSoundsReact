@@ -1,6 +1,8 @@
 * {
     padding: 0;
     margin:  0;
+    // text-rendering: optimizeLegibility;
+
     /* box-sizing: border-box; */
     
 }
@@ -330,13 +332,22 @@ height: 100%;
   
 }
 
-.fa-bars {
+.fa-bars, .hamburgerX, .hamburgerX {
     display: none;
     /* margin-left: 10px; */
     margin-right: 10px;
     transition: margin-left 1s ease !important;
     cursor: pointer;
 }
+// .fa-times-circle {
+//     box-shadow: inset 2px 0px black;
+//     border-radius: 50%;
+
+// }
+
+
+
+
 
 
 
