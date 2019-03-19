@@ -44,15 +44,17 @@ class ChargesController < ApplicationController
       p "What the fuck"
     #   @transaction = Transaction.new(transaction_params)
 
-    respond_to do |format|
+    # respond_to do |format|
       if @transaction.save
+
+        p "this is a test"
         # format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
         # format.json { render :show, status: :created, location: @transaction }
         render json: {message: "Thanks for your purchase. Your stickers are on the way!"}
-      else
-        format.html { render :new }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
-      end
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @transaction.errors, status: :unprocessable_entity }
+    #   end
     end
 
     

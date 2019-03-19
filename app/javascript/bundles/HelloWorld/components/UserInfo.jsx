@@ -582,6 +582,8 @@ class UserInfo extends React.Component {
         <MobileNav
           mobileNavToggle={mobileNavToggle}
           userLoggedIn={this.state.userLoggedIn}
+          signOut={this.signOut}
+          toggleMobileNav={this.toggleMobileNav}
         />
 
         <div style={fullScreenStyle}>

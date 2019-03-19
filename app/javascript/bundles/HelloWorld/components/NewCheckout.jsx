@@ -805,7 +805,7 @@ return totalPrice
                 cart: json.cart
             })
 
-            window.location.href="/"
+            // window.location.href="/"
 
         },
         error: function (xhr) {
@@ -1283,6 +1283,9 @@ return totalPrice
         />
         <MobileNav mobileNavToggle={mobileNavToggle} 
           userLoggedIn={this.state.userLoggedIn}
+          toggleMobileNav={this.toggleMobileNav}
+          openModal={this.toggleModal}
+          signOut = {this.signOut}
         />
 
        
