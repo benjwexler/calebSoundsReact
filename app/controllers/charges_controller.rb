@@ -47,7 +47,15 @@ class ChargesController < ApplicationController
     # respond_to do |format|
       if @transaction.save
 
+
+
         p "this is a test"
+
+        email = @transaction.email
+
+        p email 
+
+        TransactionMailer.transaction_email(email).deliver
         # format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
         # format.json { render :show, status: :created, location: @transaction }
         render json: {message: "Thanks for your purchase. Your stickers are on the way!"}
