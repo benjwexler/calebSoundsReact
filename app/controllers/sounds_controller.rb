@@ -16,6 +16,9 @@ class SoundsController < ApplicationController
   # GET /sounds/1
   # GET /sounds/1.json
   def show
+    p id = @sound.soundfile.id
+    p blob_id = ActiveStorage::Attachment.find(id).blob_id
+    p ActiveStorage::Blob.find(blob_id)
   end
 
   # GET /sounds/new
@@ -75,6 +78,6 @@ class SoundsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sound_params
-      params.require(:sound).permit(:name, :type_of_sound, :description, :key, :tempo)
+      params.require(:sound).permit(:name, :type_of_sound, :description, :key, :tempo, :soundfile)
     end
 end

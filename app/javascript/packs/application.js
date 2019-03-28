@@ -25,6 +25,8 @@ import DrumMachineSection from '../bundles/HelloWorld/components/DrumMachineSect
 import Checkout from '../bundles/HelloWorld/components/Checkout.jsx';
 import RecoverPassword from '../bundles/HelloWorld/components/RecoverPassword.jsx';
 import ChangePassword from '../bundles/HelloWorld/components/ChangePassword.jsx';
+import NewTrack from '../bundles/HelloWorld/components/NewTrack.jsx';
+import EditTrack from '../bundles/HelloWorld/components/EditTrack.jsx';
 
 
 // This is how react_on_rails can see the HelloWorld in the browser.
@@ -56,6 +58,14 @@ ReactOnRails.register({
 
   ReactOnRails.register({
     Track
+  });
+
+  ReactOnRails.register({
+    NewTrack
+  });
+
+  ReactOnRails.register({
+    EditTrack
   });
 
 

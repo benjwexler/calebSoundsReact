@@ -40,9 +40,9 @@ const container = (props) => {
 
 
     return (
-        <div className="containerStyle">
+        <div style={props.containerHeight} className="containerStyle">
         <div className="titleStyle">{props.title}</div>
-            <div className="innerContainerStyle">
+            <div style={props.innerHeight} className="innerContainerStyle">
                 {props.children}
             </div>
 

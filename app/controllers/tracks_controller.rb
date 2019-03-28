@@ -4,6 +4,10 @@ class TracksController < ApplicationController
   # GET /tracks
   # GET /tracks.json
   def index
+
+    if !current_user || !current_user.isAdmin
+      redirect_to root_path
+    end 
     query = request.query_string
     p @tracks = Track.check_for_query(query)
 
@@ -35,7 +39,7 @@ class TracksController < ApplicationController
   def new
     @track = Track.new
 
-    if !current_user
+    if !current_user || !current_user.isAdmin
       redirect_to root_path
     elsif !current_user.isAdmin
       redirect_to root_path
@@ -44,6 +48,29 @@ class TracksController < ApplicationController
 
   # GET /tracks/1/edit
   def edit
+    @track = @track.attributes.merge({ "image": url_for(@track.cover_art)})
+  
+    p @track[:image]
+# @track["image"] = "Blah"
+  # p url_for(@track.cover_art)
+
+  
+
+  # p @track.attributes
+  # @track.name = "Blah"
+
+#   respond_to do |format|
+        
+#     format.html {
+#       p "HTML"
+#       @track.merge({ image2: url_for(@track.cover_art)})
+#     }
+#     format.json { 
+#       p "JSON Track"
+    
+#     }
+# end 
+
   end
 
   # POST /tracks
@@ -90,6 +117,7 @@ class TracksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_track
       @track = Track.find(params[:id])
+    
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

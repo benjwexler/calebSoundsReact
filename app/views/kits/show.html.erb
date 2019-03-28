@@ -103,7 +103,11 @@
             <td><%= sound.soundfile.blob.filename %> </i></td>
             <td></td>
             <td></td>
-            <td> <i style="margin-left: 10px" class="far fa-edit"> </i></td>
+            <td> 
+                <a href="/sounds/<%= sound.id%>">
+                <i style="margin-left: 10px" class="far fa-edit"> </i>
+                </a>
+            </td>
             <td style="padding-left: 15px"><i class="far fa-trash-alt"></i></td>
 
           </tr>
