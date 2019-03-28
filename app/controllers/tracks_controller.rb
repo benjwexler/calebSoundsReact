@@ -5,9 +5,9 @@ class TracksController < ApplicationController
   # GET /tracks.json
   def index
 
-    if !current_user || !current_user.isAdmin
-      redirect_to root_path
-    end 
+    # if !current_user || !current_user.isAdmin
+    #   redirect_to root_path
+    # end 
     query = request.query_string
     p @tracks = Track.check_for_query(query)
 
