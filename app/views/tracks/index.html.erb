@@ -74,7 +74,7 @@
     <div id="tracksContainer">
 
         <% @tracks.each do |track| %>
-        <div class="track">
+        <div style="opacity: 1; transform: none" class="track">
             <div class="trackImageContainer">
                 <img class="trackImage" src="<%= url_for(track.cover_art)%>">
                 <div class="trackCircle"></div>

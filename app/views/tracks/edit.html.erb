@@ -1,6 +1,3 @@
-<h1>Editing Track</h1>
+<%= react_component("EditTrack", props: { trackName: @track["name"], soundcloudId: @track["soundcloud_id"], spotifyURL: @track["spotify_url"], youtubeURL: @track["youtube_url"], apple_musicURL: @track["apple_music_url"], soundcloudURL: @track["soundcloud_url"], trackId: @track["id"], track: @track })%>
 
-<%= render 'form', track: @track %>
 
-<%= link_to 'Show', @track %> |
-<%= link_to 'Back', tracks_path %>
