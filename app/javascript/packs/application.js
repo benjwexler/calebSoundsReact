@@ -27,6 +27,7 @@ import RecoverPassword from '../bundles/HelloWorld/components/RecoverPassword.js
 import ChangePassword from '../bundles/HelloWorld/components/ChangePassword.jsx';
 import NewTrack from '../bundles/HelloWorld/components/NewTrack.jsx';
 import EditTrack from '../bundles/HelloWorld/components/EditTrack.jsx';
+import ShowTrack from '../bundles/HelloWorld/components/ShowTrack.jsx';
 
 
 // This is how react_on_rails can see the HelloWorld in the browser.
@@ -66,6 +67,10 @@ ReactOnRails.register({
 
   ReactOnRails.register({
     EditTrack
+  });
+
+  ReactOnRails.register({
+    ShowTrack
   });
 
 
