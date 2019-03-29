@@ -1,0 +1,68 @@
+.StripeCheckout {
+  display: none;
+}
+
+#checkoutCoverArt {
+  width: 100%;
+  height: 100%;
+}
+
+.showLoad {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.hideLoad {
+  display: none;
+}
+
+#payWithCard {
+  background: rgba(45, 51, 221, 0.89);
+  min-width: 180px;
+}
+
+#checkoutContainer {
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+  padding-top: 20px;
+  margin: auto;
+  margin-top: 120px;
+  border: solid 3px black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: rgba(45, 51, 221, 0.747);
+  background-color: white;
+  border-radius: 3%;
+  font-family: Josefin Sans, sans-serif !important;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-shadow: 1px 3px rgba(0, 0, 0, 0.322);
+          box-shadow: 1px 3px rgba(0, 0, 0, 0.322);
+  position: relative;
+  height: 600px;
+}
+
+#checkoutCoverArtContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 400px;
+  width: 100%;
+  border: 1px solid black;
+  position: relative;
+}
+
+.StripeCheckout {
+  display: none !important;
+}
+/*# sourceMappingURL=checkout.css.map */

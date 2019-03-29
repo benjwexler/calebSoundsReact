@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "transactions.scss"
+    ],
+    "names": [],
+    "file": "transactions.css"
+}

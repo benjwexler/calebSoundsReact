@@ -1,0 +1,69 @@
+.fa-spotify:hover {
+  color: #1DB954 !important;
+}
+
+.fa-soundcloud:hover {
+  color: #ff8800;
+}
+
+.fa-apple:hover {
+  background: radial-gradient(#e66465, #9198e5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: initial;
+}
+
+.fa-youtube:hover {
+  color: red;
+}
+
+.fa-shopping-cart:hover {
+  color: rgba(0, 0, 0, 0.459);
+}
+
+.navLink:hover {
+  color: rgba(0, 0, 0, 0.781);
+  color: rgba(0, 0, 0, 0.815);
+}
+
+#loadMoreSounds:hover {
+  background: rgba(33, 40, 236, 0.89);
+  background: rgba(33, 40, 236, 0.836);
+}
+
+#navTitle:hover {
+  color: rgba(33, 40, 236, 0.781);
+}
+
+#previewButton:hover {
+  opacity: .95;
+}
+
+#logInSignUpContainer:hover {
+  color: rgba(33, 40, 236, 0.781);
+}
+
+.circle:hover {
+  background: rgba(33, 40, 236, 0.89);
+  -webkit-box-shadow: 2px 2px rgba(255, 255, 255, 0.178);
+          box-shadow: 2px 2px rgba(255, 255, 255, 0.178);
+}
+
+#checkoutBtn:hover {
+  background: rgba(33, 40, 236, 0.836);
+}
+
+#payWithCard:hover {
+  background: rgba(33, 40, 236, 0.836);
+}
+
+.btn:hover {
+  background: rgba(33, 40, 236, 0.753);
+  cursor: pointer;
+}
+
+.streamingLogo:hover {
+  font-size: 27px !important;
+  text-shadow: 1px 1px white;
+}
+/*# sourceMappingURL=hover.css.map */

@@ -20,6 +20,19 @@ const transitionStyles = {
 
 const sample = (props, { in: inProp}) => {
 
+    let adminView;
+
+    if(props.adminView) {
+       adminView= (<React.Fragment>
+            <td> 
+                <a href={"/sounds/" + props.id + "/edit"}>
+                <i style={{marginLeft: '10px'}} className="far fa-edit"> </i>
+                </a>
+            </td>
+            <td style={{paddingLeft: '15px'}}><i className="far fa-trash-alt"></i> </td>
+        </React.Fragment>)
+    }
+
     let tempo = props.tempo;
 
     if(parseFloat(tempo) === 0) {
@@ -49,7 +62,7 @@ const sample = (props, { in: inProp}) => {
             <td>Rock</td>
             <td>{tempo}</td>
             <td className="mobileHide">{props.musicalKey}</td>
-           
+            {adminView}
         </tr>
        
     )}}
