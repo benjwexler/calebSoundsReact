@@ -1071,6 +1071,7 @@ return totalPrice
         cartTransitionEnd={this.cartTransitionEnd}
         cartHeightZero={cartHeightZero}
         click={this.clearCart}
+        toggleCart={this.toggleCart}
       />
     );
 

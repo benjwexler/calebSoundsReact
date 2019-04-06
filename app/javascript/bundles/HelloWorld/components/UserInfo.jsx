@@ -418,6 +418,7 @@ class UserInfo extends React.Component {
         cartTransitionEnd={this.cartTransitionEnd}
         cartHeightZero={cartHeightZero}
         clearCart={this.clearCart}
+        toggleCart={this.toggleCart}
       />
     );
 
@@ -546,7 +547,8 @@ class UserInfo extends React.Component {
       margin: "auto",
       position: "relative",
       // border: '1px solid black',
-      borderRadius: "25px"
+      borderRadius: "25px",
+      cursor: "pointer"
     };
 
     let centerText = {
