@@ -5,8 +5,10 @@ import MobileNav from "./MobileNav.js";
 import FullScreen from "./FullScreen.js";
 import Container from "./Container.js";
 import Footer from "./Footer.js";
+import Sample from "./Sample.js";
+import ShowSamples from "./ShowSamples.js";
 
-class EditTrack extends React.Component {
+class ShowKit extends React.Component {
   constructor(props) {
     super(props);
 
@@ -16,20 +18,38 @@ class EditTrack extends React.Component {
       totalPrice: undefined,
       errorMessage: undefined,
       coverArt: undefined,
-      "track[name]": props.trackName,
-    // //   "track[soundcloud_id]": props.soundcloudId,
-    //   soundcloudEmbedCode: props.soundcloudId,
-    //   "track[spotify_url]": props.spotifyURL,  
-    //   "track[youtube_url]": props.youtubeURL, 
-    //   "track[apple_music_url]": props.apple_musicURL, 
-    //   "track[soundcloud_url]": props.soundcloudURL, 
-    //   trackId: props.trackId
+      kitId: props.kitId,
+      kitSounds: [],
+
     };
 
-    this.handleImgUpload = this.handleImgUpload.bind(this)
-    this.handleSoundcloudEmbed = this.handleSoundcloudEmbed.bind(this)
-    this.handleFormChange = this.handleFormChange.bind(this);
   }
+
+  loadSounds = kitId => {
+    // this.setState({ in: false });
+    let that = this;
+    let kitSounds;
+    let padsObj = {};
+
+    fetch(`/kits/${10}`, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+
+        kitSounds = that.state.kitSounds.concat(myJson);
+        that.setState(
+          {
+            kitSounds: kitSounds,
+          }
+        );
+      });
+  };
 
   toggleMobileNav = () => {
     let that = this;
@@ -82,40 +102,16 @@ class EditTrack extends React.Component {
     }
   };
 
-  validateAndUpload = fileInput => {
-    console.log(fileInput);
-  };
 
-  submitForm = event => {
-    // event.preventDefault(); 
-    console.log(event);
 
-    let trackName = document.getElementById("track_name").value;
-    let coverArt = document.getElementById("track_cover_art");
-    let soundcloudEmbedCode = document.getElementById("track_soundcloud_id").value;
 
-    soundcloudEmbedCode = soundcloudEmbedCode.split('tracks/')[1]
-    soundcloudEmbedCode = soundcloudEmbedCode.split('&')[0]
-
-    let spotifyURL = document.getElementById("track_spotify_url").value;
-    let youtubeURL = document.getElementById("track_youtube_url").value;
-    let appleMusicURL = document.getElementById("track_apple_music_url").value;
-    let soundcloudURL = document.getElementById("track_soundcloud_url").value;
-
-    console.log(trackName);
-    console.log(coverArt);
-    console.log(soundcloudEmbedCode);
-    console.log(spotifyURL);
-    console.log(youtubeURL);
-    console.log(appleMusicURL);
-    console.log(soundcloudURL);
-
-  }
 
   componentDidMount() {
     let that = this;
 
     window.addEventListener("resize", this.handleResize);
+
+    this.loadSounds(this.state.kitId)
   }
 
   render() {
@@ -131,6 +127,53 @@ class EditTrack extends React.Component {
       mobileNavToggle = "showMobileNav";
     }
 
+    let samples;
+    if (this.state.kitSounds.length > 0) {
+      samples = [];
+      let oddRow = "";
+
+      let that = this;
+
+      // let currentSample = false;
+      for (let i = 0; i < this.state.kitSounds.length; i++) {
+        let currentSample = false;
+        if (i % 2 === 1) {
+          oddRow = "oddRow";
+        } else {
+          oddRow = "";
+        }
+
+        if (i === that.state.currentSample) {
+          currentSample = true;
+        }
+
+        samples.push(
+          <Sample
+            oddRow={oddRow}
+            name={this.state.kitSounds[i].filename}
+            soundfile={this.state.kitSounds[i].soundfile}
+            sampleNumber={i}
+            playSample={this.setSample}
+            currentSample={currentSample}
+            tempo={this.state.kitSounds[i].tempo}
+            musicalKey={this.state.kitSounds[i].key}
+            sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
+            inProp={this.state.transition && i >= this.state.sampleOffset - 6}
+            key={i}
+            delay={i * 70}
+            adminView={true}
+            id={this.state.kitSounds[i].id}
+          />
+        );
+      }
+
+      samples = <React.Fragment>{samples}</React.Fragment>;
+    }
+
+
+
+
+
     return (
       <div>
         <Navbar toggleMobileNav={this.toggleMobileNav} />
@@ -138,34 +181,14 @@ class EditTrack extends React.Component {
           toggleMobileNav={this.toggleMobileNav}
           mobileNavToggle={mobileNavToggle}
         />
-        <FullScreen>
-          <Container
-            containerHeight={{ height: "auto" }}
-            innerHeight={{ height: "auto" }}
-            title={this.state["track[name]"]}
-          >
-     
-
-             
-
-       
-
-          
-
+        <ShowSamples
+            samples={samples}
+            
+        />
    
-
-         
-
-
-       
-
-
-           
-          </Container>
-        </FullScreen>
       </div>
     );
   }
 }
 
-export default EditTrack;
+export default ShowKit;
