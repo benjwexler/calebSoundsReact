@@ -366,6 +366,7 @@ class EditUserInfo extends React.Component {
         cartTransitionEnd={this.cartTransitionEnd}
         cartHeightZero={cartHeightZero}
         clearCart={this.clearCart}
+        toggleCart={this.toggleCart}
       />
     );
 
