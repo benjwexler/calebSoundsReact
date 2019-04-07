@@ -51,6 +51,12 @@ class ShowKit extends React.Component {
       });
   };
 
+  edit = (e) => {
+    console.log("hey")
+   console.log(e.currentTarget.dataset.sampleNumber);
+
+  }
+
   toggleMobileNav = () => {
     let that = this;
     this.setState({
@@ -163,6 +169,9 @@ class ShowKit extends React.Component {
             delay={i * 70}
             adminView={true}
             id={this.state.kitSounds[i].id}
+            edit={this.edit}
+            railsToken={this.state.railsToken}
+
           />
         );
       }

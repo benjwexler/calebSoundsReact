@@ -7,7 +7,7 @@ ruby '2.5.3'
 gem 'aws-sdk'
 gem 'stripe'
 gem "figaro"
-gem 'devise'
+gem "devise", ">= 4.6.0"
 gem 'sprockets-es6'
 gem 'webpacker', '~> 3.5'
 gem 'bundler'
