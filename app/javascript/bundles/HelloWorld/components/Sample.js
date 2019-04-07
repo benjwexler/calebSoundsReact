@@ -23,6 +23,7 @@ class sample extends React.Component {
     this.genreRef = React.createRef();
     this.keyRef = React.createRef();
     this.tempoRef = React.createRef();
+    this.soundFileRef = React.createRef();
 
     this.state = {
       editable: false,
@@ -30,7 +31,8 @@ class sample extends React.Component {
       railsToken: props.railsToken,
       id: props.id,
       key: props.musicalKey,
-      tempo: props.tempo
+      tempo: props.tempo,
+      soundFile: undefined
     };
   }
 
@@ -43,30 +45,35 @@ class sample extends React.Component {
     sampleObj["sound[key]"] = that.state.key;
     sampleObj["sound[tempo]"] = that.state.tempo;
     sampleObj.commit = "Update Sound";
-    sampleObj["_method"] = "patch"
+    sampleObj["_method"] = "patch";
 
-
-    // sampleObj["user[email]"] = document.getElementById("userEmailInput").value;
-    // sampleObj["user[password]"] = document.getElementById(
-    //   "userPasswordInput"
-    // ).value;
-    // sampleObj.commit = "Log in";
+    var data = new FormData();
+    data.append("utf8", "✓");
+    data.append("authenticity_token", that.state.railsToken);
+    data.append("sound[key]", that.state.key);
+    data.append("sound[tempo]", that.state.tempo);
+    data.append("commit", "Update Sound");
+    data.append("_method", "patch");
+    data.append("sound[soundfile]", that.state.soundFile, that.state.soundFile.name );
 
     let url = `http://localhost:3000/sounds/${that.state.id}`;
 
     $.ajax({
       type: "POST",
+      enctype: 'multipart/form-data',
+      processData: false,
+      contentType: false,
+      cache: false,
+      timeout: 600000,
 
       url: url,
-      data: sampleObj,
+      data: data,
       success: function(json) {
         if (json.errorMessage) {
-       
         } else {
           console.log("signed in or signed up");
           // document.getElementById("modalButton").click();
           console.log(json);
-     
         }
       },
       error: function(xhr) {
@@ -76,74 +83,83 @@ class sample extends React.Component {
     });
   };
 
-  editSwitch = (bool) => {
+  editSwitch = bool => {
     this.setState({
       editable: bool
     });
   };
 
-  handleEditCallback = () => {
-    this.editSwitch(false)
-    this.updateSampleReq()
-
-  }
-
-  handleEditSave = () => {
-
-    console.log(this.keyRef.current)
+  handleFileUpload = () => {
+    console.log(this.soundFileRef.current.files[0]);
+    const soundFile = this.soundFileRef.current.files[0];
 
     this.setState({
+      soundFile: soundFile
+    });
+  };
+
+  handleEditCallback = () => {
+    this.editSwitch(false);
+    this.updateSampleReq();
+  };
+
+  handleEditSave = () => {
+    console.log(this.keyRef.current);
+
+    this.setState(
+      {
         genre: this.genreRef.current.innerText,
         key: this.keyRef.current.innerText,
-        tempo: this.tempoRef.current.innerText,
-
-      }, this.handleEditCallback);
-
-    
+        tempo: this.tempoRef.current.innerText
+      },
+      this.handleEditCallback
+    );
   };
 
   handleEditCancel = () => {
     console.log(this.genreRef.current);
-    this.editSwitch(false)  
+    this.editSwitch(false);
     this.genreRef.current.innerText = this.state.genre;
     this.keyRef.current.innerText = this.state.key;
-    this.tempoRef.current.innerText = this.state.tempo
+    this.tempoRef.current.innerText = this.state.tempo;
   };
 
-  trimValue = (ref) => {
-    console.log("Stop Editing")
+  trimValue = ref => {
+    console.log("Stop Editing");
     // console.log(this.genreRef.current)
-    str = ref.current.innerText
-    str = str.replace(/\s\s+/g, '');
+    str = ref.current.innerText;
+    str = str.replace(/\s\s+/g, "");
     str.trim();
-    this.genreRef.current.innerText = str
-  }
+    this.genreRef.current.innerText = str;
+  };
 
   saveContainer = {
-    border: '2px solid #23a184',
-    borderRadius: '10px',
-    padding: '10px',
-    color: "#23a184", 
+    border: "2px solid #23a184",
+    borderRadius: "10px",
+    padding: "10px",
+    color: "#23a184",
     cursor: "pointer",
-    textAlign: 'center',
-    margin: 'auto 5px',
-    width: '30px',
-  }
+    textAlign: "center",
+    margin: "auto 5px",
+    width: "30px"
+  };
 
   cancelContainer = {
-    border: '2px solid red',
-    borderRadius: '10px',
-    padding: '10px',
-    color: "red", 
+    border: "2px solid red",
+    borderRadius: "10px",
+    padding: "10px",
+    color: "red",
     cursor: "pointer",
-    textAlign: 'center',
-    margin: 'auto 5px',
+    textAlign: "center",
+    margin: "auto 5px"
     // width: '30px',
-  }
+  };
 
   render() {
     let adminView;
     let that = this;
+
+    let soundFile;
     let editIcon;
 
     if (!that.state.editable) {
@@ -157,49 +173,59 @@ class sample extends React.Component {
           {" "}
         </i>
       );
+
+      soundFile = <td>{this.props.name}</td>;
     } else {
       editIcon = (
-        <div style={{ display: 'flex', margin: 'auto'}}>
+        <div style={{ display: "flex", margin: "auto" }}>
           <div>
-            <div onClick={() => that.handleEditSave()} style={that.saveContainer}>
-            <div style={{ fontSize: "12px", margin: "auto" }}>Save</div>
+            <div
+              onClick={() => that.handleEditSave()}
+              style={that.saveContainer}
+            >
+              <div style={{ fontSize: "12px", margin: "auto" }}>Save</div>
               <i
                 data-sample-number={this.props.sampleNumber}
-                
                 style={{
-                    margin: "auto",
-                 
+                  margin: "auto",
+
                   cursor: "pointer"
                 }}
                 className="far fa-save"
               >
                 {" "}
               </i>
-              
             </div>
           </div>
 
-           <div>
-            <div onClick={() => that.handleEditCancel()} style={that.cancelContainer}>
-            <div style={{ fontSize: "12px", margin: "auto" }}>Cancel</div>
+          <div>
+            <div
+              onClick={() => that.handleEditCancel()}
+              style={that.cancelContainer}
+            >
+              <div style={{ fontSize: "12px", margin: "auto" }}>Cancel</div>
               <i
                 data-sample-number={this.props.sampleNumber}
-                
                 style={{
-                    margin: "auto",
-                 
+                  margin: "auto",
+
                   cursor: "pointer"
                 }}
                 className="far fa-window-close"
               >
                 {" "}
               </i>
-              
             </div>
           </div>
-
-         
         </div>
+      );
+
+      soundFile = (
+        <input
+          ref={this.soundFileRef}
+          onChange={this.handleFileUpload}
+          type="file"
+        />
       );
     }
 
@@ -236,7 +262,6 @@ class sample extends React.Component {
           return (
             <tr
               key={this.state.key}
-              
               onClick={this.props.toggleTransition}
               className={this.props.oddRow}
               style={{ ...defaultStyle, ...transitionStyles[transitionState] }}
@@ -250,7 +275,8 @@ class sample extends React.Component {
                   {icon}
                 </div>
               </td>
-              <td>{this.props.name}</td>
+              {/* <td>{this.props.name}</td> */}
+              {soundFile}
               <td
                 onBlur={() => that.trimValue(that.genreRef)}
                 onFocus={() => console.log("Start Editing")}
@@ -259,8 +285,21 @@ class sample extends React.Component {
               >
                 {that.state.genre}
               </td>
-              <td onBlur={() => that.trimValue(that.tempoRef)} ref={this.tempoRef} contenteditable={`${that.state.editable}`}>{tempo}</td>
-              <td onBlur={() => that.trimValue(that.keyRef)} ref={this.keyRef} contenteditable={`${that.state.editable}`} className="mobileHide">{this.state.key}</td>
+              <td
+                onBlur={() => that.trimValue(that.tempoRef)}
+                ref={this.tempoRef}
+                contenteditable={`${that.state.editable}`}
+              >
+                {tempo}
+              </td>
+              <td
+                onBlur={() => that.trimValue(that.keyRef)}
+                ref={this.keyRef}
+                contenteditable={`${that.state.editable}`}
+                className="mobileHide"
+              >
+                {this.state.key}
+              </td>
               {adminView}
             </tr>
           );
