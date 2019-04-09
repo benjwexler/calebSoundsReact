@@ -78,7 +78,8 @@ class App extends React.Component {
       sampleCurrentlyPlaying: false,
       transition: true,
       showAccountDropdown: false,
-      userInteractedWithPage: false
+      userInteractedWithPage: false,
+      newSrc: undefined,
     };
   }
 
@@ -258,12 +259,12 @@ class App extends React.Component {
     });
   };
 
-  setSample = e => {
+  setSample = (newSrc , e) => {
+    console.log(newSrc)
     let sampleNumber = e.currentTarget.dataset.sampleNumber;
 
     let sampleCurrentlyPlaying = true;
 
-    // console.log(sampleNumber)
 
     if (
       this.state.sampleCurrentlyPlaying &&
@@ -272,14 +273,12 @@ class App extends React.Component {
       sampleCurrentlyPlaying = false;
     }
 
-    // this.setState({
-    //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
-    // });
 
     this.setState(
       {
         currentSample: parseInt(sampleNumber),
-        sampleCurrentlyPlaying: sampleCurrentlyPlaying
+        sampleCurrentlyPlaying: sampleCurrentlyPlaying,
+        newSrc: newSrc
       },
       this.playSample
     );
@@ -287,15 +286,6 @@ class App extends React.Component {
 
   playSample = sampleNumber => {
     let audioPlayer = document.getElementById("audioPlayer");
-    // let sampleCurrentlyPlaying = true;
-
-    // if (this.state.sampleCurrentlyPlaying && (this.state.currentSample === parseInt(sampleNumber))) {
-    //   sampleCurrentlyPlaying = false;
-    // }
-
-    // this.setState({
-    //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
-    // });
 
     if (this.state.currentTrack || this.state.currentTrack === 0) {
       window[`widget${this.state.currentTrack}`].pause();
@@ -304,18 +294,10 @@ class App extends React.Component {
 
     this.setState({
       currentlyPlaying: false
-      // sampleCurrentlyPlaying: sampleCurrentlyPlaying
     });
 
     let audioPlayerState = audioPlayer.readyState;
 
-    // while(audioPlayerState !== 4) {
-
-    //   audioPlayerState = audioPlayer.readyState
-    //   console.log(audioPlayerState)
-    // }
-
-    // var playPromise = audioPlayer.play();
 
     if (audioPlayer.paused) {
       audioPlayer.play().then(function() {
@@ -325,18 +307,6 @@ class App extends React.Component {
       audioPlayer.pause();
     }
 
-    // if (playPromise !== undefined) {
-    //   playPromise.then(_ => {
-    //     // Automatic playback started!
-    //     // Show playing UI.
-
-    //   })
-    //   .catch(error => {
-    //     console.log("PROBLEMS")
-    //     // Auto-play was prevented
-    //     // Show paused UI.
-    //   });
-    // }
   };
 
   audioEnded = () => {
@@ -353,15 +323,9 @@ class App extends React.Component {
     let name;
     let that = this;
 
-    // data = `authenticity_token=${this.state.railsToken}&kitId=${
-    //   this.state.kitId
-    // }&coverArtPic=${this.state.kitPic}&price=${this.state.kitPrice}&name=${
-    //   this.state.kitName
-    // }`;
-    // data = `authenticity_token=${that.state.railsToken}&kitId=${"1"}&price=${"25.99"}&name=${"4blahblah"}`;
+;
 
     data = {
-      // "authenticity_token":that.state.railsToken,
       kitId: 1,
       price: 25.99,
       name: "5blahblah"
@@ -764,6 +728,7 @@ class App extends React.Component {
             soundfile={this.state.kitSounds[i].soundfile}
             sampleNumber={i}
             playSample={this.setSample}
+            initialSrc={this.state.kitSounds[i].soundfile}
             currentSample={currentSample}
             tempo={this.state.kitSounds[i].tempo}
             musicalKey={this.state.kitSounds[i].key}
@@ -953,8 +918,10 @@ class App extends React.Component {
     let audioPlayer;
     let currentSampleSrc;
     if (this.state.currentSample || this.state.currentSample === 0) {
-      currentSampleSrc = this.state.kitSounds[this.state.currentSample]
-        .soundfile;
+      // currentSampleSrc = this.state.kitSounds[this.state.currentSample]
+      //   .soundfile;
+        currentSampleSrc = this.state.newSrc
+      
     }
     audioPlayer = (
       <audio
