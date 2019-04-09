@@ -25,6 +25,8 @@ class sample extends React.Component {
     this.tempoRef = React.createRef();
     this.soundFileRef = React.createRef();
 
+    console.log("Tes Test")
+
     this.state = {
       editable: false,
       genre: "Rock",
@@ -32,7 +34,8 @@ class sample extends React.Component {
       id: props.id,
       key: props.musicalKey,
       tempo: props.tempo,
-      soundFile: undefined
+      soundFile: props.name,
+      fileToUpload: undefined,
     };
   }
 
@@ -54,7 +57,10 @@ class sample extends React.Component {
     data.append("sound[tempo]", that.state.tempo);
     data.append("commit", "Update Sound");
     data.append("_method", "patch");
-    data.append("sound[soundfile]", that.state.soundFile, that.state.soundFile.name );
+    if(that.state.fileToUpload) {
+      data.append("sound[soundfile]", that.state.fileToUpload, that.state.fileToUpload.name );
+    }
+   
 
     let url = `http://localhost:3000/sounds/${that.state.id}`;
 
@@ -74,6 +80,12 @@ class sample extends React.Component {
           console.log("signed in or signed up");
           // document.getElementById("modalButton").click();
           console.log(json);
+
+          that.setState({
+            soundFile: json.filename
+          });
+
+          
         }
       },
       error: function(xhr) {
@@ -94,7 +106,7 @@ class sample extends React.Component {
     const soundFile = this.soundFileRef.current.files[0];
 
     this.setState({
-      soundFile: soundFile
+      fileToUpload: soundFile
     });
   };
 
@@ -174,7 +186,7 @@ class sample extends React.Component {
         </i>
       );
 
-      soundFile = <td>{this.props.name}</td>;
+      soundFile = <td>{this.state.soundFile}</td>;
     } else {
       editIcon = (
         <div style={{ display: "flex", margin: "auto" }}>

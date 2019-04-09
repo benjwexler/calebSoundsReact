@@ -51,8 +51,15 @@ class SoundsController < ApplicationController
   def update
     respond_to do |format|
       if @sound.update(sound_params)
+        p "XXXX Test"
+        p @sound.soundfile.blob
+        p "XXXX Test"
         format.html { redirect_to @sound, notice: 'Sound was successfully updated.' }
-        format.json { render :show, status: :ok, location: @sound }
+        # format.json { render :show, status: :ok, location: @sound }
+        format.json do
+          render json: @sound.as_json.merge({ soundfile: url_for(@sound.soundfile), filename: @sound.soundfile.blob.filename })
+        end
+        
       else
         format.html { render :edit }
         format.json { render json: @sound.errors, status: :unprocessable_entity }
