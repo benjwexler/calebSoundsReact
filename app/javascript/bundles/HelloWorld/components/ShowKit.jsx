@@ -20,6 +20,9 @@ class ShowKit extends React.Component {
       coverArt: undefined,
       kitId: props.kitId,
       kitSounds: [],
+      currentSample: undefined,
+      sampleCurrentlyPlaying: false,
+      newSrc: undefined,
 
     };
 
@@ -49,6 +52,48 @@ class ShowKit extends React.Component {
           }
         );
       });
+  };
+
+  setSample = (newSrc , e) => {
+    console.log(newSrc)
+    let sampleNumber = e.currentTarget.dataset.sampleNumber;
+
+    let sampleCurrentlyPlaying = true;
+
+
+    if (
+      this.state.sampleCurrentlyPlaying &&
+      this.state.currentSample === parseInt(sampleNumber)
+    ) {
+      sampleCurrentlyPlaying = false;
+    }
+
+
+    this.setState(
+      {
+        currentSample: parseInt(sampleNumber),
+        sampleCurrentlyPlaying: sampleCurrentlyPlaying,
+        newSrc: newSrc
+      },
+      this.playSample
+    );
+  };
+
+  playSample = sampleNumber => {
+    let audioPlayer = document.getElementById("audioPlayer");
+
+
+    let audioPlayerState = audioPlayer.readyState;
+
+
+    if (audioPlayer.paused) {
+      audioPlayer.play().then(function() {
+        // Automatic playback started!
+      });
+    } else {
+      audioPlayer.pause();
+    }
+
   };
 
   edit = (e) => {
@@ -122,6 +167,26 @@ class ShowKit extends React.Component {
 
   render() {
     let that = this;
+
+
+    let audioPlayer;
+    let currentSampleSrc;
+    if (this.state.currentSample || this.state.currentSample === 0) {
+      // currentSampleSrc = this.state.kitSounds[this.state.currentSample]
+      //   .soundfile;
+      
+        currentSampleSrc = this.state.newSrc
+    }
+    audioPlayer = (
+      <audio
+        onEnded={this.audioEnded}
+        id="audioPlayer"
+        autoplay
+        src={currentSampleSrc}
+        type="audio/wav"
+      />
+    );
+
     let emailInputStyle = {
       marginLeft: "auto",
       marginRight: "auto"
@@ -163,6 +228,7 @@ class ShowKit extends React.Component {
             currentSample={currentSample}
             tempo={this.state.kitSounds[i].tempo}
             musicalKey={this.state.kitSounds[i].key}
+            initialSrc={this.state.kitSounds[i].soundfile}
             sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
             inProp={this.state.transition && i >= this.state.sampleOffset - 6}
             key={i}
@@ -194,6 +260,7 @@ class ShowKit extends React.Component {
             samples={samples}
             
         />
+        {audioPlayer}
    
       </div>
     );

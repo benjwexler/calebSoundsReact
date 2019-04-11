@@ -36,6 +36,7 @@ class sample extends React.Component {
       tempo: props.tempo,
       soundFile: props.name,
       fileToUpload: undefined,
+      src: props.initialSrc,
     };
   }
 
@@ -82,7 +83,8 @@ class sample extends React.Component {
           console.log(json);
 
           that.setState({
-            soundFile: json.filename
+            soundFile: json.filename,
+            src: json.soundfile,
           });
 
           
@@ -281,7 +283,7 @@ class sample extends React.Component {
               <td className="setWidth">
                 <div
                   data-sample-number={this.props.sampleNumber}
-                  onClick={this.props.playSample}
+                  onClick={(e) => this.props.playSample(this.state.src, e)}
                   className="circle"
                 >
                   {icon}
