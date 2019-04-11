@@ -83,7 +83,8 @@ class sample extends React.Component {
           console.log(json);
 
           that.setState({
-            soundFile: json.filename
+            soundFile: json.filename,
+            src: json.soundfile,
           });
 
           
