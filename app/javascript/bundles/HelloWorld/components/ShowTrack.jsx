@@ -17,7 +17,7 @@ class EditTrack extends React.Component {
       errorMessage: undefined,
       coverArt: undefined,
       "track[name]": props.trackName,
-    // //   "track[soundcloud_id]": props.soundcloudId,
+      "track[soundcloud_id]": props.soundcloudId,
     //   soundcloudEmbedCode: props.soundcloudId,
     //   "track[spotify_url]": props.spotifyURL,  
     //   "track[youtube_url]": props.youtubeURL, 
