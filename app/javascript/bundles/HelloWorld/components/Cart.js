@@ -3,6 +3,11 @@ import React from "react";
 const cart = props => {
   console.log(props.isCartEmpty);
   let cartContent;
+  let minHeight;
+
+  if(!props.cartHeightZero) {
+      minHeight={minHeight: '210px'}
+  }
 
   if (!props.isCartEmpty) {
     cartContent = (
@@ -28,16 +33,25 @@ const cart = props => {
     );
   } else {
     cartContent = (
+        <React.Fragment>
         <div className="cartEmpty"> 
         Your Cart is Empty 
         <br/>
         <br/>
         <span className="frown">:(</span> </div>
+            <div style={{position: 'absolute', bottom: '0px'}} id="checkoutBtnOuterContainer">
+          <div onClick={props.previewSamples} id="checkoutBtn">
+            <a id="checkoutText">
+              Preview Samples
+            </a>
+          </div>
+        </div>
+        </React.Fragment>
     )
   }
 
   return (
-    <div
+    <div style={minHeight}
       id="cart"
       className={props.showCartBoolean + " " + props.cartHeightZero}
       onTransitionEnd={props.cartTransitionEnd}

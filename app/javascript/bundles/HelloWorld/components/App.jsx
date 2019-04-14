@@ -111,21 +111,11 @@ class App extends React.Component {
       });
   };
 
-  // $.ajax({
-  //   type: "GET",
-  //   url: `http://localhost:3000/kits/${7}?limit=6`,
-  //   success: function(json) {
-  //     // json.forEach((sound, index) => {
-  //     //     padsObj[index] = sound.soundfile
-  //     // })
-
-  //     that.setState({
-  //       kitSounds: json
-  //     });
-  //   },
-  //   error: function(xhr) {},
-  //   dataType: "json"
-  // });
+previewSamples = () => {
+  this.setState({
+    showCart: false
+  }, document.getElementById("section2").scrollIntoView(false))
+}
 
   loadMoreSounds = () => {};
 
@@ -778,6 +768,7 @@ class App extends React.Component {
         clearCart={this.clearCart}
         toggleCart={this.toggleCart}
         isCartEmpty={unsortedItems.length === 0}
+        previewSamples={this.previewSamples}
       />
     );
 

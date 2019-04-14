@@ -45,7 +45,7 @@ height: 100%;
     // height: 360px;
     // height: 0px;
     /* min-height: 360px; */
-    min-height: 210px;
+    // min-height: 210px;
     box-sizing: border-box;
     font-family: 'Josefin Sans', sans-serif !important;
     border-radius: 6px;
@@ -69,7 +69,7 @@ height: 100%;
 .cartEmpty {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 30%;
     text-align: center;
     transform: translate(-50%, -50%);
     border: 2px solid black;
