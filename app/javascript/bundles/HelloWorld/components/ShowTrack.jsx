@@ -144,23 +144,6 @@ class EditTrack extends React.Component {
             innerHeight={{ height: "auto" }}
             title={this.state["track[name]"]}
           >
-     
-
-             
-
-       
-
-          
-
-   
-
-         
-
-
-       
-
-
-           
           </Container>
         </FullScreen>
       </div>
