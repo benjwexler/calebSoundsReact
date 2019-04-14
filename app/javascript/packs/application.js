@@ -29,6 +29,7 @@ import NewTrack from '../bundles/HelloWorld/components/NewTrack.jsx';
 import EditTrack from '../bundles/HelloWorld/components/EditTrack.jsx';
 import ShowTrack from '../bundles/HelloWorld/components/ShowTrack.jsx';
 import ShowKit from '../bundles/HelloWorld/components/ShowKit.jsx';
+import TracksIndex from '../bundles/HelloWorld/components/TracksIndex.jsx';
 
 
 // This is how react_on_rails can see the HelloWorld in the browser.
@@ -72,6 +73,10 @@ ReactOnRails.register({
 
   ReactOnRails.register({
     ShowTrack
+  });
+
+  ReactOnRails.register({
+    TracksIndex
   });
 
   ReactOnRails.register({
