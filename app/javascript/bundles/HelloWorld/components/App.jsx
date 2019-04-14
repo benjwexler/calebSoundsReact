@@ -216,7 +216,6 @@ class App extends React.Component {
   };
 
   response = json => {
-    let that = this;
 
     this.setState({
       cart: json
@@ -778,6 +777,7 @@ class App extends React.Component {
         cartHeightZero={cartHeightZero}
         clearCart={this.clearCart}
         toggleCart={this.toggleCart}
+        isCartEmpty={unsortedItems.length === 0}
       />
     );
 
