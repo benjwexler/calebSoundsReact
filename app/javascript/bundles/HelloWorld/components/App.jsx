@@ -14,7 +14,6 @@ import Section3 from "./Section3.js";
 import Sample from "./Sample.js";
 import Track from "./Track.jsx";
 import Footer from "./Footer.js";
-import DrumMachineSection from "./DrumMachineSection.jsx";
 import Item from "./Item.js";
 import { LinkedList, Node } from "./linkedList.js";
 import StripeCheckout from "react-stripe-checkout";
@@ -177,29 +176,6 @@ class App extends React.Component {
         );
       });
 
-    // $.ajax({
-    //   type: "GET",
-    //   url: "http://localhost:3000/tracks?limit=4",
-    //   success: function(json) {
-    //     console.log(json);
-    //     let newTracksObj = {};
-    //     json.forEach(function(track, index) {
-    //       console.log(json[index]);
-    //       newTracksObj[index] = json[index];
-    //     });
-    //     that.setState(
-    //       {
-    //         tracks: json,
-    //         tracksObj: newTracksObj,
-    //         counter: 7
-    //       },
-    //       that.bindWidget
-    //     );
-    //   },
-    //   error: function(xhr) {},
-    //   dataType: "json"
-    // });
-
     fetch(`/carts`, {
       headers: {
         "Content-Type": "application/json"
@@ -213,30 +189,20 @@ class App extends React.Component {
         that.response(myJson);
       });
 
-    //   $.ajax({
-    //     method: "GET",
-    //     url: `/carts`,
-    //     dataType: "json",
-    //     success: this.response
-    //   });
   }
 
   bindWidget = () => {
     let soundcloudWidget;
     let that = this;
     if (this.state.counter === 7) {
-      // console.log(document.getElementById("playAndPauseIcon1"))
 
       let tracks = document.querySelectorAll(".playAndPauseIcon");
       let soundclouds = document.querySelectorAll(".soundclouds");
 
-      // console.log(soundclouds)
-
       for (let i = 0; i < soundclouds.length; i++) {
-        // console.log(soundclouds[i].id)
+
         soundcloudWidget = soundclouds[i];
         window[`widget${i}`] = SC.Widget(soundcloudWidget);
-        //   console.log(soundcloudWidget)
         console.log(window[`widget${i}`].Events);
         window[`widget${i}`].bind(SC.Widget.Events.READY, function() {});
         window[`widget${i}`].bind(SC.Widget.Events.FINISH, function() {
@@ -245,8 +211,6 @@ class App extends React.Component {
             currentlyPlaying: false
           });
         });
-
-        // console.log(window[`widget${i}`])
       }
     }
   };
@@ -353,20 +317,8 @@ class App extends React.Component {
         // promises in the chain.
       });
 
-    // $.ajax({
-    //   method: "POST",
-    //   beforeSend: function(request) {
-    //     request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
-    //   },
-    //   url: `/carts`,
-    //   data: data,
-    //   dataType: "json",
-    //   success: this.response
-    // });
-
     this.toggleCart();
 
-    // console.log(this.state)
     this.setState(
       {
         showCart: true,
@@ -376,17 +328,12 @@ class App extends React.Component {
       this.checkToggleCart
     );
 
-    // this.setState({
-    //     showCart: true,
-    // })
   };
 
   deleteItem = e => {
     let kitId = e.target.dataset.kitId;
 
     let that = this;
-
-    // let kitId = this.state.kitId
 
     fetch(`carts/${1}`, {
       method: "DELETE",
@@ -407,16 +354,6 @@ class App extends React.Component {
         // promises in the chain.
       });
 
-    // $.ajax({
-    //   method: "DELETE",
-    //   beforeSend: function(request) {
-    //     request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
-    //   },
-    //   url: `carts/${1}`,
-    //   data: `authenticity_token=${that.state.railsToken}`,
-    //   dataType: "json",
-    //   success: that.response
-    // });
   };
 
   clearCart = () => {
@@ -443,26 +380,12 @@ class App extends React.Component {
         // promises in the chain.
       });
   };
-  //   $.ajax({
-  //     method: "DELETE",
-  //     beforeSend: function(request) {
-  //       request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
-  //     },
-  //     url: `carts/all`,
-  //     data: `authenticity_token=${that.state.railsToken}`,
-  //     dataType: "json",
-  //     success: that.response
-  //   });
-  // };
+
 
   showCircle = e => {
-    //  console.log("showCircle")
-    //  console.log(e.currentTarget.childNodes)
-    //  console.log(e.currentTarget.dataset.trackNumber)
 
     let currentHoverTrack = parseInt(e.currentTarget.dataset.trackNumber);
 
-    //  console.log(currentHoverTrack)
     this.setState({
       currentHoverTrack: currentHoverTrack
     });
@@ -475,9 +398,6 @@ class App extends React.Component {
   };
 
   setCurrentTrack = e => {
-    //  console.log("Playing or paused")
-    //  console.log(e.currentTarget.parentNode.dataset.trackNumber)
-
     let currentTrack = parseInt(e.currentTarget.parentNode.dataset.trackNumber);
     let currentlyPlaying = true;
 
@@ -488,7 +408,6 @@ class App extends React.Component {
       currentlyPlaying = false;
     }
 
-    //  console.log(currentTrack)
     this.setState(
       {
         currentTrack: currentTrack,
@@ -499,8 +418,6 @@ class App extends React.Component {
   };
 
   playPauseTrack = currentTrack => {
-    //  console.log(this.state.tracksObj[this.state.currentTrack])
-    //  console.log(this.state.tracksObj[this.state.currentTrack].soundcloud_id)
 
     let audioPlayer = document.getElementById("audioPlayer");
     audioPlayer.pause();
@@ -512,14 +429,12 @@ class App extends React.Component {
 
     if (this.state.currentTrack === currentTrack) {
       window[`widget${currentTrack}`].toggle();
-      // console.log("pausing")
-      // currentTrack = undefined
-      // isTrackPlaying = !this.state.isTrackPlaying
+
     } else {
-      // console.log("playing")
+
       window[`widget${currentTrack}`].seekTo(0);
       window[`widget${currentTrack}`].play();
-      // isTrackPlaying = true
+
     }
   };
 
@@ -535,16 +450,6 @@ class App extends React.Component {
     }
   };
 
-  // handleMousemove = () => {
-
-  //   if(!this.state.userInteractedWithPage) {
-  //     console.log("MOUSEMOVE")
-  //     this.setState({
-  //       userInteractedWithPage: true
-  //     }, window.removeEventListener("mousemove", this.handleMousemove))
-
-  //   }
-  // };
 
   toggleModal = () => {
     this.setState({
@@ -659,7 +564,6 @@ class App extends React.Component {
   toggleCart = () => {
     let that = this;
 
-    // console.log(this.state)
     this.setState(
       {
         showCart: !that.state.showCart,
@@ -673,14 +577,13 @@ class App extends React.Component {
   toggleAccountDropdown = () => {
     let that = this;
 
-    // console.log(this.state)
     this.setState(
       {
         showAccountDropdown: !this.state.showAccountDropdown,
         showCart: false,
         showMobileNav: false
       }
-      // this.checkToggleCart
+
     );
   };
 
@@ -817,15 +720,8 @@ class App extends React.Component {
 
       tracks = <React.Fragment>{tracks}</React.Fragment>;
       latestTracks = <Section3 tracks={tracks} />;
-
-    //   LatestTracks = React.forwardRef((props, ref) => {
-    //     return <Section3 tracks={tracks} innerRef={ref} {...props} />
-    //   })
     }
 
-    // const BlockWithRef = React.forwardRef((props, ref) => {
-    //   return <Section3 innerRef={ref} {...props} />
-    // })
 
     let unsortedItems;
     if (this.state.cart) {
@@ -918,8 +814,7 @@ class App extends React.Component {
     let audioPlayer;
     let currentSampleSrc;
     if (this.state.currentSample || this.state.currentSample === 0) {
-      // currentSampleSrc = this.state.kitSounds[this.state.currentSample]
-      //   .soundfile;
+
         currentSampleSrc = this.state.newSrc
       
     }
@@ -971,19 +866,6 @@ class App extends React.Component {
           loadSounds={this.loadSounds}
         />
         {audioPlayer}
-
-        {/* <Waypoint
-  onEnter={this.enterWaypoint}
-  onLeave={this.exitWaypoint}
-
- 
-/> */}
-
-{/* <Waypoint onEnter={this.enterWaypoint} onLeave={this.exitWaypoint}>
-<div>
-
-</div>
-</Waypoint> */}
 
   {latestTracks}
     
