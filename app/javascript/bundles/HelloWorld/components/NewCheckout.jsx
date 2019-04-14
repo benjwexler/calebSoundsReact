@@ -328,6 +328,10 @@ return totalPrice
   response = (json) => {
     let that = this;
 
+    if(Object.keys(json).length===0) {
+      window.location.href = "/";
+    }
+
     this.setState({
       cart: json
     });
