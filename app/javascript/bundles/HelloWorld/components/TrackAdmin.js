@@ -49,8 +49,8 @@ const trackAdmin = props => {
         </div>
       </td>
       <td>{props.name}</td>
-      <td>{props.releaseDate}</td>
-      <td>
+      <td className="centerColContent">{props.releaseDate}</td>
+      <td className="centerColContent">
         <a
           className={soundcloudNoStreaming}
           href={props.soundcloudLink}
@@ -59,17 +59,17 @@ const trackAdmin = props => {
           <i className="fab fa-soundcloud" />
         </a>
       </td>
-      <td>
+      <td  className="centerColContent">
         <a className={spotifyNoStreaming} href={props.spotifyLink} target="_blank">
           <i className="fab fa-spotify" />
         </a>
       </td>
-      <td>
+      <td className="centerColContent">
       <a className={youtubeNoStreaming} href={props.youtubeLink} target="_blank">
           <i className="fab fa-youtube" />
         </a>
       </td>
-      <td>
+      <td className="centerColContent">
       <a className={appleMusicNoStreaming} href={props.appleMusicLink} target="_blank">
           <i className="fab fa-apple" />
         </a>

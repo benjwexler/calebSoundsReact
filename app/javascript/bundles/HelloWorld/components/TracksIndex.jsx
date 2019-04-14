@@ -74,6 +74,21 @@ class TracksIndex extends React.Component {
 
   }
 
+  formatDate = (inputDate) => {
+    var date = new Date(inputDate);
+    const year = date.getFullYear().toString().slice(-2);
+
+    if (!isNaN(date.getTime())) {
+        var day = date.getDate().toString();
+        var month = (date.getMonth() + 1).toString();
+        // Months use 0 index.
+
+        return (month[1] ? month : '0' + month[0]) + '/' +
+           (day[1] ? day : '0' + day[0]) + '/' + 
+           year
+    }
+}
+
   handleResize = () => {
     if (window.innerWidth > 1120) {
       this.setState({
@@ -212,6 +227,7 @@ class TracksIndex extends React.Component {
         trackNumber={i}
         currentTrack={currentTrack}
         currentlyPlaying={this.state.currentlyPlaying}
+        releaseDate={this.formatDate(that.state.tracks[i].release_date)}
         />)
     }))
 

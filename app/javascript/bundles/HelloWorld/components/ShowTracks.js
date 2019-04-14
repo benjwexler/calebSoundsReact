@@ -38,11 +38,11 @@ const showTracks = (props) => {
                     <tr className="oddRow headerRow">
                         <th></th>
                         <th>Track Name</th>
-                        <th>Release Date</th>
-                        <th>Soundcloud</th>
-                        <th>Spotify</th>
-                        <th>Youtube</th>
-                        <th>Apple Music</th>
+                        <th className="centerColContent">Release <span className="mobileHide">Date</span></th>
+                        <th className="centerColContent">Soundcloud</th>
+                        <th className="centerColContent">Spotify</th>
+                        <th className="centerColContent">Youtube</th>
+                        <th className="centerColContent">Apple <span className="mobileHide">Music</span></th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
