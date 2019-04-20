@@ -35,10 +35,10 @@ const navbar = (props) => {
 
     <div id="accountContainer">
         <div onClick={props.toggleAccountDropdown} id="signOutContainer">
-            <div className="logInorSignUp">
+            <div id="accountText" className="logInorSignUp">
             ACCOUNT
             </div>
-            <i onClick={props.toggleAccountDropdown} class="navbarIconBig fas fa-user-circle"></i>
+            <i onClick={props.toggleAccountDropdown} id="accountIcon" class="navbarIconBig fas fa-user-circle"></i>
         </div>
 
         <div id="accountDropdown" class={props.showAccountDropdown}>

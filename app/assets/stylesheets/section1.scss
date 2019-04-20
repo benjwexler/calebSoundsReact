@@ -682,3 +682,19 @@ height: 100%;
     text-shadow: 1px 1px white;
 }
 
+// @keyframes animateArrow {
+//     0% {transform:translateY(0px);}
+//     50% {transform:translateY(3px);}
+//     100% {transform:translateY(0px);}
+//   }
+
+.animateArrow {
+    // position: absolute;
+    top: 19px; 
+    // left: 30px;
+    animation: animateArrow 600ms linear infinite;
+    transition: opacity 800ms;
+    opacity: 0;
+
+}
+

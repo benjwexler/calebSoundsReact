@@ -16,7 +16,6 @@ class TracksController < ApplicationController
     respond_to do |format|
         
         format.html {
-          p "HTML"
         }
         format.json { 
           p "JSON Track"
@@ -106,10 +105,17 @@ class TracksController < ApplicationController
   # DELETE /tracks/1
   # DELETE /tracks/1.json
   def destroy
+    @tracks = Track.all
     @track.destroy
     respond_to do |format|
       format.html { redirect_to tracks_url, notice: 'Track was successfully destroyed.' }
-      format.json { head :no_content }
+      format.json { 
+          p "JSON Track"
+          # render json: @tracks.to_json 
+          render json: @tracks.map { |track|
+            track.as_json.merge({ image: url_for(track.cover_art), isPlaying: false })
+          }
+        }
     end
   end
 
