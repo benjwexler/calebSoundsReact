@@ -85,7 +85,7 @@
                     <div class="trackName"><%= track.name %> </div>
                     <%= link_to 'Edit', edit_track_path(track) %>
                     <%= link_to 'Show', track %>
-                    <%= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    <%= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' }, :remote => true %>
                 </div>
 
 

@@ -79,7 +79,9 @@ class App extends React.Component {
       showAccountDropdown: false,
       userInteractedWithPage: false,
       newSrc: undefined,
+      showDownArrow: false
     };
+    this.closeDropDowns = this.closeDropDowns.bind(this);
   }
 
   loadSounds = kitId => {
@@ -97,8 +99,6 @@ class App extends React.Component {
         return response.json();
       })
       .then(function(myJson) {
-        console.log(myJson);
-
         kitSounds = that.state.kitSounds.concat(myJson);
         that.setState(
           {
@@ -110,6 +110,12 @@ class App extends React.Component {
         );
       });
   };
+
+  toggleDownArrow = (bool) => {
+    this.setState({
+      showDownArrow: bool
+    })
+  }
 
 previewSamples = () => {
   this.setState({
@@ -124,19 +130,16 @@ previewSamples = () => {
   };
 
   enterWaypoint = (props) => {
-    console.log("enterWayPoint")
-    console.log(props)
   }
 
   exitWaypoint = (props) => {
-    console.log("exitWayPoint")
-    console.log(props)
   }
 
   componentDidMount() {
 
     //  this.setState({ in: !this.state.transition });
     window.addEventListener("resize", this.handleResize);
+    window.addEventListener("click", (e) => this.closeDropDowns(e));
     // window.addEventListener("mousemove", this.handleMousemove);
 
     let that = this;
@@ -175,7 +178,6 @@ previewSamples = () => {
         return response.json();
       })
       .then(function(myJson) {
-        console.log(myJson);
         that.response(myJson);
       });
 
@@ -193,10 +195,8 @@ previewSamples = () => {
 
         soundcloudWidget = soundclouds[i];
         window[`widget${i}`] = SC.Widget(soundcloudWidget);
-        console.log(window[`widget${i}`].Events);
         window[`widget${i}`].bind(SC.Widget.Events.READY, function() {});
         window[`widget${i}`].bind(SC.Widget.Events.FINISH, function() {
-          console.log("Song is finished!");
           that.setState({
             currentlyPlaying: false
           });
@@ -213,7 +213,6 @@ previewSamples = () => {
   };
 
   setSample = (newSrc , e) => {
-    console.log(newSrc)
     let sampleNumber = e.currentTarget.dataset.sampleNumber;
 
     let sampleCurrentlyPlaying = true;
@@ -439,6 +438,17 @@ previewSamples = () => {
     }
   };
 
+  closeDropDowns = (e) => {
+
+    console.log(e.target.id)
+    const idMatch = e.target.id === "accountIcon" || e.target.id === "accountText";
+    if (this.state.showAccountDropdown && !idMatch) {
+      this.setState({
+        showAccountDropdown: false
+      });
+    } 
+  };
+
 
   toggleModal = () => {
     this.setState({
@@ -491,9 +501,6 @@ previewSamples = () => {
             errorMessage: json.errorMessage
           });
         } else {
-          console.log("signed in or signed up");
-          // document.getElementById("modalButton").click();
-          console.log(json);
           that.setState(
             {
               railsToken: json.csrfToken,
@@ -503,7 +510,6 @@ previewSamples = () => {
               cart: JSON.parse(json.cart)
             },
             () => {
-              console.log(that.state);
               that.setState({
                 showModal: false
               });
@@ -512,7 +518,6 @@ previewSamples = () => {
         }
       },
       error: function(xhr) {
-        console.log("error");
         that.setState({
           errorMessage: "Your Email and/or Password is incorrect"
         });
@@ -528,9 +533,6 @@ previewSamples = () => {
       url: "/users/sign_out",
       data: { _method: "delete", authenticity_token: that.state.railsToken },
       success: function(json) {
-        console.log("trying to delete");
-        console.log(json);
-
         that.setState({
           userLoggedIn: false,
           railsToken: json.csrfToken,
@@ -850,7 +852,7 @@ previewSamples = () => {
           signOut={this.signOut}
           userId={this.state.userId}
         />
-        <Section1 />
+        <Section1 showDownArrow={this.state.showDownArrow} toggleDownArrow={this.toggleDownArrow}/>
         <Section2
           samples={samples}
           click={this.addToCart}

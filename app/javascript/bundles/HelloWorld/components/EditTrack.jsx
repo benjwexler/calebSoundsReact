@@ -102,14 +102,6 @@ class EditTrack extends React.Component {
     let appleMusicURL = document.getElementById("track_apple_music_url").value;
     let soundcloudURL = document.getElementById("track_soundcloud_url").value;
 
-    console.log(trackName);
-    console.log(coverArt);
-    console.log(soundcloudEmbedCode);
-    console.log(spotifyURL);
-    console.log(youtubeURL);
-    console.log(appleMusicURL);
-    console.log(soundcloudURL);
-
   }
 
   componentDidMount() {

@@ -4,6 +4,8 @@ import Navbar from "./Navbar.js";
 import MobileNav from "./MobileNav.js";
 import ShowTracks from "./ShowTracks.js";
 import TrackAdmin from "./TrackAdmin.js";
+import Modal from "./Modal.js";
+import EditTrackModal from "./EditTrackModal.js";
 
 
 class TracksIndex extends React.Component {
@@ -19,14 +21,91 @@ class TracksIndex extends React.Component {
       newSrc: undefined,
       tracks: [],
       currentTrack: undefined,
+      showModal: false,
+      currentEditTrack: undefined,
+      editTrackName: undefined,
+      "track[name]": undefined,
+      "track[spotify_url]": undefined,  
+      "track[youtube_url]": undefined, 
+      "track[apple_music_url]": undefined, 
+      "track[soundcloud_url]": undefined, 
 
     };
+    this.handleFormChange = this.handleFormChange.bind(this);
 
   }
 
+  deleteTrack = (trackIndex) => {
+    let that = this;
+    console.log(this.state.tracks[trackIndex].id)
 
+    let trackId = this.state.tracks[trackIndex].id;
 
+    // fetch(`/tracks/${trackId}`, {
+    //   headers: {
+    //     // "Content-Type": "application/json",
+    //     "X-CSRF-Token": this.state.railsToken
+    //   },
+    //   method: 'DELETE',
+    //   // data: {"_method":"delete"},
+    //   // credentials: "same-origin",
+    // })
+    //   .then(function(response) {
+    //     return response.json();
+    //   })
+    //   .then(function(myJson) {
+    //     console.log(myJson)
+    //   })
 
+    $.ajax({
+      type: "POST",
+      url: `/tracks/${trackId}`,
+      data: { _method: "delete", authenticity_token: that.state.railsToken },
+      success: function(json) {
+        console.log("trying to delete");
+        console.log(json);
+        that.setState(
+          {
+            tracks: json,
+            counter: 7
+
+          },
+          that.bindWidget
+        );
+      },
+      error: function(xhr) {},
+      dataType: "json"
+    });
+  }
+
+  toggleModal = (trackIndex) => {
+
+    
+    let trackName;
+    let spotify_url;
+    let youtube_url;
+    let apple_music_url;
+    let soundcloud_url;
+    if(this.state.tracks[trackIndex]) {
+     trackName = this.state.tracks[trackIndex].name
+     spotify_url = this.state.tracks[trackIndex].spotify_url
+     youtube_url = this.state.tracks[trackIndex].youtube_url
+     apple_music_url = this.state.tracks[trackIndex].apple_music_url
+     soundcloud_url = this.state.tracks[trackIndex].soundcloud_url
+    }
+    
+    console.log(trackName)
+    this.setState({
+      showModal: !this.state.showModal,
+      currentEditTrack: trackName,
+      "track[name]": trackName,
+      "track[spotify_url]": spotify_url,
+      "track[youtube_url]": youtube_url,
+      "track[apple_music_url]": apple_music_url,
+      "track[soundcloud_url]": soundcloud_url,
+
+    });
+  };
 
 
   edit = (e) => {
@@ -220,7 +299,7 @@ class TracksIndex extends React.Component {
         spotifyLink={track.spotify_url}
         youtubeLink={track.youtube_url}
         appleMusicLink={track.apple_music_url}
-        key={i}
+        key={track.id}
         oddRow={oddRow}
         soundcloud_id={that.state.tracks[i].soundcloud_id}
         playPauseTrack={this.setCurrentTrack}
@@ -228,8 +307,34 @@ class TracksIndex extends React.Component {
         currentTrack={currentTrack}
         currentlyPlaying={this.state.currentlyPlaying}
         releaseDate={this.formatDate(that.state.tracks[i].release_date)}
+        editTrack={() => this.toggleModal(i)}
+        deleteTrack={() => this.deleteTrack(i)}
+        trackInfo={track}
+        onChange={this.handleFormChange}
         />)
     }))
+
+    let modal;
+
+    let loginInSwitch = "inactiveBtn";
+    let signUpSwitch = "switchFormBtn";
+
+    if (this.state.showModal) {
+      modal = (
+        <EditTrackModal
+          exitModal={this.toggleModal}
+          loginInSwitch={loginInSwitch}
+          railsToken={this.state.railsToken}
+          name={this.state.currentEditTrack}
+          trackName={this.state["track[name]"]}
+          spotifyLink={this.state["track[spotify_url]"]}
+          youtubeLink={this.state["track[youtube_url]"]}
+          appleMusicLink={this.state["track[apple_music_url]"]}
+          soundcloudLink={this.state["track[soundcloud_url]"]}
+          onChange={this.handleFormChange}
+        />
+      );
+    }
 
 
 
@@ -239,6 +344,7 @@ class TracksIndex extends React.Component {
 
     return (
       <div>
+      {modal}
         <Navbar toggleMobileNav={this.toggleMobileNav} />
         <MobileNav
           toggleMobileNav={this.toggleMobileNav}
