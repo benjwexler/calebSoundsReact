@@ -56,7 +56,7 @@ const EditTrackModal = props => {
                   { paddingTop: "10px", height: "30px" },
                   emailInputStyle
                 )}
-                onChange={this.handleImgUpload}
+                onChange={props.handleImgUpload}
                 className="form"
                 autoFocus="autofocus"
                 autocomplete="email"
@@ -74,8 +74,8 @@ const EditTrackModal = props => {
           <div class="field">
             <div className="modalIconContainer">
               <input
-                onChange={this.handleSoundcloudEmbed}
-                // value={this.state.soundcloudEmbedCode}
+                onChange={props.handleSoundcloudEmbed}
+                value={props.soundcloudEmbedCode}
                 style={emailInputStyle}
                 className="form"
                 autoFocus="autofocus"
@@ -244,6 +244,7 @@ const EditTrackModal = props => {
             class="actions"
           >
             <input
+              onClick={props.submit}
               style={{ fontSize: "16px", width: "auto" }}
               className="btn"
               type="submit"

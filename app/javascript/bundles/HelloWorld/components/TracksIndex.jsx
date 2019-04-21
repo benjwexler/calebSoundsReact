@@ -29,11 +29,76 @@ class TracksIndex extends React.Component {
       "track[youtube_url]": undefined, 
       "track[apple_music_url]": undefined, 
       "track[soundcloud_url]": undefined, 
+      soundcloudEmbedCode: undefined,
+      trackId: undefined, 
 
     };
+    this.handleImgUpload = this.handleImgUpload.bind(this)
     this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleSoundcloudEmbed = this.handleSoundcloudEmbed.bind(this)
 
   }
+
+  updateTrackReq = e => {
+    let that = this;
+    e.preventDefault();
+    let trackObj = {};
+    trackObj.utf8 = "✓";
+    trackObj.authenticity_token = that.state.railsToken;
+    trackObj["sound[key]"] = that.state.key;
+    trackObj["sound[tempo]"] = that.state.tempo;
+    trackObj.commit = "Update Sound";
+    trackObj["_method"] = "patch";
+
+    var data = new FormData();
+    data.append("utf8", "✓");
+    data.append("authenticity_token", that.state.railsToken);
+
+    data.append("track[name]", that.state["track[name]"]);
+    data.append("track[spotify_url]", that.state["track[spotify_url]"]);
+    data.append( "track[youtube_url]", that.state["track[youtube_url]"]);
+    data.append("track[apple_music_url]", that.state["track[apple_music_url"]);
+    data.append("track[soundcloud_url]", that.state["track[soundcloud_url]"]);
+    data.append("track[soundcloud_id]", that.state.soundcloudEmbedCode);
+
+
+    data.append("commit", "Edit Track");
+    data.append("_method", "patch");
+    if(that.state.coverArt) {
+      data.append("track[cover_art]", that.state.coverArt);
+    }
+   
+
+    let url = `http://localhost:3000/tracks/${that.state.trackId}`;
+
+    $.ajax({
+      type: "POST",
+      enctype: 'multipart/form-data',
+      processData: false,
+      contentType: false,
+      cache: false,
+      timeout: 600000,
+
+      url: url,
+      data: data,
+      success: function(json) {
+        if (json.errorMessage) {
+        } else {
+          // document.getElementById("modalButton").click();
+          console.log(json);
+
+          that.setState({
+            tracks: json
+          });
+          
+        }
+      },
+      error: function(xhr) {
+        console.log("error");
+      },
+      dataType: "json"
+    });
+  };
 
   deleteTrack = (trackIndex) => {
     let that = this;
@@ -86,12 +151,16 @@ class TracksIndex extends React.Component {
     let youtube_url;
     let apple_music_url;
     let soundcloud_url;
+    let soundcloudEmbedCode;
+    let trackId;
     if(this.state.tracks[trackIndex]) {
      trackName = this.state.tracks[trackIndex].name
      spotify_url = this.state.tracks[trackIndex].spotify_url
      youtube_url = this.state.tracks[trackIndex].youtube_url
      apple_music_url = this.state.tracks[trackIndex].apple_music_url
      soundcloud_url = this.state.tracks[trackIndex].soundcloud_url
+     soundcloudEmbedCode = this.state.tracks[trackIndex].soundcloud_id
+     trackId = this.state.tracks[trackIndex].id
     }
     
     console.log(trackName)
@@ -103,6 +172,8 @@ class TracksIndex extends React.Component {
       "track[youtube_url]": youtube_url,
       "track[apple_music_url]": apple_music_url,
       "track[soundcloud_url]": soundcloud_url,
+      soundcloudEmbedCode: soundcloudEmbedCode,
+      trackId: trackId,
 
     });
   };
@@ -120,6 +191,36 @@ class TracksIndex extends React.Component {
       showMobileNav: !that.state.showMobileNav
     });
   };
+
+  handleImgUpload = (event) => {
+    this.setState({
+      coverArt: URL.createObjectURL(event.target.files[0])
+    })
+  }
+
+  handleSoundcloudEmbed = (event) => {
+
+    console.log("Trying to change SC")
+
+    let soundcloudEmbedCode=event.target.value
+
+    try {
+      soundcloudEmbedCode = soundcloudEmbedCode.split('tracks/')[1]
+      soundcloudEmbedCode = soundcloudEmbedCode.split('&')[0]
+    }
+    catch(error) {
+      soundcloudEmbedCode = event.target.value
+    }
+
+    
+
+    // console.log(event.target.value)
+
+    this.setState({
+      soundcloudEmbedCode: soundcloudEmbedCode
+    })
+
+  }
 
   handleFormChange (evt) {
     this.setState({ [evt.target.name]: evt.target.value });
@@ -299,7 +400,7 @@ class TracksIndex extends React.Component {
         spotifyLink={track.spotify_url}
         youtubeLink={track.youtube_url}
         appleMusicLink={track.apple_music_url}
-        key={track.id}
+        key={i}
         oddRow={oddRow}
         soundcloud_id={that.state.tracks[i].soundcloud_id}
         playPauseTrack={this.setCurrentTrack}
@@ -331,7 +432,11 @@ class TracksIndex extends React.Component {
           youtubeLink={this.state["track[youtube_url]"]}
           appleMusicLink={this.state["track[apple_music_url]"]}
           soundcloudLink={this.state["track[soundcloud_url]"]}
+          soundcloudEmbedCode={this.state.soundcloudEmbedCode}
           onChange={this.handleFormChange}
+          handleSoundcloudEmbed={this.handleSoundcloudEmbed}
+          handleImgUpload={this.handleImgUpload}
+          submit={this.updateTrackReq}
         />
       );
     }
