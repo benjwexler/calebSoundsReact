@@ -30,7 +30,11 @@ class TracksIndex extends React.Component {
       "track[apple_music_url]": undefined, 
       "track[soundcloud_url]": undefined, 
       soundcloudEmbedCode: undefined,
-      trackId: undefined, 
+      trackId: undefined,
+      "track[release_date(1i)]": undefined,
+      "track[release_date(2i)]": undefined,
+      "track[release_date(3i)]": undefined,
+
 
     };
     this.handleImgUpload = this.handleImgUpload.bind(this)
@@ -40,6 +44,10 @@ class TracksIndex extends React.Component {
   }
 
   updateTrackReq = e => {
+
+    this.setState({
+      showModal: false,
+    });
     let that = this;
     e.preventDefault();
     let trackObj = {};
@@ -49,6 +57,11 @@ class TracksIndex extends React.Component {
     trackObj["sound[tempo]"] = that.state.tempo;
     trackObj.commit = "Update Sound";
     trackObj["_method"] = "patch";
+
+    let releaseDate = [that.state["track[release_date(1i)]"], that.state["track[release_date(2i)]"], that.state["track[release_date(2i)]"]];
+    releaseDate = releaseDate.join('-');
+    console.log(releaseDate);
+    
 
     var data = new FormData();
     data.append("utf8", "✓");
@@ -60,12 +73,13 @@ class TracksIndex extends React.Component {
     data.append("track[apple_music_url]", that.state["track[apple_music_url"]);
     data.append("track[soundcloud_url]", that.state["track[soundcloud_url]"]);
     data.append("track[soundcloud_id]", that.state.soundcloudEmbedCode);
+    data.append("track[release_date]", releaseDate );
 
 
     data.append("commit", "Edit Track");
     data.append("_method", "patch");
     if(that.state.coverArt) {
-      data.append("track[cover_art]", that.state.coverArt);
+      data.append("track[cover_art]", that.state.coverArt, that.state.coverArt);
     }
    
 
@@ -194,7 +208,8 @@ class TracksIndex extends React.Component {
 
   handleImgUpload = (event) => {
     this.setState({
-      coverArt: URL.createObjectURL(event.target.files[0])
+      // coverArt: URL.createObjectURL(event.target.files[0]),
+      coverArt: event.target.files[0]
     })
   }
 
@@ -226,11 +241,11 @@ class TracksIndex extends React.Component {
     this.setState({ [evt.target.name]: evt.target.value });
   }
 
-  handleImgUpload = (event) => {
-    this.setState({
-      coverArt: URL.createObjectURL(event.target.files[0])
-    })
-  }
+  // handleImgUpload = (event) => {
+  //   this.setState({
+  //     coverArt: URL.createObjectURL(event.target.files[0])
+  //   })
+  // }
 
   handleSoundcloudEmbed = (event) => {
 
