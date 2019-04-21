@@ -1,4 +1,7 @@
 import React from "react";
+import DatePicker from "react-datepicker";
+
+// import "react-datepicker/dist/react-datepicker.css";
 
 const EditTrackModal = props => {
   let emailInputStyle = {
@@ -254,6 +257,14 @@ const EditTrackModal = props => {
               // disabled='disabled'
             />
           </div>
+          <DatePicker
+  selected={new Date()}
+  // onChange={this.handleChange}
+  dateFormatCalendar={"MMM yyyy"}
+  // minDate={subMonths(new Date(), 6)}
+  // maxDate={addMonths(new Date(), 6)}
+  showMonthYearDropdown
+/>
         </form>
       </div>
     </div>
