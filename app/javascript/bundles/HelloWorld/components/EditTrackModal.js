@@ -169,7 +169,7 @@ const EditTrackModal = props => {
           <div class="field">
             <label for="track_release_date">Release date</label>
             <br />
-            <select id="track_release_date_1i" name="track[release_date(1i)]">
+            <select onChange={props.onChange} id="track_release_date_1i" name="track[release_date(1i)]">
               <option value="2014">2014</option>
               <option value="2015">2015</option>
               <option value="2016">2016</option>
@@ -184,7 +184,7 @@ const EditTrackModal = props => {
               <option value="2023">2023</option>
               <option value="2024">2024</option>
             </select>
-            <select id="track_release_date_2i" name="track[release_date(2i)]">
+            <select onChange={props.onChange} id="track_release_date_2i" name="track[release_date(2i)]">
               <option value="1">January</option>
               <option value="2">February</option>
               <option value="3" selected="selected">
@@ -200,7 +200,7 @@ const EditTrackModal = props => {
               <option value="11">November</option>
               <option value="12">December</option>
             </select>
-            <select id="track_release_date_3i" name="track[release_date(3i)]">
+            <select onChange={props.onChange} id="track_release_date_3i" name="track[release_date(3i)]">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
