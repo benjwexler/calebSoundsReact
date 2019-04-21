@@ -91,11 +91,21 @@ class TracksController < ApplicationController
   # PATCH/PUT /tracks/1
   # PATCH/PUT /tracks/1.json
   def update
+    @tracks = Track.all
     respond_to do |format|
       if @track.update(track_params)
+        p "Option A"
         format.html { redirect_to @track, notice: 'Track was successfully updated.' }
-        format.json { render :show, status: :ok, location: @track }
+        # format.json { render :show, status: :ok, location: @track }
+        format.json { 
+          p "JSON Track"
+          # render json: @tracks.to_json 
+          render json: @tracks.map { |track|
+            track.as_json.merge({ image: url_for(track.cover_art), isPlaying: false })
+          }
+        }
       else
+        p "Option B"
         format.html { render :edit }
         format.json { render json: @track.errors, status: :unprocessable_entity }
       end
