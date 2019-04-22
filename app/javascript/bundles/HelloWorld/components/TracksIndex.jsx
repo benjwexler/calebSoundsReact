@@ -6,6 +6,7 @@ import ShowTracks from "./ShowTracks.js";
 import TrackAdmin from "./TrackAdmin.js";
 import Modal from "./Modal.js";
 import EditTrackModal from "./EditTrackModal.js";
+import moment from 'moment';
 
 
 class TracksIndex extends React.Component {
@@ -34,10 +35,12 @@ class TracksIndex extends React.Component {
       "track[release_date(1i)]": undefined,
       "track[release_date(2i)]": undefined,
       "track[release_date(3i)]": undefined,
+      date: undefined,
 
 
     };
     this.handleImgUpload = this.handleImgUpload.bind(this)
+    this.handleDateChange = this.handleDateChange.bind(this)
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleSoundcloudEmbed = this.handleSoundcloudEmbed.bind(this)
 
@@ -73,7 +76,8 @@ class TracksIndex extends React.Component {
     data.append("track[apple_music_url]", that.state["track[apple_music_url"]);
     data.append("track[soundcloud_url]", that.state["track[soundcloud_url]"]);
     data.append("track[soundcloud_id]", that.state.soundcloudEmbedCode);
-    data.append("track[release_date]", releaseDate );
+    // data.append("track[release_date]", releaseDate );
+    data.append("track[release_date]", that.state.date);
 
 
     data.append("commit", "Edit Track");
@@ -167,6 +171,7 @@ class TracksIndex extends React.Component {
     let soundcloud_url;
     let soundcloudEmbedCode;
     let trackId;
+    let date;
     if(this.state.tracks[trackIndex]) {
      trackName = this.state.tracks[trackIndex].name
      spotify_url = this.state.tracks[trackIndex].spotify_url
@@ -175,6 +180,7 @@ class TracksIndex extends React.Component {
      soundcloud_url = this.state.tracks[trackIndex].soundcloud_url
      soundcloudEmbedCode = this.state.tracks[trackIndex].soundcloud_id
      trackId = this.state.tracks[trackIndex].id
+     date = this.state.tracks[trackIndex].release_date
     }
     
     console.log(trackName)
@@ -188,6 +194,7 @@ class TracksIndex extends React.Component {
       "track[soundcloud_url]": soundcloud_url,
       soundcloudEmbedCode: soundcloudEmbedCode,
       trackId: trackId,
+      date: date,
 
     });
   };
@@ -210,6 +217,16 @@ class TracksIndex extends React.Component {
     this.setState({
       // coverArt: URL.createObjectURL(event.target.files[0]),
       coverArt: event.target.files[0]
+    })
+  }
+
+  handleDateChange = (date) => {
+
+    console.log(date)
+
+    console.log(moment(date).format("YYYY-MM-DD"))
+    this.setState({
+      date: moment(date).format("YYYY-MM-DD")
     })
   }
 
@@ -451,7 +468,9 @@ class TracksIndex extends React.Component {
           onChange={this.handleFormChange}
           handleSoundcloudEmbed={this.handleSoundcloudEmbed}
           handleImgUpload={this.handleImgUpload}
+          handleDateChange={this.handleDateChange}
           submit={this.updateTrackReq}
+          date={this.state.date}
         />
       );
     }

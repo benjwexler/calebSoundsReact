@@ -1,5 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
+import Moment from 'react-moment';
 
 // import "react-datepicker/dist/react-datepicker.css";
 
@@ -258,13 +259,22 @@ const EditTrackModal = props => {
             />
           </div>
           <DatePicker
-  selected={new Date()}
-  // onChange={this.handleChange}
-  dateFormatCalendar={"MMM yyyy"}
+  // selected={new Date()}
+  // onChange={props.handleDateChange}
+  // dateFormatCalendar={"MMM yyyy"}
   // minDate={subMonths(new Date(), 6)}
   // maxDate={addMonths(new Date(), 6)}
-  showMonthYearDropdown
+  // showMonthYearDropdown
+
+  selected={props.date}
+  onChange={props.handleDateChange}
+    peekNextMonth
+    showMonthDropdown
+    showYearDropdown
+    dropdownMode="select"
 />
+
+
         </form>
       </div>
     </div>
