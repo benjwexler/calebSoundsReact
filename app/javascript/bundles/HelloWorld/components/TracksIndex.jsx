@@ -26,11 +26,11 @@ class TracksIndex extends React.Component {
       currentEditTrack: undefined,
       editTrackName: undefined,
       "track[name]": undefined,
-      "track[spotify_url]": undefined,  
-      "track[youtube_url]": undefined, 
-      "track[apple_music_url]": undefined, 
-      "track[soundcloud_url]": undefined, 
-      soundcloudEmbedCode: undefined,
+      "track[spotify_url]": "",  
+      "track[youtube_url]": "", 
+      "track[apple_music_url]": "", 
+      "track[soundcloud_url]": "", 
+      soundcloudEmbedCode: "",
       trackId: undefined,
       "track[release_date(1i)]": undefined,
       "track[release_date(2i)]": undefined,
@@ -73,7 +73,7 @@ class TracksIndex extends React.Component {
     data.append("track[name]", that.state["track[name]"]);
     data.append("track[spotify_url]", that.state["track[spotify_url]"]);
     data.append( "track[youtube_url]", that.state["track[youtube_url]"]);
-    data.append("track[apple_music_url]", that.state["track[apple_music_url"]);
+    data.append("track[apple_music_url]", that.state["track[apple_music_url]"]);
     data.append("track[soundcloud_url]", that.state["track[soundcloud_url]"]);
     data.append("track[soundcloud_id]", that.state.soundcloudEmbedCode);
     // data.append("track[release_date]", releaseDate );
@@ -139,26 +139,35 @@ class TracksIndex extends React.Component {
     //   .then(function(myJson) {
     //     console.log(myJson)
     //   })
+    
 
-    $.ajax({
-      type: "POST",
-      url: `/tracks/${trackId}`,
-      data: { _method: "delete", authenticity_token: that.state.railsToken },
-      success: function(json) {
-        console.log("trying to delete");
-        console.log(json);
-        that.setState(
-          {
-            tracks: json,
-            counter: 7
+    var result = confirm("Want to delete?");
+if (result) {
+  
+  $.ajax({
+    type: "POST",
+    url: `/tracks/${trackId}`,
+    data: { _method: "delete", authenticity_token: that.state.railsToken },
+    success: function(json) {
+      console.log("trying to delete");
+      console.log(json);
+      that.setState(
+        {
+          tracks: json,
+          counter: 7
 
-          },
-          that.bindWidget
-        );
-      },
-      error: function(xhr) {},
-      dataType: "json"
-    });
+        },
+        that.bindWidget
+      );
+    },
+    error: function(xhr) {},
+    dataType: "json"
+  });
+
+
+}
+
+   
   }
 
   toggleModal = (trackIndex) => {
@@ -223,11 +232,13 @@ class TracksIndex extends React.Component {
   handleDateChange = (date) => {
 
     console.log(date)
+    if(date) {
+      this.setState({
+        date: moment(date).format("YYYY-MM-DD")
+      })
 
-    console.log(moment(date).format("YYYY-MM-DD"))
-    this.setState({
-      date: moment(date).format("YYYY-MM-DD")
-    })
+    }
+    
   }
 
   handleSoundcloudEmbed = (event) => {
