@@ -56,12 +56,12 @@ const mobileNav = (props) => {
 
             {props.userLoggedIn ? loggedInLinks : loggedOutLinks}
             
-                <div onClick={() => {goToSection("section2", false); props.toggleMobileNav()}} className="mobileNavLink">
+                <div onClick={() => {goToSection("fauxSection2", true); props.toggleMobileNav()}} className="mobileNavLink">
                 <div className="mobileNavLinkName">
                     Sound Packs
                 </div>
             </div>
-            <div onClick={() => {goToSection("section3", true); props.toggleMobileNav()}} className="mobileNavLink">
+            <div onClick={() => {goToSection("fauxSection3", true); props.toggleMobileNav()}} className="mobileNavLink">
                 <div className="mobileNavLinkName">
                     Latest Tracks
                 </div>

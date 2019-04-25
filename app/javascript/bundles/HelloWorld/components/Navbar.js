@@ -84,8 +84,8 @@ const navbar = (props) => {
             <div id="navContainer">
                 <i onClick={props.toggleMobileNav} className="fas fa-bars"></i>
                 <a href="/" id="navTitle">Caleb Elias G sounds</a>
-                <div onClick={() => goToSection("section2", false)} className="navLink">Sound Packs</div>
-                <div onClick={() => goToSection("section3", true)} className="navLink">Latest Tracks</div>
+                <div onClick={() => goToSection("fauxSection2", true)} className="navLink">Sound Packs</div>
+                <div onClick={() => goToSection("fauxSection3", true)} className="navLink">Latest Tracks</div>
                 <div id="navStreamingIcons">
                         <a href="https://open.spotify.com/artist/3KfwtF94LanpNpDp6yVCji?si=TZgT40K1Ry-StUGIRznfFw" target="_blank" className="navLink">
                                 <i className="fab fa-spotify streamingIcon"></i>
