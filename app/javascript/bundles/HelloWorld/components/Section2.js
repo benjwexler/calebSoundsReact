@@ -28,6 +28,7 @@ const section2 = (props) => {
 
     return (
         <div id="section2">
+        <div id="fauxSection2">w</div>
             <div id="section2topRow">
             <img id="coverArt" style={picStyle} src="pics/gtrv3.jpg"/>
                 <div id="whatsInside">$8.99 <span id="mobileDashRemove">-</span> <span id="mobilePackTitle"><br/></span>CEG Guitar Essentials Vol. 1</div>

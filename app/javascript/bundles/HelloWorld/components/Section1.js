@@ -20,7 +20,7 @@ const section1 = (props) => {
             <div 
                 onMouseEnter={() => props.toggleDownArrow(true)} 
                 onMouseLeave={() => props.toggleDownArrow(false)} 
-                onClick={() => document.getElementById("section2").scrollIntoView(false)} 
+                onClick={() => document.getElementById("fauxSection2").scrollIntoView(true)} 
                 id="previewButton">
             Preview
             {/* <i style={{position: 'absolute', top: '19px', right: '30px'}} className="fas fa-arrow-right"></i> */}

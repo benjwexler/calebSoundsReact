@@ -120,7 +120,7 @@ class App extends React.Component {
 previewSamples = () => {
   this.setState({
     showCart: false
-  }, document.getElementById("section2").scrollIntoView(false))
+  }, document.getElementById("fauxSection2").scrollIntoView(true))
 }
 
   loadMoreSounds = () => {};
