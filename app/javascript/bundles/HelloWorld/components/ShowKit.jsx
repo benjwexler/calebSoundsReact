@@ -153,6 +153,35 @@ class ShowKit extends React.Component {
     }
   };
 
+  deleteSound2 = (e) => {
+    console.log("DELETE TEST");
+    console.log(e.currentTarget.dataset.sampleId);
+  }
+
+  deleteSound = (e) => {
+    let that = this;
+    let kitSounds;
+
+    let soundId = e.currentTarget.dataset.sampleId
+  
+    var result = confirm("Want to delete?");
+if (result) {
+  
+  $.ajax({
+    type: "POST",
+    url: `/sounds/${soundId}`,
+    data: { _method: "delete", authenticity_token: that.state.railsToken },
+    success: function(json) {
+      console.log("trying to delete");
+      // kitSounds = that.state.kitSounds.concat(myJson);
+      that.setState({kitSounds: [json]});
+    },
+    error: function(xhr) {},
+    dataType: "json"
+    });
+  }  
+}
+
 
 
 
@@ -237,6 +266,7 @@ class ShowKit extends React.Component {
             id={this.state.kitSounds[i].id}
             edit={this.edit}
             railsToken={this.state.railsToken}
+            deleteSound={this.deleteSound}
 
           />
         );
