@@ -255,6 +255,7 @@ class sample extends React.Component {
             <i 
             onClick={this.props.deleteSound} className="far fa-trash-alt" 
             data-sample-id={this.props.id}
+            data-sample-number={this.props.sampleNumber}
             />{" "}
           </td>
         </React.Fragment>
