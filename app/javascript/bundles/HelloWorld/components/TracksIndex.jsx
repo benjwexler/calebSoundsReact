@@ -123,24 +123,7 @@ class TracksIndex extends React.Component {
     console.log(this.state.tracks[trackIndex].id)
 
     let trackId = this.state.tracks[trackIndex].id;
-
-    // fetch(`/tracks/${trackId}`, {
-    //   headers: {
-    //     // "Content-Type": "application/json",
-    //     "X-CSRF-Token": this.state.railsToken
-    //   },
-    //   method: 'DELETE',
-    //   // data: {"_method":"delete"},
-    //   // credentials: "same-origin",
-    // })
-    //   .then(function(response) {
-    //     return response.json();
-    //   })
-    //   .then(function(myJson) {
-    //     console.log(myJson)
-    //   })
-    
-
+  
     var result = confirm("Want to delete?");
 if (result) {
   
@@ -162,13 +145,9 @@ if (result) {
     },
     error: function(xhr) {},
     dataType: "json"
-  });
-
-
+    });
+  }  
 }
-
-   
-  }
 
   toggleModal = (trackIndex) => {
 

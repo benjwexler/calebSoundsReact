@@ -252,7 +252,10 @@ class sample extends React.Component {
             {/* </a> */}
           </td>
           <td style={{ paddingLeft: "15px", color: "red" }}>
-            <i className="far fa-trash-alt" />{" "}
+            <i 
+            onClick={this.props.deleteSound} className="far fa-trash-alt" 
+            data-sample-id={this.props.id}
+            />{" "}
           </td>
         </React.Fragment>
       );
