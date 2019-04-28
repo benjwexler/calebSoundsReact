@@ -160,9 +160,12 @@ class ShowKit extends React.Component {
 
   deleteSound = (e) => {
     let that = this;
-    let kitSounds;
+    let kitSounds = this.state.kitSounds;
 
     let soundId = e.currentTarget.dataset.sampleId
+    let soundNum = e.currentTarget.dataset.sampleNumber
+
+    console.log(soundNum)
   
     var result = confirm("Want to delete?");
 if (result) {
@@ -173,8 +176,10 @@ if (result) {
     data: { _method: "delete", authenticity_token: that.state.railsToken },
     success: function(json) {
       console.log("trying to delete");
+      kitSounds.splice(soundNum, 1)
+
       // kitSounds = that.state.kitSounds.concat(myJson);
-      that.setState({kitSounds: [json]});
+      that.setState({kitSounds: kitSounds});
     },
     error: function(xhr) {},
     dataType: "json"
@@ -260,7 +265,7 @@ if (result) {
             initialSrc={this.state.kitSounds[i].soundfile}
             sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
             inProp={this.state.transition && i >= this.state.sampleOffset - 6}
-            key={i}
+            key={this.state.kitSounds[i].id}
             delay={i * 70}
             adminView={true}
             id={this.state.kitSounds[i].id}
