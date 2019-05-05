@@ -24,9 +24,13 @@ class KitsIndex extends React.Component {
       coverArt: undefined,
       newSrc: undefined,
       kits: [],
-      currentTrack: undefined,
-      showModal: true,
+      currentkit: undefined,
+      showModal: false,
+      "kit[name]": undefined,
+      "kit[price]": undefined,
+      kitId: undefined,
     };
+    this.handleFormChange = this.handleFormChange.bind(this);
   }
 
   toggleMobileNav = () => {
@@ -47,6 +51,98 @@ class KitsIndex extends React.Component {
       });
     }
   };
+
+  updateKitReq = e => {
+
+    this.setState({
+      showModal: false,
+    });
+    let that = this;
+    e.preventDefault();
+    console.log("Trying to Send!")
+    let kitObj = {};
+    kitObj.utf8 = "✓";
+    kitObj.authenticity_token = that.state.railsToken;
+    kitObj.commit = "Edit Kit Info";
+    kitObj["_method"] = "patch";
+
+    var data = new FormData();
+    data.append("utf8", "✓");
+    data.append("authenticity_token", that.state.railsToken);
+
+    data.append("kit[name]", that.state["kit[name]"]);
+    data.append("kit[price]", that.state["kit[price]"]);
+    data.append("kit[description]", that.state["kit[description]"]);
+
+
+    data.append("commit", "Edit kit");
+    data.append("_method", "patch");
+    if(that.state.coverArt) {
+      data.append("kit[cover_art]", that.state.coverArt, that.state.coverArt);
+    }
+   
+
+    let url = `http://localhost:3000/kits/${that.state.kitId}`;
+
+    $.ajax({
+      type: "POST",
+      enctype: 'multipart/form-data',
+      processData: false,
+      contentType: false,
+      cache: false,
+      timeout: 600000,
+
+      url: url,
+      data: data,
+      success: function(json) {
+        if (json.errorMessage) {
+        } else {
+          console.log(json);
+
+          that.setState({
+            kits: json
+          });
+          
+        }
+      },
+      error: function(xhr) {
+        console.log("error");
+      },
+      dataType: "json"
+    });
+  };
+
+  toggleModal = (kitIndex) => {
+
+    
+    let kitName;
+    let kitPrice
+    let kitDescription;
+    let kitId;
+    let date;
+    if(this.state.kits[kitIndex]) {
+     kitName = this.state.kits[kitIndex].name
+     kitId = this.state.kits[kitIndex].id
+     kitPrice = this.state.kits[kitIndex].price
+     kitDescription = this.state.kits[kitIndex].description
+     
+    }
+    
+    this.setState({
+      showModal: !this.state.showModal,
+      currentEditKit: kitName,
+      "kit[name]": kitName,
+      "kit[price]": kitPrice,
+      "kit[description]": kitDescription,
+      kitId: kitId,
+
+    });
+  };
+
+  handleFormChange (evt) {
+    this.setState({ [evt.target.name]: evt.target.value });
+  }
+
 
   componentDidMount() {
     let that = this;
@@ -76,8 +172,13 @@ class KitsIndex extends React.Component {
     if (this.state.showModal) {
       modal = (
         <EditKitModal
-          // exitModal={this.toggleModal}
+          exitModal={this.toggleModal}
           railsToken={this.state.railsToken}
+          kitName={this.state["kit[name]"]}
+          kitPrice={this.state["kit[price]"]}
+          kitDescription={this.state["kit[description]"]}
+          onChange={this.handleFormChange}
+          submit={this.updateKitReq}
         />
       );
     }
@@ -102,6 +203,7 @@ class KitsIndex extends React.Component {
           description={kit.description}
           coverArt={kit.image}
           bgImage={{background: `url(${kit.image}) center center / cover no-repeat`}} 
+          editTrack={() => this.toggleModal(i)}
         />
       );
     });

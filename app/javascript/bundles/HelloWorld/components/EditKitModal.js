@@ -40,10 +40,10 @@ const EditKitModal = props => {
                 autoFocus="autofocus"
                 autocomplete="email"
                 type="text"
-                name="track[name]"
-                id="track_name"
+                name="kit[name]"
+                id="kit_name"
                 placeholder="Kit Name"
-                value={props.trackName}
+                value={props.kitName}
                 onChange={props.onChange}
               />
               <i className="fas fa-info-circle modalIcon" />
@@ -58,10 +58,10 @@ const EditKitModal = props => {
                 autoFocus="autofocus"
                 autocomplete="email"
                 type="number"
-                name="track[name]"
+                name="kit[price]"
                 id="track_name"
                 placeholder="Price"
-                value={props.trackName}
+                value={props.kitPrice}
                 onChange={props.onChange}
               />
               <i style={{left: '13px'}} className="fas fa-dollar-sign modalIcon" />
@@ -76,10 +76,10 @@ const EditKitModal = props => {
                 autoFocus="autofocus"
                 autocomplete="email"
                 type="text"
-                name="track[name]"
+                name="kit[description]"
                 id="track_name"
                 placeholder="Description"
-                value={props.trackName}
+                value={props.kitDescription}
                 onChange={props.onChange}
                 >
               </textarea>
