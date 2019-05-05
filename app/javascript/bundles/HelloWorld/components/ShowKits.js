@@ -45,7 +45,7 @@ const showKits = props => {
                 <th>Kit Name</th>
                 <th>Price </th>
                 <th>Description</th>
-
+                <th>Edit</th>
                 <th>Delete</th>
               </tr>
 

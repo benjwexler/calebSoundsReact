@@ -4,6 +4,7 @@ import Navbar from "./Navbar.js";
 import MobileNav from "./MobileNav.js";
 import ShowKits from "./ShowKits.js";
 import KitAdmin from "./KitAdmin.js";
+import EditKitModal from "./EditKitModal.js";
 
 const convertToUsCurrency = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -24,7 +25,7 @@ class KitsIndex extends React.Component {
       newSrc: undefined,
       kits: [],
       currentTrack: undefined,
-      showModal: false
+      showModal: true,
     };
   }
 
@@ -69,6 +70,18 @@ class KitsIndex extends React.Component {
   render() {
     let that = this;
 
+    let modal;
+
+
+    if (this.state.showModal) {
+      modal = (
+        <EditKitModal
+          // exitModal={this.toggleModal}
+          railsToken={this.state.railsToken}
+        />
+      );
+    }
+
     let mobileNavToggle = "hideMobileNav";
 
     if (this.state.showMobileNav) {
@@ -87,12 +100,15 @@ class KitsIndex extends React.Component {
           id={kit.id}
           price={convertToUsCurrency.format(kit.price)}
           description={kit.description}
+          coverArt={kit.image}
+          bgImage={{background: `url(${kit.image}) center center / cover no-repeat`}} 
         />
       );
     });
 
     return (
       <div>
+      {modal}
         <Navbar toggleMobileNav={this.toggleMobileNav} />
         <MobileNav
           toggleMobileNav={this.toggleMobileNav}
