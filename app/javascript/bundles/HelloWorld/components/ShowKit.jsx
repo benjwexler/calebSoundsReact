@@ -34,7 +34,14 @@ class ShowKit extends React.Component {
     let kitSounds;
     let padsObj = {};
 
-    fetch(`/kits/${10}`, {
+
+var pathArray = window.location.pathname.split('/');
+
+var kitId = pathArray[pathArray.length-1]
+
+console.log(kitId)
+
+    fetch(`/kits/${kitId}`, {
       headers: {
         "Content-Type": "application/json"
       }

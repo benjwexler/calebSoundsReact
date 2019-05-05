@@ -150,7 +150,7 @@ if (result) {
 }
 
   toggleModal = (trackIndex) => {
-
+console.log("modal toggle")
     
     let trackName;
     let spotify_url;
@@ -424,7 +424,7 @@ if (result) {
         appleMusicLink={track.apple_music_url}
         key={i}
         oddRow={oddRow}
-        soundcloud_id={that.state.tracks[i].soundcloud_id}
+        soundcloud_iftd={that.state.tracks[i].soundcloud_id}
         playPauseTrack={this.setCurrentTrack}
         trackNumber={i}
         currentTrack={currentTrack}
