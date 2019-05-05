@@ -19,17 +19,11 @@ class Track extends React.Component {
         this.setState({ 
             className: "flipDown" 
         });
-        console.log("enterWayPoint")
-        console.log(props)
+
       }
     
       exitWaypoint = (props) => {
 
-        // this.setState({ 
-        //     className: "flipUp"
-        // });
-        console.log("exitWayPoint")
-        console.log(props)
       }
 
     render() {

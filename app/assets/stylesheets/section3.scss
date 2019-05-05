@@ -350,7 +350,11 @@
 }
 
 .soundclouds {
-    display: none;
+    // display: none;
+    position: absolute;
+    opacity: 0;
+    z-index: -9999999999;
+    width: 0px;
 }
 
 .lastTwoTracks {

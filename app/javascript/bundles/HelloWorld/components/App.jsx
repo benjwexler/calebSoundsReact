@@ -163,7 +163,7 @@ previewSamples = () => {
           {
             tracks: myJson,
             tracksObj: newTracksObj,
-            counter: 7
+            // counter: 7
           },
           that.bindWidget
         );
@@ -186,7 +186,7 @@ previewSamples = () => {
   bindWidget = () => {
     let soundcloudWidget;
     let that = this;
-    if (this.state.counter === 7) {
+    // if (this.state.counter === 7) {
 
       let tracks = document.querySelectorAll(".playAndPauseIcon");
       let soundclouds = document.querySelectorAll(".soundclouds");
@@ -195,14 +195,16 @@ previewSamples = () => {
 
         soundcloudWidget = soundclouds[i];
         window[`widget${i}`] = SC.Widget(soundcloudWidget);
+        
         window[`widget${i}`].bind(SC.Widget.Events.READY, function() {});
         window[`widget${i}`].bind(SC.Widget.Events.FINISH, function() {
           that.setState({
             currentlyPlaying: false
           });
         });
+        console.log(window[`widget${i}`])
       }
-    }
+    // }
   };
 
   response = json => {
@@ -407,6 +409,8 @@ previewSamples = () => {
 
   playPauseTrack = currentTrack => {
 
+    console.log(currentTrack)
+
     let audioPlayer = document.getElementById("audioPlayer");
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
@@ -424,6 +428,7 @@ previewSamples = () => {
       window[`widget${currentTrack}`].play();
 
     }
+
   };
 
   handleResize = () => {
