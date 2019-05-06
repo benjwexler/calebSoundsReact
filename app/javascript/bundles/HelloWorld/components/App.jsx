@@ -90,7 +90,7 @@ class App extends React.Component {
     let kitSounds;
     let padsObj = {};
 
-    fetch(`/kits/${10}?limit=6&offset=${that.state.sampleOffset}`, {
+    fetch(`/kits/${36}?limit=6&offset=${that.state.sampleOffset}`, {
       headers: {
         "Content-Type": "application/json"
       }

@@ -203,7 +203,6 @@ console.log("modal toggle")
 
   handleImgUpload = (event) => {
     this.setState({
-      // coverArt: URL.createObjectURL(event.target.files[0]),
       coverArt: event.target.files[0]
     })
   }
