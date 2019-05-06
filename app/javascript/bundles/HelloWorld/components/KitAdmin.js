@@ -22,7 +22,9 @@ import React from "react";
           <i onClick={props.editTrack} style={{ marginLeft: "10px", cursor: 'pointer' }} className="far fa-edit">
           </i>
       </td>
-        <td>Delete</td>
+      <td style={{ paddingLeft: "15px" }}>
+        <i onClick={props.deleteKit} className="far fa-trash-alt" />{" "}
+      </td>
     </tr>
   );
 };

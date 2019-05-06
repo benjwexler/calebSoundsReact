@@ -31,6 +31,7 @@ class KitsIndex extends React.Component {
       kitId: undefined,
     };
     this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleImgUpload = this.handleImgUpload.bind(this)
   }
 
   toggleMobileNav = () => {
@@ -143,6 +144,43 @@ class KitsIndex extends React.Component {
     this.setState({ [evt.target.name]: evt.target.value });
   }
 
+  handleImgUpload = (event) => {
+    this.setState({
+      coverArt: event.target.files[0]
+    })
+  }
+
+  deleteKit = (kitIndex) => {
+    let that = this;
+    console.log(this.state.kits[kitIndex].id)
+
+    let kitId = this.state.kits[kitIndex].id;
+  
+    var result = confirm("Want to delete?");
+if (result) {
+  
+  $.ajax({
+    type: "POST",
+    url: `/kits/${kitId}`,
+    data: { _method: "delete", authenticity_token: that.state.railsToken },
+    success: function(json) {
+      console.log("trying to delete");
+      console.log(json);
+      that.setState(
+        {
+          kits: json,
+          counter: 7
+
+        },
+        that.bindWidget
+      );
+    },
+    error: function(xhr) {},
+    dataType: "json"
+    });
+  }  
+}
+
 
   componentDidMount() {
     let that = this;
@@ -179,6 +217,7 @@ class KitsIndex extends React.Component {
           kitDescription={this.state["kit[description]"]}
           onChange={this.handleFormChange}
           submit={this.updateKitReq}
+          handleImgUpload={this.handleImgUpload}
         />
       );
     }
@@ -203,7 +242,8 @@ class KitsIndex extends React.Component {
           description={kit.description}
           coverArt={kit.image}
           bgImage={{background: `url(${kit.image}) center center / cover no-repeat`}} 
-          editTrack={() => this.toggleModal(i)}
+          editkit={() => this.toggleModal(i)}
+          deleteKit={() => this.deleteKit(i)}
         />
       );
     });

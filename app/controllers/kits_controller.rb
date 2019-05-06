@@ -162,7 +162,43 @@ class KitsController < ApplicationController
   # DELETE /kits/1
   # DELETE /kits/1.json
   def destroy
-    @kit.destroy
+    # @kit.destroy
+    # if SoundAndKit.all.where(sound_id: 135)
+    # SoundAndKit.all.where(sound_id: 135).destroy_all
+
+    sounds = @kit.sounds
+    # conditional = SoundAndKit.all.where(sound_id: sound_id).length < 2
+   
+    
+    p sounds
+
+    sounds.each do |sound|
+
+      p sound_id = sound.id
+      p sound.id
+
+      p "huba"
+      # sound_id = sound.id
+      # p sound_id
+      p "SOUND ID"
+      if SoundAndKit.all.where(sound_id: sound_id).length < 2
+       
+        # SoundAndKit.all.where(sound_id: sound_id).destroy_all
+        # Sound.find(sound_id).destroy
+        # blob_id = ActiveStorage::Attachment.where(record_type: "Sound", record_id: sound_id)[0].blob_id
+        # ActiveStorage::Attachment.where(record_type: "Sound", record_id: sound_id).destroy_all
+        # ActiveStorage::Blob.all.where(id: blob_id ).destroy_all
+        Sound.find(sound_id).destroy
+        p sound
+        p "DELETED"
+        p "plz hit"
+      end
+
+       
+   end
+
+   @kit.destroy
+
     respond_to do |format|
       format.html { redirect_to kits_url, notice: 'Kit was successfully destroyed.' }
       format.json { head :no_content }
@@ -177,6 +213,6 @@ class KitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def kit_params
-      params.require(:kit).permit(:name, :description, :price, :quantity_sold, sound_and_kits_attributes: [:sound_id, :kit_id], sounds_attributes: [:name, :type_of_sound, :description, :key, :tempo, :soundfile])
+      params.require(:kit).permit(:name, :description, :price, :cover_art, :quantity_sold, sound_and_kits_attributes: [:sound_id, :kit_id], sounds_attributes: [:name, :type_of_sound, :description, :key, :tempo, :soundfile])
     end
 end

@@ -103,9 +103,10 @@ const EditKitModal = props => {
                 autocomplete="email"
                 accept="image/*"
                 type="file"
-                name="track[cover_art]"
-                id="track_cover_art"
+                name="kit[cover_art]"
+                id="kit_cover_art"
                 placeholder="Cover Art"
+                onChange={props.handleImgUpload}
               />
               <i className="far fa-image modalIcon" />
             </div>

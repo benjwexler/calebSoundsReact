@@ -1,8 +1,9 @@
 class Kit < ApplicationRecord
-    has_many :sound_and_kits
-    has_many :sounds, through: :sound_and_kits
+    has_many :sound_and_kits, dependent: :destroy
+    has_many :sounds, through: :sound_and_kits, dependent: :destroy
     has_one_attached :cover_art
     accepts_nested_attributes_for :sound_and_kits, :sounds
+    
 
     # def self.check_for_query(query)
     #     query_hash = CGI.parse(query) 
