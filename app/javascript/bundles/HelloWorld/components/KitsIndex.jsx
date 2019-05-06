@@ -242,7 +242,7 @@ if (result) {
           description={kit.description}
           coverArt={kit.image}
           bgImage={{background: `url(${kit.image}) center center / cover no-repeat`}} 
-          editkit={() => this.toggleModal(i)}
+          editKit={() => this.toggleModal(i)}
           deleteKit={() => this.deleteKit(i)}
         />
       );
