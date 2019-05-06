@@ -19,7 +19,7 @@ import React from "react";
         <td>{props.price}</td>
         <td class="smallPhoneHide">{props.description}</td>
         <td>
-          <i onClick={props.editTrack} style={{ marginLeft: "10px", cursor: 'pointer' }} className="far fa-edit">
+          <i onClick={props.editKit} style={{ marginLeft: "10px", cursor: 'pointer' }} className="far fa-edit">
           </i>
       </td>
       <td style={{ paddingLeft: "15px" }}>
