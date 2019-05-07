@@ -69,6 +69,6 @@ class SoundAndKitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sound_and_kit_params
-      params.require(:sound_and_kit).permit(:kit_id, :sound_id)
+      params.require(:sound_and_kit).permit(:kit_id, :sound_id, :soundfile)
     end
 end
