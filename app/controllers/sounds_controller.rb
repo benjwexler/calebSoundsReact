@@ -24,6 +24,7 @@ class SoundsController < ApplicationController
   # GET /sounds/new
   def new
     @sound = Sound.new
+    @sound.sound_and_kits.build
   end
 
   # GET /sounds/1/edit
@@ -33,7 +34,22 @@ class SoundsController < ApplicationController
   # POST /sounds
   # POST /sounds.json
   def create
-    @sound = Sound.new(sound_params)
+
+      sound_and_kit_to_build = {
+        kit_id: params["sound"]["kit_id"].to_i
+        }
+
+        new_sound_params = {
+      sound: {
+        name: params["sound"]["name"], 
+        type_of_sound: params["sound"]["type_of_sound"], 
+        soundfile: params["sound"]["soundfile"], 
+        sound_and_kits_attributes: [sound_and_kit_to_build]
+        
+      }
+    }
+
+    @sound = Sound.new(new_sound_params[:sound])
 
     respond_to do |format|
       if @sound.save
@@ -51,9 +67,7 @@ class SoundsController < ApplicationController
   def update
     respond_to do |format|
       if @sound.update(sound_params)
-        p "XXXX Test"
         p @sound.soundfile.blob
-        p "XXXX Test"
         format.html { redirect_to @sound, notice: 'Sound was successfully updated.' }
         # format.json { render :show, status: :ok, location: @sound }
         format.json do
@@ -85,6 +99,9 @@ class SoundsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sound_params
-      params.require(:sound).permit(:name, :type_of_sound, :description, :key, :tempo, :soundfile)
+      params.require(:sound).permit(:name, :type_of_sound, :description, :key, :tempo, :soundfile, 
+      sound_and_kits_attributes: [ :id, :kit_id, :sound_id, :soundfile ],
+      kits_attributes: [ :id, :kit_id ],
+      )
     end
 end
