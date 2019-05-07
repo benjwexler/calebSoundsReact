@@ -23,15 +23,15 @@ const showKits = props => {
   return (
     <div style={{ paddingTop: "100px" }} id="section2">
       <div
-        style={{ height: "auto", border: "1px solid black", display: "flex" }}
+        style={{ height: "auto", display: "flex" }}
       >
-        <div style={{ margin: "auto", display: 'flex' }}>
-          <a href="/kits/new">
+        <div style={{ margin: "auto", marginBottom: '20px', display: 'flex' }}>
+          <a style={{margin: 'auto'}} href="/kits/new">
             ADD NEW KIT
           </a>
 
           <a href="/kits/new">
-            <i class="fas fa-plus-square" />
+            <i style={{fontSize: '28px', marginLeft: '5px', color: 'rgba(45, 51, 221, 0.747)'}} class="fas fa-plus-square" />
           </a>
         </div>
       </div>
