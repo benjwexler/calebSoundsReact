@@ -82,8 +82,27 @@ const navbar = (props) => {
         <div id="outerNavContainer">
         <div id="nav">
             <div id="navContainer">
-                <i onClick={props.toggleMobileNav} className="fas fa-bars"></i>
+            <div id="hamburgerContainer" style={
+                {
+                    // display: 'flex',
+                    width: '50px',
+                    paddingLeft: '7px',
+                    paddingRight: '2px',
+                }
+            }>
+            <i style={
+                {
+                    // padding: '15px',
+                    // background: 'yellow',
+                    borderRadius: '50%',
+                    margin: 'auto',
+                }
+            } onClick={props.toggleMobileNav} className="fas fa-bars"></i>
+            </div>
+            <div id="navTitleContainer">
                 <a href="/" id="navTitle">Caleb Elias G sounds</a>
+            </div>
+                
                 <div onClick={() => goToSection("fauxSection2", true)} className="navLink">Sound Packs</div>
                 <div onClick={() => goToSection("fauxSection3", true)} className="navLink">Latest Tracks</div>
                 <div id="navStreamingIcons">

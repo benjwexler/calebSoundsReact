@@ -61,7 +61,10 @@ const sample = (props, { in: inProp}) => {
             <td>{props.name}</td>
             <td>Rock</td>
             <td>{tempo}</td>
-            <td className="mobileHide">{props.musicalKey}</td>
+            <td className="mobileHide">
+            {/* {props.musicalKey} */}
+A#
+            </td>
             {adminView}
         </tr>
        
