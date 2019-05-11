@@ -11,7 +11,7 @@ import React from "react";
           style={props.bgImage}
         >
         </div> */}
-        <img style={{height: '50px', width: '50px',}} src={props.coverArt} />
+        <img style={{height: '50px', width: '50px', paddingRight: '10px', paddingLeft: '5px'}} src={props.coverArt} />
         </td>
         <td>
         <a style={{color: 'rgba(45, 51, 221, 0.747)', textDecoration: 'underline'}} href={`/kits/${props.id}`}>{props.name}</a>

@@ -93,6 +93,7 @@ class KitsController < ApplicationController
 
   # GET /kits/1/edit
   def edit
+
   end
 
   # POST /kits
@@ -148,10 +149,16 @@ class KitsController < ApplicationController
   # PATCH/PUT /kits/1
   # PATCH/PUT /kits/1.json
   def update
+    @kits = Kit.all
+    p 'editizle'
     respond_to do |format|
       if @kit.update(kit_params)
         format.html { redirect_to @kit, notice: 'Kit was successfully updated.' }
-        format.json { render :show, status: :ok, location: @kit }
+        format.json { 
+        render json: @kits.map { |kit|
+            kit.as_json.merge({ image: url_for(kit.cover_art)})
+          }
+        }
       else
         format.html { render :edit }
         format.json { render json: @kit.errors, status: :unprocessable_entity }
