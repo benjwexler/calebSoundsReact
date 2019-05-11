@@ -235,9 +235,9 @@ class KitNew extends React.Component {
 
               <div class="field">
                 <div className="modalIconContainer">
-                  <input
+                  <textarea
                     onChange={this.handleSoundcloudEmbed}
-                    value={this.state.soundcloudEmbedCode}
+                    // value={this.state.soundcloudEmbedCode}
                     style={emailInputStyle}
                     className="form"
                     autoFocus="autofocus"
@@ -245,9 +245,10 @@ class KitNew extends React.Component {
                     type="text"
                     name="kit[description]"
                     id="kit_description"
-                    placeholder="Kit Description"
-                  />
-                  <i className="fas fa-info-circle modalIcon" />
+                    placeholder="Description"
+                    style={{paddingTop:'25px', height: '100px'}}
+                  ></textarea>
+                  <i style={{top:'25%'}} className="fas fa-info-circle modalIcon" />
                 </div>
               </div>
               <br />
