@@ -87,7 +87,7 @@ class TracksIndex extends React.Component {
     }
    
 
-    let url = `http://localhost:3000/tracks/${that.state.trackId}`;
+    let url = `/tracks/${that.state.trackId}`;
 
     $.ajax({
       type: "POST",

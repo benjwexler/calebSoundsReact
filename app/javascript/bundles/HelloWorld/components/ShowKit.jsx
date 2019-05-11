@@ -7,6 +7,7 @@ import Container from "./Container.js";
 import Footer from "./Footer.js";
 import Sample from "./Sample.js";
 import ShowSamples from "./ShowSamples.js";
+import ModalNewSound from "./ModalNewSound.js";
 
 class ShowKit extends React.Component {
   constructor(props) {
@@ -19,12 +20,20 @@ class ShowKit extends React.Component {
       errorMessage: undefined,
       coverArt: undefined,
       kitId: props.kitId,
+      kitName: props.kitName,
       kitSounds: [],
       currentSample: undefined,
       sampleCurrentlyPlaying: false,
       newSrc: undefined,
+      showModal: false,
+      'sound[name]': '',
+      'sound[tempo]': '',
+      'sound[key]': '',
+      'sound[soundfile]': '',
 
     };
+
+    this.handleFormChange = this.handleFormChange.bind(this);
 
   }
 
@@ -126,27 +135,76 @@ console.log(kitId)
     })
   }
 
-  handleSoundcloudEmbed = (event) => {
+  handleFileUpload = (ev) => {
+    // console.log(ev.target.value.files[0]);
+    console.log(ev.target.files[0])
+    const soundFile = ev.target.files[0];
 
-    let soundcloudEmbedCode=event.target.value
+    this.setState({
+      'sound[soundfile]': soundFile
+    });
+  };
 
-    try {
-      soundcloudEmbedCode = soundcloudEmbedCode.split('tracks/')[1]
-      soundcloudEmbedCode = soundcloudEmbedCode.split('&')[0]
-    }
-    catch(error) {
-      soundcloudEmbedCode = event.target.value
-    }
+  handleSubmit = e => {
+
+    this.setState({
+      showModal: false,
+    });
+    let that = this;
+    e.preventDefault();
+
 
     
 
-    // console.log(event.target.value)
+    var data = new FormData();
+    data.append("utf8", "✓");
+    data.append("authenticity_token", that.state.railsToken);
 
-    this.setState({
-      soundcloudEmbedCode: soundcloudEmbedCode
-    })
+    data.append("sound[name]", that.state["sound[name]"]);
+    data.append("sound[tempo]", that.state["sound[tempo]"]);
+    data.append("sound[key]", that.state["sound[key]"]);
+    data.append("sound[kit_id]", that.state.kitId);
+    
+    
 
-  }
+
+    data.append("commit", "New Sound");
+    // data.append("_method", "patch");
+    if(that.state["sound[soundfile]"]) {
+      data.append("sound[soundfile]", that.state["sound[soundfile]"], that.state["sound[soundfile]"]);
+    }
+   
+
+    let url = `/sounds`;
+
+    $.ajax({
+      type: "POST",
+      enctype: 'multipart/form-data',
+      processData: false,
+      contentType: false,
+      cache: false,
+      timeout: 600000,
+
+      url: url,
+      data: data,
+      success: function(json) {
+        if (json.errorMessage) {
+        } else {
+          // document.getElementById("modalButton").click();
+          console.log(json);
+
+          that.setState({
+            tracks: json
+          });
+          
+        }
+      },
+      error: function(xhr) {
+        console.log("error");
+      },
+      dataType: "json"
+    });
+  };
 
   handleResize = () => {
     if (window.innerWidth > 1120) {
@@ -206,8 +264,36 @@ if (result) {
     this.loadSounds(this.state.kitId)
   }
 
+  toggleModal = () => {
+        this.setState({
+          showModal: !this.state.showModal,
+    
+        });
+      };
+
+  
+  
+
   render() {
     let that = this;
+
+    let modal
+
+    if (this.state.showModal) {
+      modal = (
+        <ModalNewSound
+        exitModal={this.toggleModal}
+        submit={this.handleSubmit}
+        name={this.state['sound[name]']}
+        musicalKey={this.state['sound[key]']}
+        tempo={this.state['sound[tempo]']}
+        onChange={this.handleFormChange}
+        kitName={this.state.kitName}
+        handleFileUpload={this.handleFileUpload}
+        />
+      );
+
+    }
 
 
     let audioPlayer;
@@ -293,6 +379,7 @@ if (result) {
 
     return (
       <div>
+      {modal}
         <Navbar toggleMobileNav={this.toggleMobileNav} />
         <MobileNav
           toggleMobileNav={this.toggleMobileNav}
@@ -300,6 +387,8 @@ if (result) {
         />
         <ShowSamples
             samples={samples}
+            openModal={this.toggleModal}
+            
             
         />
         {audioPlayer}
