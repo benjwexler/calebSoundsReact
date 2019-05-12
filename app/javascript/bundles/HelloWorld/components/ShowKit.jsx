@@ -140,6 +140,8 @@ console.log(kitId)
     console.log(ev.target.files[0])
     const soundFile = ev.target.files[0];
 
+    console.log(soundFile)
+
     this.setState({
       'sound[soundfile]': soundFile
     });
@@ -171,7 +173,7 @@ console.log(kitId)
     data.append("commit", "New Sound");
     // data.append("_method", "patch");
     if(that.state["sound[soundfile]"]) {
-      data.append("sound[soundfile]", that.state["sound[soundfile]"], that.state["sound[soundfile]"]);
+      data.append("sound[soundfile]", that.state["sound[soundfile]"], that.state["sound[soundfile]"].name);
     }
    
 
@@ -193,8 +195,12 @@ console.log(kitId)
           // document.getElementById("modalButton").click();
           console.log(json);
 
+          let kitSounds = that.state.kitSounds.concat(json);
+
+
+
           that.setState({
-            tracks: json
+            kitSounds: kitSounds
           });
           
         }
