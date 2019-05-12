@@ -359,7 +359,7 @@ height: 100%;
     display: none;
     /* margin-left: 10px; */
     margin-right: 10px;
-    transition: margin-left 1s ease, padding 1s ease !important;
+    transition: margin-left 1s ease, padding 250ms ease !important;
     cursor: pointer;
 }
 // .fa-times-circle {
@@ -368,7 +368,10 @@ height: 100%;
 
 // }
 
-
+.animateHamburger {
+    background: rgb(226, 226, 226);
+    padding: 10px;
+}
 
 
 #navTitleContainer {

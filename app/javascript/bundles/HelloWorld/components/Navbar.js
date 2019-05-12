@@ -69,13 +69,12 @@ const navbar = (props) => {
 )
 }
 
-// let hamburgerIcon 
+let animateHamburgerClass;
 
-// if(!props.showMobileNav) {
-//     hamburgerIcon = "fas fa-bars"
-// } else {
-//     hamburgerIcon ="hamburgerX fas fa-times-circle"
-// }
+if(props.hamburgerIsAnimated) {
+    animateHamburgerClass = "animateHamburger"
+}
+
 
 
     return (
@@ -97,7 +96,7 @@ const navbar = (props) => {
                     borderRadius: '50%',
                     margin: 'auto',
                 }
-            } onClick={props.toggleMobileNav} className="fas fa-bars"></i>
+            } ref={props.hamburgerRef} onClick={props.toggleMobileNav} className="fas fa-bars"></i>
             </div>
             <div id="navTitleContainer">
                 <a href="/" id="navTitle">Caleb Elias G sounds</a>

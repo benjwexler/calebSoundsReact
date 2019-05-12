@@ -1,6 +1,6 @@
 import ReactOnRails from "react-on-rails";
 import React, { Component } from "react";
-import { Waypoint } from 'react-waypoint';
+import { Waypoint } from "react-waypoint";
 
 import Modal from "./Modal.js";
 import Navbar from "./Navbar.js";
@@ -79,8 +79,10 @@ class App extends React.Component {
       showAccountDropdown: false,
       userInteractedWithPage: false,
       newSrc: undefined,
-      showDownArrow: false
+      showDownArrow: false,
+      hamburgerIsAnimated: false
     };
+    this.hamburgerRef = React.createRef();
     this.closeDropDowns = this.closeDropDowns.bind(this);
   }
 
@@ -111,17 +113,20 @@ class App extends React.Component {
       });
   };
 
-  toggleDownArrow = (bool) => {
+  toggleDownArrow = bool => {
     this.setState({
       showDownArrow: bool
-    })
-  }
+    });
+  };
 
-previewSamples = () => {
-  this.setState({
-    showCart: false
-  }, document.getElementById("fauxSection2").scrollIntoView(true))
-}
+  previewSamples = () => {
+    this.setState(
+      {
+        showCart: false
+      },
+      document.getElementById("fauxSection2").scrollIntoView(true)
+    );
+  };
 
   loadMoreSounds = () => {};
 
@@ -129,17 +134,33 @@ previewSamples = () => {
     this.setState({ transition: true });
   };
 
-  enterWaypoint = (props) => {
-  }
+  enterWaypoint = props => {};
 
-  exitWaypoint = (props) => {
+  exitWaypoint = props => {};
+
+  animateHamburger = () => {
+    let that = this;
+    this.setState(
+      { hamburgerIsAnimated: true },
+
+     
+      // setTimeout(that.setState({ hamburgerIsAnimated: false }, 1000))
+    );
+  };
+  
+  componentDidUpdate(prevState) {
+    let that = this;
+    if(prevState.hamburgerIsAnimated !== this.state.hamburgerIsAnimated) {
+      setTimeout(() => that.setState(
+        {hamburgerIsAnimated: false}
+      ), 1000)
+    }
   }
 
   componentDidMount() {
-
     //  this.setState({ in: !this.state.transition });
     window.addEventListener("resize", this.handleResize);
-    window.addEventListener("click", (e) => this.closeDropDowns(e));
+    window.addEventListener("click", e => this.closeDropDowns(e));
     // window.addEventListener("mousemove", this.handleMousemove);
 
     let that = this;
@@ -162,7 +183,7 @@ previewSamples = () => {
         that.setState(
           {
             tracks: myJson,
-            tracksObj: newTracksObj,
+            tracksObj: newTracksObj
             // counter: 7
           },
           that.bindWidget
@@ -180,7 +201,6 @@ previewSamples = () => {
       .then(function(myJson) {
         that.response(myJson);
       });
-
   }
 
   bindWidget = () => {
@@ -188,37 +208,34 @@ previewSamples = () => {
     let that = this;
     // if (this.state.counter === 7) {
 
-      let tracks = document.querySelectorAll(".playAndPauseIcon");
-      let soundclouds = document.querySelectorAll(".soundclouds");
+    let tracks = document.querySelectorAll(".playAndPauseIcon");
+    let soundclouds = document.querySelectorAll(".soundclouds");
 
-      for (let i = 0; i < soundclouds.length; i++) {
+    for (let i = 0; i < soundclouds.length; i++) {
+      soundcloudWidget = soundclouds[i];
+      window[`widget${i}`] = SC.Widget(soundcloudWidget);
 
-        soundcloudWidget = soundclouds[i];
-        window[`widget${i}`] = SC.Widget(soundcloudWidget);
-        
-        window[`widget${i}`].bind(SC.Widget.Events.READY, function() {});
-        window[`widget${i}`].bind(SC.Widget.Events.FINISH, function() {
-          that.setState({
-            currentlyPlaying: false
-          });
+      window[`widget${i}`].bind(SC.Widget.Events.READY, function() {});
+      window[`widget${i}`].bind(SC.Widget.Events.FINISH, function() {
+        that.setState({
+          currentlyPlaying: false
         });
-        console.log(window[`widget${i}`])
-      }
+      });
+      console.log(window[`widget${i}`]);
+    }
     // }
   };
 
   response = json => {
-
     this.setState({
       cart: json
     });
   };
 
-  setSample = (newSrc , e) => {
+  setSample = (newSrc, e) => {
     let sampleNumber = e.currentTarget.dataset.sampleNumber;
 
     let sampleCurrentlyPlaying = true;
-
 
     if (
       this.state.sampleCurrentlyPlaying &&
@@ -226,7 +243,6 @@ previewSamples = () => {
     ) {
       sampleCurrentlyPlaying = false;
     }
-
 
     this.setState(
       {
@@ -252,7 +268,6 @@ previewSamples = () => {
 
     let audioPlayerState = audioPlayer.readyState;
 
-
     if (audioPlayer.paused) {
       audioPlayer.play().then(function() {
         // Automatic playback started!
@@ -260,7 +275,6 @@ previewSamples = () => {
     } else {
       audioPlayer.pause();
     }
-
   };
 
   audioEnded = () => {
@@ -276,8 +290,6 @@ previewSamples = () => {
     let price;
     let name;
     let that = this;
-
-;
 
     data = {
       kitId: 1,
@@ -317,7 +329,6 @@ previewSamples = () => {
       },
       this.checkToggleCart
     );
-
   };
 
   deleteItem = e => {
@@ -343,7 +354,6 @@ previewSamples = () => {
         // Handle any error that occurred in any of the previous
         // promises in the chain.
       });
-
   };
 
   clearCart = () => {
@@ -371,9 +381,7 @@ previewSamples = () => {
       });
   };
 
-
   showCircle = e => {
-
     let currentHoverTrack = parseInt(e.currentTarget.dataset.trackNumber);
 
     this.setState({
@@ -408,8 +416,7 @@ previewSamples = () => {
   };
 
   playPauseTrack = currentTrack => {
-
-    console.log(currentTrack)
+    console.log(currentTrack);
 
     let audioPlayer = document.getElementById("audioPlayer");
     audioPlayer.pause();
@@ -421,14 +428,10 @@ previewSamples = () => {
 
     if (this.state.currentTrack === currentTrack) {
       window[`widget${currentTrack}`].toggle();
-
     } else {
-
       window[`widget${currentTrack}`].seekTo(0);
       window[`widget${currentTrack}`].play();
-
     }
-
   };
 
   handleResize = () => {
@@ -443,17 +446,16 @@ previewSamples = () => {
     }
   };
 
-  closeDropDowns = (e) => {
-
-    console.log(e.target.id)
-    const idMatch = e.target.id === "accountIcon" || e.target.id === "accountText";
+  closeDropDowns = e => {
+    console.log(e.target.id);
+    const idMatch =
+      e.target.id === "accountIcon" || e.target.id === "accountText";
     if (this.state.showAccountDropdown && !idMatch) {
       this.setState({
         showAccountDropdown: false
       });
-    } 
+    }
   };
-
 
   toggleModal = () => {
     this.setState({
@@ -557,6 +559,18 @@ previewSamples = () => {
     });
   };
 
+  handleHamburgerClick = () => {
+    this.animateHamburger()
+    this.toggleMobileNav()
+    // )
+
+    console.log(this.hamburgerRef.current.style="padding: 11px; background: rgb(226, 226, 226); border-radius: 50%; margin: auto;")
+    // if(this.state.showMobileNav) {
+      setTimeout(() => this.hamburgerRef.current.style="border-radius: 50%; margin: auto;", 250)
+    // }
+    
+  }
+
   toggleCart = () => {
     let that = this;
 
@@ -573,14 +587,11 @@ previewSamples = () => {
   toggleAccountDropdown = () => {
     let that = this;
 
-    this.setState(
-      {
-        showAccountDropdown: !this.state.showAccountDropdown,
-        showCart: false,
-        showMobileNav: false
-      }
-
-    );
+    this.setState({
+      showAccountDropdown: !this.state.showAccountDropdown,
+      showCart: false,
+      showMobileNav: false
+    });
   };
 
   checkToggleCart = () => {
@@ -718,7 +729,6 @@ previewSamples = () => {
       latestTracks = <Section3 tracks={tracks} />;
     }
 
-
     let unsortedItems;
     if (this.state.cart) {
       unsortedItems = Object.keys(this.state.cart);
@@ -812,9 +822,7 @@ previewSamples = () => {
     let audioPlayer;
     let currentSampleSrc;
     if (this.state.currentSample || this.state.currentSample === 0) {
-
-        currentSampleSrc = this.state.newSrc
-      
+      currentSampleSrc = this.state.newSrc;
     }
     audioPlayer = (
       <audio
@@ -841,13 +849,16 @@ previewSamples = () => {
         <Navbar
           toggleCart={this.toggleCart}
           openModal={this.toggleModal}
-          toggleMobileNav={this.toggleMobileNav}
+          toggleMobileNav={this.handleHamburgerClick}
           userLoggedIn={this.state.userLoggedIn}
           signOut={this.signOut}
           userId={this.state.userId}
           showAccountDropdown={showAccountDropdown}
           toggleAccountDropdown={this.toggleAccountDropdown}
           showMobileNav={this.state.showMobileNav}
+          animateHamburger={this.animateHamburger}
+          hamburgerIsAnimated={this.state.hamburgerIsAnimated}
+          hamburgerRef={this.hamburgerRef}
         />
         <MobileNav
           mobileNavToggle={mobileNavToggle}
@@ -857,7 +868,10 @@ previewSamples = () => {
           signOut={this.signOut}
           userId={this.state.userId}
         />
-        <Section1 showDownArrow={this.state.showDownArrow} toggleDownArrow={this.toggleDownArrow}/>
+        <Section1
+          showDownArrow={this.state.showDownArrow}
+          toggleDownArrow={this.toggleDownArrow}
+        />
         <Section2
           samples={samples}
           click={this.addToCart}
@@ -865,8 +879,8 @@ previewSamples = () => {
         />
         {audioPlayer}
 
-  {latestTracks}
-    
+        {latestTracks}
+
         <Footer footerId="footer" emailDivStyle="email" />
       </div>
     );
