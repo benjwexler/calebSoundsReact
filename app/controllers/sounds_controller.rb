@@ -34,14 +34,19 @@ class SoundsController < ApplicationController
   # POST /sounds
   # POST /sounds.json
   def create
-
+    p 'xxx'
+    p params["sound"]["soundfile"]
+    p 'xxx'
       sound_and_kit_to_build = {
         kit_id: params["sound"]["kit_id"].to_i
         }
 
         new_sound_params = {
       sound: {
-        name: params["sound"]["name"], 
+        name: params["sound"]["name"],
+        tempo: params["sound"]["tempo"],
+        key: params["sound"]["key"],
+        
         type_of_sound: params["sound"]["type_of_sound"], 
         soundfile: params["sound"]["soundfile"], 
         sound_and_kits_attributes: [sound_and_kit_to_build]
@@ -54,7 +59,9 @@ class SoundsController < ApplicationController
     respond_to do |format|
       if @sound.save
         format.html { redirect_to @sound, notice: 'Sound was successfully created.' }
-        format.json { render :show, status: :created, location: @sound }
+        format.json do
+          render json: @sound.as_json.merge({ soundfile: url_for(@sound.soundfile), filename: @sound.soundfile.blob.filename })
+        end
       else
         format.html { render :new }
         format.json { render json: @sound.errors, status: :unprocessable_entity }

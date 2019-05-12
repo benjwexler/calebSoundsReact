@@ -316,8 +316,8 @@ class sample extends React.Component {
                 contenteditable={`${that.state.editable}`}
                 className="mobileHide"
               >
-                {/* {this.state.key} */}
-                A#
+                {this.state.key.substring(0, 2)}
+                
               </td>
               {adminView}
             </tr>
