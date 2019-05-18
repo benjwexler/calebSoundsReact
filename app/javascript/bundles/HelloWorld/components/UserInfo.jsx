@@ -460,13 +460,8 @@ class UserInfo extends React.Component {
     }
 
     let fullScreenStyle = {
-      height: "100vh",
       width: "100vw",
-      // border: '1px solid white',
-      overflow: "hidden",
-      position: "fixed"
-      // paddingTop: '200px'
-      // marginTop: '200px',
+      flexGrow: '1',
     };
 
     let positonAbsoluteBgPicStyle = {
@@ -567,8 +562,15 @@ class UserInfo extends React.Component {
       marginBottom: "30px"
     };
 
+    const outerStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+    }
+
+
     return (
-      <div>
+      <div style={outerStyle}>
         {modal}
         {cart}
         <Navbar
@@ -628,7 +630,7 @@ class UserInfo extends React.Component {
             </div>
           </div>
         </div>
-        <Footer footerId="stickyFooter" emailDivStyle="emailStickFooter" />
+        <Footer footerId="footer2" emailDivStyle="emailStickFooter" />
       </div>
     );
   }

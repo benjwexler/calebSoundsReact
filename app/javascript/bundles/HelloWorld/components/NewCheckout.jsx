@@ -17,7 +17,6 @@ import Item from "./Item.js";
 import { LinkedList, Node } from "./linkedList.js";
 import StripeCheckout from "react-stripe-checkout";
 
-
 const convertToUsCurrency = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -86,221 +85,196 @@ class NewCheckout extends React.Component {
   }
 
   getRelativePath = () => {
-    let path = window.location.pathname+window.location.search
+    let path = window.location.pathname + window.location.search;
     this.setState({
       relativePath: path
-      });
-    
-  }
+    });
+  };
 
-  onToken = (token) => {
+  onToken = token => {
+    const data = {
+      ...token,
+      amount: this.state.totalPrice * 100,
+      userId: this.state.userId,
+      kitId: this.state.kitId
+    };
 
-    const data = {...token, amount: this.state.totalPrice * 100, userId: this.state.userId, kitId: this.state.kitId}
+    let that = this;
 
-    let that = this 
+    $.ajax({
+      method: "POST",
+      beforeSend: function(request) {
+        request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
+      },
+      url: `/charges`,
+      data: data,
+      dataType: "json",
+      success: this.tokenResponse
+    });
+  };
 
-        $.ajax({
-            method: "POST",
-            beforeSend: function(request) {
-                request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
-              },
-            url: `/charges`,
-            data: data,
-            dataType: 'json',
-            success: this.tokenResponse
-        })
-
-       
-
-    }
-
-    tokenResponse = (json) => {
-        console.log(json)
-    }
+  tokenResponse = json => {
+    console.log(json);
+  };
 
   getUserId = () => {
     let that = this;
     fetch(`/users/x.json`, {
       headers: {
-          "Content-Type": "application/json"
-        }
-  })
-    .then(function(response) {
-      // console.log(response.json())
-      return response.json();
+        "Content-Type": "application/json"
+      }
     })
-    .then(function(myJson) {
-      console.log(myJson.user_id)
-      that.setState({
-        userId: myJson.user_id,
-        userEmail: myJson.user_email
+      .then(function(response) {
+        // console.log(response.json())
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson.user_id);
+        that.setState({
+          userId: myJson.user_id,
+          userEmail: myJson.user_email
+        });
       });
-    })
-   
+  };
 
-    }
-
-  
-
-  loadSounds = (kitId) => {
+  loadSounds = kitId => {
     // this.setState({ in: false });
     let that = this;
-    let kitSounds 
+    let kitSounds;
     let padsObj = {};
 
     fetch(`/kits/${10}?limit=6&offset=${that.state.sampleOffset}`, {
-        headers: {
-            "Content-Type": "application/json"
-          }
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
       .then(function(response) {
         return response.json();
       })
       .then(function(myJson) {
-        kitSounds = that.state.kitSounds.concat(myJson)
-        that.setState({
+        kitSounds = that.state.kitSounds.concat(myJson);
+        that.setState(
+          {
             kitSounds: kitSounds,
             sampleOffset: that.state.sampleOffset + 6,
             transition: false
-            }, that.transition);
-          })
+          },
+          that.transition
+        );
+      });
+  };
 
-      }
+  // getUserInfo = () => {
+  //   // this.setState({ in: false });
+  //   let that = this;
+  //   let kitSounds
+  //   let padsObj = {};
 
-      // getUserInfo = () => {
-      //   // this.setState({ in: false });
-      //   let that = this;
-      //   let kitSounds 
-      //   let padsObj = {};
-    
-      //   fetch(`/kits/${10}?limit=6&offset=${that.state.sampleOffset}`, {
-      //       headers: {
-      //           "Content-Type": "application/json"
-      //         }
-      //   })
-      //     .then(function(response) {
-      //       return response.json();
-      //     })
-      //     .then(function(myJson) {
-      //       kitSounds = that.state.kitSounds.concat(myJson)
-      //       that.setState({
-      //           kitSounds: kitSounds,
-      //           sampleOffset: that.state.sampleOffset + 6,
-      //           transition: false
-      //           }, that.transition);
-      //         })
-    
-      //     }
-      
+  //   fetch(`/kits/${10}?limit=6&offset=${that.state.sampleOffset}`, {
+  //       headers: {
+  //           "Content-Type": "application/json"
+  //         }
+  //   })
+  //     .then(function(response) {
+  //       return response.json();
+  //     })
+  //     .then(function(myJson) {
+  //       kitSounds = that.state.kitSounds.concat(myJson)
+  //       that.setState({
+  //           kitSounds: kitSounds,
+  //           sampleOffset: that.state.sampleOffset + 6,
+  //           transition: false
+  //           }, that.transition);
+  //         })
 
-     
+  //     }
 
-    // $.ajax({
-    //   type: "GET",
-    //   url: `http://localhost:3000/kits/${7}?limit=6`,
-    //   success: function(json) {
-    //     // json.forEach((sound, index) => {
-    //     //     padsObj[index] = sound.soundfile
-    //     // })
+  // $.ajax({
+  //   type: "GET",
+  //   url: `http://localhost:3000/kits/${7}?limit=6`,
+  //   success: function(json) {
+  //     // json.forEach((sound, index) => {
+  //     //     padsObj[index] = sound.soundfile
+  //     // })
 
-    //     that.setState({
-    //       kitSounds: json
-    //     });
-    //   },
-    //   error: function(xhr) {},
-    //   dataType: "json"
-    // });
-  
+  //     that.setState({
+  //       kitSounds: json
+  //     });
+  //   },
+  //   error: function(xhr) {},
+  //   dataType: "json"
+  // });
 
-  loadMoreSounds = () => {
-
-  }
+  loadMoreSounds = () => {};
 
   transition = () => {
-    this.setState({transition: true})
+    this.setState({ transition: true });
+  };
 
+  responseTotalPrice = json => {
+    // let totalPrice = (json) => this.totalPrice(json)
 
-  }
+    let totalPrice = this.totalPrice(json);
 
+    console.log(json);
 
+    this.setState({
+      cart: json,
+      totalPrice: totalPrice
+    });
+  };
 
+  totalPrice = cartObj => {
+    let that = this;
 
-responseTotalPrice = (json) => {
+    let price;
+    let quantity;
 
-// let totalPrice = (json) => this.totalPrice(json)
+    let cartItems = Object.keys(cartObj);
+    console.log(cartItems);
+    let totalPrice = cartItems
+      .map((item, index) => {
+        price = parseFloat(cartObj[item].price);
+        quantity = cartObj[item].quantity;
 
-let totalPrice = this.totalPrice(json)
+        return price * quantity;
+      })
+      .reduce((sum, price) => {
+        return sum + price;
+      });
 
+    console.log(totalPrice);
 
+    return totalPrice;
+  };
 
-console.log(json)
+  componentDidMount() {
+    //  this.setState({ in: !this.state.transition });
 
-this.setState({
-    cart: json,
-    totalPrice: totalPrice
-
-
-} 
-)
-
-
-}
-
-totalPrice = (cartObj) => {
-
-let that = this
-
-let price
-let quantity
-
-let cartItems = Object.keys(cartObj)
-console.log(cartItems)
-let totalPrice = cartItems.map((item, index) => {
-
-    price = parseFloat(cartObj[item].price)
-    quantity = cartObj[item].quantity
-
-    return price * quantity
-}).reduce((sum, price) => {
-    return sum + price;
-});
-
-console.log(totalPrice)
-
-return totalPrice
-
-}
-
-    componentDidMount() {
-      //  this.setState({ in: !this.state.transition });
-
-      this.getUserId();
-      $.ajax({
-        method: "GET",
-        url: `/carts`,
-        dataType: 'json',
-        success: this.responseTotalPrice
-    })
-      this.getRelativePath()
-      document.querySelector(".StripeCheckout").click()
+    this.getUserId();
+    $.ajax({
+      method: "GET",
+      url: `/carts`,
+      dataType: "json",
+      success: this.responseTotalPrice
+    });
+    this.getRelativePath();
+    document.querySelector(".StripeCheckout").click();
     window.addEventListener("resize", this.handleResize);
     let that = this;
 
-
     fetch(`/carts`, {
       headers: {
-          "Content-Type": "application/json"
-        }
-  })
-    .then(function(response) {
-      return response.json();
+        "Content-Type": "application/json"
+      }
     })
-    .then(function(myJson) {
-      console.log(myJson)
-      that.response(myJson)
-    });
-
-
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+        that.response(myJson);
+      });
   }
 
   bindWidget = () => {
@@ -325,10 +299,10 @@ return totalPrice
     }
   };
 
-  response = (json) => {
+  response = json => {
     let that = this;
 
-    if(Object.keys(json).length===0) {
+    if (Object.keys(json).length === 0) {
       window.location.href = "/";
     }
 
@@ -337,14 +311,17 @@ return totalPrice
     });
   };
 
-  setSample = (e) => {
-    let sampleNumber = e.currentTarget.dataset.sampleNumber
+  setSample = e => {
+    let sampleNumber = e.currentTarget.dataset.sampleNumber;
 
     let sampleCurrentlyPlaying = true;
 
     // console.log(sampleNumber)
 
-    if (this.state.sampleCurrentlyPlaying && (this.state.currentSample === parseInt(sampleNumber))) {
+    if (
+      this.state.sampleCurrentlyPlaying &&
+      this.state.currentSample === parseInt(sampleNumber)
+    ) {
       sampleCurrentlyPlaying = false;
     }
 
@@ -352,17 +329,18 @@ return totalPrice
     //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
     // });
 
-    this.setState({
-      currentSample: parseInt(sampleNumber),
-      sampleCurrentlyPlaying: sampleCurrentlyPlaying
-    }, this.playSample);
-  }
+    this.setState(
+      {
+        currentSample: parseInt(sampleNumber),
+        sampleCurrentlyPlaying: sampleCurrentlyPlaying
+      },
+      this.playSample
+    );
+  };
 
-  playSample = (sampleNumber) => {
+  playSample = sampleNumber => {
     let audioPlayer = document.getElementById("audioPlayer");
     // let sampleCurrentlyPlaying = true;
-
-
 
     // if (this.state.sampleCurrentlyPlaying && (this.state.currentSample === parseInt(sampleNumber))) {
     //   sampleCurrentlyPlaying = false;
@@ -372,44 +350,39 @@ return totalPrice
     //   sampleCurrentlyPlaying: sampleCurrentlyPlaying
     // });
 
-    if(this.state.currentTrack || this.state.currentTrack === 0) {
-     
-      window[`widget${this.state.currentTrack}`].pause()
+    if (this.state.currentTrack || this.state.currentTrack === 0) {
+      window[`widget${this.state.currentTrack}`].pause();
       window[`widget${this.state.currentTrack}`].seekTo(0);
-      
-      
-    } 
+    }
 
     this.setState({
-      currentlyPlaying: false,
+      currentlyPlaying: false
       // sampleCurrentlyPlaying: sampleCurrentlyPlaying
     });
 
-    let audioPlayerState = audioPlayer.readyState
+    let audioPlayerState = audioPlayer.readyState;
 
     // while(audioPlayerState !== 4) {
-      
+
     //   audioPlayerState = audioPlayer.readyState
     //   console.log(audioPlayerState)
     // }
 
     // var playPromise = audioPlayer.play();
 
-    if(audioPlayer.paused) {
-      audioPlayer.play()
-      .then(function() {
+    if (audioPlayer.paused) {
+      audioPlayer.play().then(function() {
         // Automatic playback started!
-
-      })
+      });
     } else {
-      audioPlayer.pause()
+      audioPlayer.pause();
     }
 
     // if (playPromise !== undefined) {
     //   playPromise.then(_ => {
     //     // Automatic playback started!
     //     // Show playing UI.
-       
+
     //   })
     //   .catch(error => {
     //     console.log("PROBLEMS")
@@ -417,17 +390,13 @@ return totalPrice
     //     // Show paused UI.
     //   });
     // }
-    
-  
-    
-
-  }
+  };
 
   audioEnded = () => {
     this.setState({
       sampleCurrentlyPlaying: false
     });
-  }
+  };
 
   addToCart = () => {
     let kitId;
@@ -437,7 +406,6 @@ return totalPrice
     let name;
     let that = this;
 
-
     // data = `authenticity_token=${this.state.railsToken}&kitId=${
     //   this.state.kitId
     // }&coverArtPic=${this.state.kitPic}&price=${this.state.kitPrice}&name=${
@@ -446,39 +414,33 @@ return totalPrice
     // data = `authenticity_token=${that.state.railsToken}&kitId=${"1"}&price=${"25.99"}&name=${"4blahblah"}`;
 
     data = {
-    // "authenticity_token":that.state.railsToken,
-    "kitId": 1,
-    "price": 25.99,
-    "name": "5blahblah"
-    }
+      // "authenticity_token":that.state.railsToken,
+      kitId: 1,
+      price: 25.99,
+      name: "5blahblah"
+    };
 
-
-    fetch('/carts', {
-        method: "POST",
-        body: JSON.stringify(data),
-        credentials: 'same-origin',
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": that.state.railsToken,
-            
-          }
+    fetch("/carts", {
+      method: "POST",
+      body: JSON.stringify(data),
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": that.state.railsToken
+      }
     })
       .then(function(response) {
         return response.json();
       })
       .then(function(myJson) {
-        
         that.setState({
-            cart: myJson
-          });
+          cart: myJson
+        });
       })
-      .catch((err) => {
+      .catch(err => {
         // Handle any error that occurred in any of the previous
         // promises in the chain.
       });
-      
-
-
 
     // $.ajax({
     //   method: "POST",
@@ -517,25 +479,22 @@ return totalPrice
 
     fetch(`carts/${1}`, {
       method: "DELETE",
-      credentials: 'same-origin',
+      credentials: "same-origin",
       headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": that.state.railsToken,
-          
-        }
-  })
-    .then(function(response) {
-      return response.json();
+        "Content-Type": "application/json",
+        "X-CSRF-Token": that.state.railsToken
+      }
     })
-    .then(function(myJson) {
-      
-      that.response(myJson) 
-      
-    })
-    .catch((err) => {
-      // Handle any error that occurred in any of the previous
-      // promises in the chain.
-    });
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        that.response(myJson);
+      })
+      .catch(err => {
+        // Handle any error that occurred in any of the previous
+        // promises in the chain.
+      });
 
     // $.ajax({
     //   method: "DELETE",
@@ -556,26 +515,23 @@ return totalPrice
 
     fetch(`carts/all`, {
       method: "DELETE",
-      credentials: 'same-origin',
+      credentials: "same-origin",
       headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": that.state.railsToken,
-          
-        }
-  })
-    .then(function(response) {
-      return response.json();
+        "Content-Type": "application/json",
+        "X-CSRF-Token": that.state.railsToken
+      }
     })
-    .then(function(myJson) {
-
-      that.response(myJson) 
-      
-    })
-    .catch((err) => {
-      // Handle any error that occurred in any of the previous
-      // promises in the chain.
-    });
-  }
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        that.response(myJson);
+      })
+      .catch(err => {
+        // Handle any error that occurred in any of the previous
+        // promises in the chain.
+      });
+  };
   //   $.ajax({
   //     method: "DELETE",
   //     beforeSend: function(request) {
@@ -636,7 +592,7 @@ return totalPrice
     //  console.log(this.state.tracksObj[this.state.currentTrack].soundcloud_id)
 
     let audioPlayer = document.getElementById("audioPlayer");
-    audioPlayer.pause()
+    audioPlayer.pause();
     audioPlayer.currentTime = 0;
 
     this.setState({
@@ -654,21 +610,18 @@ return totalPrice
       window[`widget${currentTrack}`].play();
       // isTrackPlaying = true
     }
-
-
   };
 
   handleResize = () => {
-    if (window.innerWidth > 1120){
-        this.setState({
-          showMobileNav: false
-        })
-        
-      } else {
-        this.setState({
-          showAccountDropdown: false
-        })
-      }
+    if (window.innerWidth > 1120) {
+      this.setState({
+        showMobileNav: false
+      });
+    } else {
+      this.setState({
+        showAccountDropdown: false
+      });
+    }
   };
 
   toggleModal = () => {
@@ -680,7 +633,6 @@ return totalPrice
   };
 
   setModalContent = e => {
-
     let modalContent = "Sign Up";
 
     if (e.currentTarget.id === "switchToLogin") {
@@ -700,59 +652,62 @@ return totalPrice
     signUpObj.utf8 = "✓";
     signUpObj.authenticity_token = that.state.railsToken;
     signUpObj["user[email]"] = document.getElementById("userEmailInput").value;
-    signUpObj["user[password]"] = document.getElementById("userPasswordInput").value;
+    signUpObj["user[password]"] = document.getElementById(
+      "userPasswordInput"
+    ).value;
     signUpObj.commit = "Log in";
     // signUpObj['CSRFToken'] = that.state.railsToken
     let url = "/users/sign_in.json";
     if (this.state.modalContent === "Sign Up") {
       url = "/users.json";
-    signUpObj["user[password_confirmation]"] = document.getElementById("userPasswordConfirmationInput").value;
-
+      signUpObj["user[password_confirmation]"] = document.getElementById(
+        "userPasswordConfirmationInput"
+      ).value;
     }
 
-  //   fetch(url, {
-  //     method: "POST",
-  //     mode: 'cors',
-  //     body: JSON.stringify(signUpObj),
-  //     credentials: 'same-origin',
-  //     headers: {
-  //         "Content-Type": "application/json",
-  //         'Accept': 'application/json',
-  //         'Access-Control-Allow-Origin':'*',
-  //         "X-CSRF-Token": that.state.railsToken,
-  //         "Authorization": that.state.railsToken,
-          
-  //       }
-  // })
-  //   .then(function(response) {
-  //     return response.json();
-  //   })
-  //   .then(function(myJson) {
-      
-  //     console.log("wtf")
-      
-  //     that.setState(
-  //       {
-  //         railsToken: myJson.csrfToken,
-  //         userLoggedIn: true,
-  //         errorMessage: undefined,
-  //         cart: JSON.parse(myJson.cart)
-  //       },
-  //       () => {
-  //         console.log(that.state);
-  //         that.setState({
-  //           showModal: false
-  //         })
-  //       }
-  //     );
-  //   })
-  //   .catch((err) => {
-  //     // Handle any error that occurred in any of the previous
-  //     // promises in the chain.
-  //     console.log(err)
-  //     console.log("there was an error")
-  //   });
-      
+    //   fetch(url, {
+    //     method: "POST",
+    //     mode: 'cors',
+    //     body: JSON.stringify(signUpObj),
+    //     credentials: 'same-origin',
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         'Accept': 'application/json',
+    //         'Access-Control-Allow-Origin':'*',
+    //         "X-CSRF-Token": that.state.railsToken,
+    //         "Authorization": that.state.railsToken,
+
+    //       }
+    // })
+    //   .then(function(response) {
+    //     return response.json();
+    //   })
+    //   .then(function(myJson) {
+
+    //     console.log("wtf")
+
+    //     that.setState(
+    //       {
+    //         railsToken: myJson.csrfToken,
+    //         userLoggedIn: true,
+    //         errorMessage: undefined,
+    //         cart: JSON.parse(myJson.cart)
+    //       },
+    //       () => {
+    //         console.log(that.state);
+    //         that.setState({
+    //           showModal: false
+    //         })
+    //       }
+    //     );
+    //   })
+    //   .catch((err) => {
+    //     // Handle any error that occurred in any of the previous
+    //     // promises in the chain.
+    //     console.log(err)
+    //     console.log("there was an error")
+    //   });
+
     $.ajax({
       type: "POST",
 
@@ -779,7 +734,7 @@ return totalPrice
               console.log(that.state);
               that.setState({
                 showModal: false
-              })
+              });
             }
           );
         }
@@ -794,30 +749,31 @@ return totalPrice
   };
 
   signOut = () => {
-    let that = this
+    let that = this;
     $.ajax({
-        type: "POST",
-        url: "/users/sign_out",
-        data: { "_method": "delete", "authenticity_token": that.state.railsToken, "relativePath": that.state.relativePath  },
-        success: function (json) {
-            console.log("trying to delete")
-            console.log(json)
+      type: "POST",
+      url: "/users/sign_out",
+      data: {
+        _method: "delete",
+        authenticity_token: that.state.railsToken,
+        relativePath: that.state.relativePath
+      },
+      success: function(json) {
+        console.log("trying to delete");
+        console.log(json);
 
-            that.setState({
-                userLoggedIn: false,
-                railsToken: json.csrfToken,
-                cart: json.cart
-            })
+        that.setState({
+          userLoggedIn: false,
+          railsToken: json.csrfToken,
+          cart: json.cart
+        });
 
-            // window.location.href="/"
-
-        },
-        error: function (xhr) {
-        },
-        dataType: "json"
+        // window.location.href="/"
+      },
+      error: function(xhr) {},
+      dataType: "json"
     });
-}
-
+  };
 
   toggleMobileNav = () => {
     let that = this;
@@ -835,7 +791,7 @@ return totalPrice
       {
         showCart: !that.state.showCart,
         showMobileNav: false,
-        showAccountDropdown: false,
+        showAccountDropdown: false
       },
       this.checkToggleCart
     );
@@ -850,7 +806,7 @@ return totalPrice
         showAccountDropdown: !this.state.showAccountDropdown,
         showCart: false,
         showMobileNav: false
-      },
+      }
       // this.checkToggleCart
     );
   };
@@ -872,69 +828,67 @@ return totalPrice
   };
 
   stripeClick = () => {
-    this.setState({
-      showLoadingGif: true
-      }, () => {
-        document.querySelector(".StripeCheckout").click()
-      });
-
-    
-                  
-
-  }
+    this.setState(
+      {
+        showLoadingGif: true
+      },
+      () => {
+        document.querySelector(".StripeCheckout").click();
+      }
+    );
+  };
 
   onOpened = () => {
-    console.log("Opened")
+    console.log("Opened");
 
     this.setState({
       showLoadingGif: false
     });
-    
-  }
+  };
 
   onClosed = () => {
-    console.log("closed")
-  }
+    console.log("closed");
+  };
 
   render() {
-    let samples 
+    let samples;
     if (this.state.kitSounds.length > 0) {
-    samples = [];
-    let oddRow = "";
-    
-    let that = this
-    
-    // let currentSample = false;
-    for (let i = 0; i < this.state.kitSounds.length; i++) {
-      let currentSample = false;
-      if (i % 2 === 1) {
-        oddRow = "oddRow";
-      } else {
-        oddRow = "";
+      samples = [];
+      let oddRow = "";
+
+      let that = this;
+
+      // let currentSample = false;
+      for (let i = 0; i < this.state.kitSounds.length; i++) {
+        let currentSample = false;
+        if (i % 2 === 1) {
+          oddRow = "oddRow";
+        } else {
+          oddRow = "";
+        }
+
+        if (i === that.state.currentSample) {
+          currentSample = true;
+        }
+
+        samples.push(
+          <Sample
+            oddRow={oddRow}
+            name={this.state.kitSounds[i].filename}
+            soundfile={this.state.kitSounds[i].soundfile}
+            sampleNumber={i}
+            playSample={this.setSample}
+            currentSample={currentSample}
+            sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
+            inProp={this.state.transition && i >= this.state.sampleOffset - 6}
+            key={i}
+            delay={i * 70}
+          />
+        );
       }
 
-      
-
-      if (i === that.state.currentSample) {
-        currentSample = true;
-      }
-
-      samples.push(<Sample 
-      oddRow={oddRow} 
-      name={this.state.kitSounds[i].filename} 
-      soundfile={this.state.kitSounds[i].soundfile} 
-      sampleNumber={i} 
-      playSample={this.setSample}  
-      currentSample={currentSample}
-      sampleCurrentlyPlaying={this.state.sampleCurrentlyPlaying}
-      inProp={this.state.transition && (i>= this.state.sampleOffset - 6)}
-      key={i}
-      delay={i * 70}
-      />);
+      samples = <React.Fragment>{samples}</React.Fragment>;
     }
-
-    samples = <React.Fragment>{samples}</React.Fragment>;
-  }
 
     let latestTracks;
     let tracks = [];
@@ -1052,7 +1006,6 @@ return totalPrice
 
     // items = <React.Fragment>{items}</React.Fragment>;
 
-
     let showCartBoolean;
 
     let cartHeightZero;
@@ -1097,7 +1050,7 @@ return totalPrice
           submitBtnText={this.state.modalContent}
           loginInSwitch={loginInSwitch}
           signUpSwitch={signUpSwitch}
-          submit = {this.submitForm}
+          submit={this.submitForm}
         />
       );
     }
@@ -1108,228 +1061,229 @@ return totalPrice
       mobileNavToggle = "showMobileNav";
     }
 
-    let audioPlayer
-    let currentSampleSrc 
-    if(this.state.currentSample || this.state.currentSample === 0) {
-      
-      currentSampleSrc = this.state.kitSounds[this.state.currentSample].soundfile
+    let audioPlayer;
+    let currentSampleSrc;
+    if (this.state.currentSample || this.state.currentSample === 0) {
+      currentSampleSrc = this.state.kitSounds[this.state.currentSample]
+        .soundfile;
     }
-    audioPlayer = <audio onEnded={this.audioEnded} id="audioPlayer" autoplay src={currentSampleSrc}  type="audio/wav"/>
+    audioPlayer = (
+      <audio
+        onEnded={this.audioEnded}
+        id="audioPlayer"
+        autoplay
+        src={currentSampleSrc}
+        type="audio/wav"
+      />
+    );
 
-    let showAccountDropdown
-    
-    if(this.state.showAccountDropdown) {
-      showAccountDropdown = "showAccountDropdown"
+    let showAccountDropdown;
+
+    if (this.state.showAccountDropdown) {
+      showAccountDropdown = "showAccountDropdown";
     } else {
-      showAccountDropdown = "hideAccountDropdown"
+      showAccountDropdown = "hideAccountDropdown";
     }
 
     let fullScreenStyle = {
-        height: '100vh',
-        width: '100vw',
-        // border: '1px solid white',
-        overflow: 'hidden',
-        overflow: 'hidden',
-        position: 'fixed'
-        // paddingTop: '200px'
-        // marginTop: '200px',
-    }
+      // height: "100vh",
+      width: "100vw",
+      flexGrow: '1',
+      // border: '1px solid white',
+      // overflow: "hidden",
+      // overflow: "hidden",
+      // position: "fixed"
+      // paddingTop: '200px'
+      // marginTop: '200px',
+    };
 
     let nameStyle = {
-      fontSize: '20px',
-      color: 'black',
-      marginBottom: '5px'
-      
-  }
+      fontSize: "20px",
+      color: "black",
+      marginBottom: "5px"
+    };
 
-  let fontBlue = {
-    color: 'rgba(45, 51, 221, 0.747)',
-    fontSize: '18px' 
-  }
+    let fontBlue = {
+      color: "rgba(45, 51, 221, 0.747)",
+      fontSize: "18px"
+    };
 
     let modalStyle = {
-        // margin: 'auto',
-        // marginTop: '100px',
-        // width: '100%',
-        // maxWidth: '600px',
-        // height: '400px',
-        // border: '1px solid black',
-        // background: 'white',
-        // borderRadius: '5px',
-        // fontFamily: 'Josefin Sans, sans-serif !important',
-        // boxSizing: 'border-box',
-
-   
-            width: '100%',
-            maxWidth: '500px',
-            padding: '40px',
-            paddingTop: '20px',
-            margin: 'auto',
-            marginTop: '120px',
-            border: 'solid 3px black',
-            display: 'flex',
-            flexDirection: 'column',
-            // justifyContent: 'center',
-            alignItems: 'center',
-            color: 'rgba(45, 51, 221, 0.747)'  ,
-            backgroundColor: 'white',
-            borderRadius: '3%',
-            fontFamily: 'Josefin Sans, sans-serif !important',
-            boxSizing: 'border-box',
-            boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
-            position: 'relative',
-            height: '600px'
-            /* font-family: 'Fjalla One', sans-serif; */
-       
-        
-        
-    
-    }
+      width: "100%",
+      maxWidth: "500px",
+      padding: "40px",
+      paddingTop: "20px",
+      margin: "auto",
+      marginTop: "120px",
+      border: "solid 3px black",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      color: "rgba(45, 51, 221, 0.747)",
+      backgroundColor: "white",
+      borderRadius: "3%",
+      fontFamily: "Josefin Sans, sans-serif !important",
+      boxSizing: "border-box",
+      boxShadow: "1px 3px rgba(0, 0, 0, 0.322)",
+      position: "relative",
+      height: "600px"
+    };
 
     let linksContainerStyle = {
-      display : 'flex',
-      height: '400px',
-      width: '100%',
-      border: '1px solid black',
-      position: 'relative'
-    }
+      display: "flex",
+      height: "400px",
+      width: "100%",
+      border: "1px solid black",
+      position: "relative"
+    };
 
     let linksContainerStyle2 = {
-      display : 'flex',
-      height: '100px',
-      width: '100%',
-      border: '1px solid black'
-    }
+      display: "flex",
+      height: "100px",
+      width: "100%",
+      border: "1px solid black"
+    };
 
     let col = {
-      width: '42%',
-      height: '44px',
+      width: "42%",
+      height: "44px",
       // background: 'rgba(45, 51, 221, 0.89)',
-      margin: 'auto',
-      position: 'relative',
+      margin: "auto",
+      position: "relative",
       // border: '1px solid black',
-      borderRadius: '25px',
-      cursor: 'pointer'
-    }
+      borderRadius: "25px",
+      cursor: "pointer"
+    };
 
     let centerText = {
-      position: 'absolute',
-      left: '50%',
-      top: '50%',
-      transform: 'translate(-50%, -50%)',
-      color: 'rgba(255, 255, 255, 0.961)',
-      fontFamily: 'Fjalla One, sans-serif',
-      textAlign: 'center',
-      cursor: 'pointer'
+      position: "absolute",
+      left: "50%",
+      top: "50%",
+      transform: "translate(-50%, -50%)",
+      color: "rgba(255, 255, 255, 0.961)",
+      fontFamily: "Fjalla One, sans-serif",
+      textAlign: "center",
+      cursor: "pointer"
       // zIndex: '-1'
-    }
+    };
 
     let accountInfoStyle = {
-        fontSize: '32px',
-        fontFamily: 'Josefin Sans, sans-serif',
-        marginBottom: '20px'
-    }
+      fontSize: "32px",
+      fontFamily: "Josefin Sans, sans-serif",
+      marginBottom: "20px"
+    };
 
     let displayNoneStyle = {
-      display: 'none'
-    }
+      display: "none"
+    };
 
     let loadingGifStyle = {
-      width: '80%',
-      height: '80%',
-      margin: 'auto',
-      position: 'absolute',
+      width: "80%",
+      height: "80%",
+      margin: "auto",
+      position: "absolute",
 
-  left: '50%',
-  top: '50%',
-  
- 
-  transform: 'translate(-50%, -50%)',
-  
-    }
+      left: "50%",
+      top: "50%",
+
+      transform: "translate(-50%, -50%)"
+    };
 
     let loadingGifHideStyle = {
-      width: '80%',
-      height: '80%',
-      margin: 'auto',
-      position: 'absolute',
-      display: 'none',
+      width: "80%",
+      height: "80%",
+      margin: "auto",
+      position: "absolute",
+      display: "none",
 
-  left: '50%',
-  top: '50%',
-  
- 
-  transform: 'translate(-50%, -50%)',
-  
-    }
+      left: "50%",
+      top: "50%",
 
-    let loadingGif
+      transform: "translate(-50%, -50%)"
+    };
 
-    if(this.state.showLoadingGif) {
-      loadingGif = <img class="showLoad" style={loadingGifStyle} src="/pics/loadingGifBlack.gif"/>
+    let loadingGif;
+
+    if (this.state.showLoadingGif) {
+      loadingGif = (
+        <img
+          class="showLoad"
+          style={loadingGifStyle}
+          src="/pics/loadingGifBlack.gif"
+        />
+      );
     } else {
-      loadingGif = <img class="hideLoad" style={loadingGifStyle} src="/pics/loadingGifBlack.gif"/>
+      loadingGif = (
+        <img
+          class="hideLoad"
+          style={loadingGifStyle}
+          src="/pics/loadingGifBlack.gif"
+        />
+      );
     }
 
-  
+    const checkoutOuterStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+    }
+
     return (
-      <div>
+      <div style={checkoutOuterStyle}>
         {modal}
         {cart}
         <Navbar
           toggleCart={this.toggleCart}
           openModal={this.toggleModal}
           toggleMobileNav={this.toggleMobileNav}
-          userLoggedIn = {this.state.userLoggedIn}
-          signOut = {this.signOut}
-          userId= {this.state.userId}
-          showAccountDropdown = {showAccountDropdown}
-          toggleAccountDropdown = {this.toggleAccountDropdown}
+          userLoggedIn={this.state.userLoggedIn}
+          signOut={this.signOut}
+          userId={this.state.userId}
+          showAccountDropdown={showAccountDropdown}
+          toggleAccountDropdown={this.toggleAccountDropdown}
         />
-        <MobileNav mobileNavToggle={mobileNavToggle} 
+        <MobileNav
+          mobileNavToggle={mobileNavToggle}
           userLoggedIn={this.state.userLoggedIn}
           toggleMobileNav={this.toggleMobileNav}
           openModal={this.toggleModal}
-          signOut = {this.signOut}
+          signOut={this.signOut}
         />
 
-       
-
-        <div style={fullScreenStyle}> 
-            <div id="checkoutContainer" >
-                <div id="checkoutText2" style={accountInfoStyle}>Checkout</div>
-                <div id="checkoutCoverArtContainer" >
-                  {loadingGif}
-                  <img id="checkoutCoverArt" src="pics/gtrv3.jpg"/>
-                  
-                </div>
-                <div style={linksContainerStyle2}>
-                {/* <a style={col} href="/">
-                  <div style={centerText}>Back</div>
-                </a> */}
-                <div id="payWithCard" style={col} onClick={()=> this.stripeClick()}>
-                  <div  onClick={()=> this.stripeClick()} style={centerText}>Pay With Card</div>
-                </div>
-                {/* <a style={col} href="/users/edit">
-                  <div style={centerText}>Change Password</div>
-                </a> */}
-                  
-                </div>
+        <div style={fullScreenStyle}>
+          <div id="checkoutContainer">
+            <div id="checkoutText2" style={accountInfoStyle}>
+              Checkout
             </div>
+            <div id="checkoutCoverArtContainer">
+              {loadingGif}
+              <img id="checkoutCoverArt" src="pics/gtrv3.jpg" />
+            </div>
+            <div style={linksContainerStyle2}>
+              <div
+                id="payWithCard"
+                style={col}
+                onClick={() => this.stripeClick()}
+              >
+                <div onClick={() => this.stripeClick()} style={centerText}>
+                  Pay With Card
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        {/* style={displayNoneStyle} */}
-        <div >
+        <div>
           <StripeCheckout
-                  amount={this.state.totalPrice * 100}
-                  stripeKey={process.env.stripe_publishable_key}
-                  token={this.onToken}
-                  email={this.state.userEmail}
-                  reconfigureOnUpdate={true}
-                  opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
-                  closed={this.onClosed}
-              />
+            amount={this.state.totalPrice * 100}
+            stripeKey={process.env.stripe_publishable_key}
+            token={this.onToken}
+            email={this.state.userEmail}
+            reconfigureOnUpdate={true}
+            opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
+            closed={this.onClosed}
+          />
         </div>
-        <Footer footerId="stickyFooter" emailDivStyle="emailStickFooter"/>
+        <Footer footerId="footer2" emailDivStyle="emailStickFooter" />
       </div>
     );
   }

@@ -109,7 +109,6 @@ class EditUserInfo extends React.Component {
         return response.json();
       })
       .then(function(myJson) {
-        console.log(myJson);
         that.response(myJson);
       });
   }
@@ -148,16 +147,6 @@ class EditUserInfo extends React.Component {
         // promises in the chain.
       });
 
-    // $.ajax({
-    //   method: "DELETE",
-    //   beforeSend: function(request) {
-    //     request.setRequestHeader("X-CSRF-Token", that.state.railsToken);
-    //   },
-    //   url: `carts/${1}`,
-    //   data: `authenticity_token=${that.state.railsToken}`,
-    //   dataType: "json",
-    //   success: that.response
-    // });
   };
 
   clearCart = () => {
@@ -229,9 +218,6 @@ class EditUserInfo extends React.Component {
         relativePath: that.state.relativePath
       },
       success: function(json) {
-        console.log("trying to delete");
-        console.log(json);
-
         that.setState({
           userLoggedIn: false,
           railsToken: json.csrfToken,
@@ -255,8 +241,6 @@ class EditUserInfo extends React.Component {
 
   toggleCart = () => {
     let that = this;
-
-    // console.log(this.state)
     this.setState(
       {
         showCart: !that.state.showCart,
@@ -269,8 +253,6 @@ class EditUserInfo extends React.Component {
 
   toggleAccountDropdown = () => {
     let that = this;
-
-    // console.log(this.state)
     this.setState(
       {
         showAccountDropdown: !this.state.showAccountDropdown,
@@ -408,94 +390,32 @@ class EditUserInfo extends React.Component {
     }
 
     let fullScreenStyle = {
-      height: "100vh",
       width: "100vw",
-      // border: '1px solid yellow',
-      overflow: "hidden",
-      position: "fixed"
-      // paddingTop: '200px'
-      // marginTop: '200px',
-    };
-
-    let nameStyle = {
-      fontSize: "20px",
-      color: "black",
-      marginBottom: "5px"
-    };
-
-    let fontBlue = {
-      color: "rgba(45, 51, 221, 0.747)",
-      fontSize: "18px"
+      flexGrow: '1',
     };
 
     let modalStyle = {
-      // margin: 'auto',
-      // marginTop: '100px',
-      // width: '100%',
-      // maxWidth: '600px',
-      // height: '400px',
-      // border: '1px solid black',
-      // background: 'white',
-      // borderRadius: '5px',
-      // fontFamily: 'Josefin Sans, sans-serif !important',
-      // boxSizing: 'border-box',
-
       width: "100%",
       maxWidth: "500px",
       padding: "40px",
       paddingTop: "20px",
-      // margin: 'auto',
-      // marginTop: '120px',
-      // border: 'solid 3px black',
-      // boxShadow: '1px 3px rgba(0, 0, 0, 0.322)',
       display: "flex",
       flexDirection: "column",
-      // justifyContent: 'center',
       alignItems: "center",
       color: "rgba(45, 51, 221, 0.747)",
       backgroundColor: "white",
       borderRadius: "3%",
       fontFamily: "Josefin Sans, sans-serif !important",
       boxSizing: "border-box",
-
       position: "relative"
-      // height: '500px'
-      /* font-family: 'Fjalla One', sans-serif; */
     };
 
     let linksContainerStyle = {
       display: "flex",
       height: "800px",
       width: "100%"
-      // border: '1px solid black'
     };
 
-    let linksContainerStyle2 = {
-      display: "flex",
-      height: "100px",
-      width: "100%",
-      border: "1px solid black"
-    };
-
-    let col = {
-      width: "30%",
-      height: "44px",
-      background: "rgba(45, 51, 221, 0.89)",
-      margin: "auto",
-      position: "relative",
-      // border: '1px solid black',
-      borderRadius: "25px"
-    };
-
-    let centerText = {
-      position: "absolute",
-      left: "50%",
-      top: "50%",
-      transform: "translate(-50%, -50%)",
-      color: "rgba(255, 255, 255, 0.961)",
-      fontFamily: "Fjalla One, sans-serif",
-      textAlign: "center"
-    };
 
     let accountInfoStyle = {
       fontSize: "32px",
@@ -503,37 +423,6 @@ class EditUserInfo extends React.Component {
       marginBottom: "20px"
     };
 
-    let marginAutoStyle = {
-      margin: "auto",
-      marginTop: "45px"
-    };
-
-    let switchStyle = {
-      position: "relative",
-      display: "inline-block",
-      width: "60px",
-      height: "34px",
-      opacity: "0",
-      width: "0",
-      height: "0"
-    };
-
-    let inputStyle = {
-      opacity: "0",
-      width: "0",
-      height: "0"
-    };
-
-    let sliderStyle = {
-      position: "absolute",
-      cursor: "pointer",
-      top: "0",
-      left: "0",
-      right: "0",
-      bottom: "0",
-      backgroundColor: "#ccc",
-      transition: ".4s"
-    };
 
     let changePasswordContainerStyle = {
       display: "flex"
@@ -552,7 +441,6 @@ class EditUserInfo extends React.Component {
       transform: "translate(0%, -50%)",
       fontSize: "18px",
       whiteSpace: "nowrap"
-      // color: 'black'
     };
 
     let sliderContainerStyle = {
@@ -597,8 +485,15 @@ class EditUserInfo extends React.Component {
       );
     }
 
+    const outerStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+    }
+
+
     return (
-      <div>
+      <div style={outerStyle}>
         {modal}
         {cart}
         <Navbar
@@ -703,7 +598,7 @@ class EditUserInfo extends React.Component {
           </div>
         </div>
 
-        <Footer footerId="stickyFooter" emailDivStyle="emailStickFooter" />
+        <Footer footerId="footer2" emailDivStyle="emailStickFooter" />
       </div>
     );
   }
