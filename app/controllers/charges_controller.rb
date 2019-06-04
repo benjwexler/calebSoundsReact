@@ -48,14 +48,15 @@ class ChargesController < ApplicationController
       if @transaction.save
 
 
-
+        
         p "this is a test"
 
         email = @transaction.email
+        p Kit.find(kit_id).sounds
 
         p email 
 
-        TransactionMailer.transaction_email(email).deliver
+        TransactionMailer.transaction_email(email, kit_id).deliver
         # format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
         # format.json { render :show, status: :created, location: @transaction }
         render json: {message: "Thanks for your purchase. Your stickers are on the way!"}
