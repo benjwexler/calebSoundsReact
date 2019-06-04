@@ -66,7 +66,7 @@ class NewCheckout extends React.Component {
       kitPic: undefined,
       kitName: undefined,
       kitPrice: undefined,
-      kitId: 10,
+      kitId: 36,
       pads: undefined,
       context: undefined,
       gainNode: undefined,
